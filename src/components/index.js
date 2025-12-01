@@ -5,6 +5,7 @@ import BlurText from './BlurText.c.vue'
 import CurvedLoop from './CurvedLoop.c.vue'
 import CircularText from './CircularText.c.vue'
 import AsciiText from './AsciiText.c.vue'
+import DecryptedText from './DecryptedText.c.vue'
 
 // 定义组件列表
 const components = [
@@ -13,7 +14,8 @@ const components = [
   BlurText,
   CircularText,
   CurvedLoop,
-  AsciiText
+  AsciiText,
+  DecryptedText
 ]
 
 // 定义 install 方法，接收 Vue 作为参数
@@ -35,7 +37,8 @@ export default {
   BlurText,
   CircularText,
   CurvedLoop,
-  AsciiText
+  AsciiText,
+  DecryptedText
 }
 
 // 单独导出组件，支持按需引入
@@ -45,5 +48,6 @@ export {
   BlurText,
   CircularText,
   CurvedLoop,
-  AsciiText
+  AsciiText,
+  DecryptedText
 }
