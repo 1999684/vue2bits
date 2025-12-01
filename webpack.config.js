@@ -71,7 +71,7 @@ module.exports = (env, argv) => {
         }
       ],
       compress: true,
-      port: 9002,
+      port: 9003,
       historyApiFallback: true
     }
   }
