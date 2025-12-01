@@ -2,12 +2,14 @@
 import SplitText from './SplitText.c.vue'
 import ScrollFloat from './ScrollFloat.c.vue'
 import BlurText from './BlurText.c.vue'
+import CurvedLoop from './CurvedLoop.c.vue'
 
 // 定义组件列表
 const components = [
   ScrollFloat,
   SplitText,
-  BlurText
+  BlurText,
+  CurvedLoop
 ]
 
 // 定义 install 方法，接收 Vue 作为参数
@@ -26,12 +28,14 @@ export default {
   install,
   ScrollFloat,
   SplitText,
-  BlurText
+  BlurText,
+  CurvedLoop
 }
 
 // 单独导出组件，支持按需引入
 export {
   ScrollFloat,
   SplitText,
-  BlurText
+  BlurText,
+  CurvedLoop
 }

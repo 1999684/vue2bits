@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vue2bits 组件预览</title>
+    <script src="../libs/vue.js"></script>
+    <link rel="stylesheet" href="../../dist/vue2bits.css">
+    <link rel="stylesheet" href="preview.css">
+</head>
+
+<body>
+    <div id="app" style="display: flex;">
+        <div class="col flex-center flex-column" style="height: 100vh;width: 50%;">
+            <curved-loop :marquee-text="marqueeText" :class-name="className" :speed="speed" :curve-amount="curveAmount"
+                :direction="direction" :interactive="interactive">
+            </curved-loop>
+        </div>
+        <div class="use">
+            <h2>how to use</h2>
+            <div class="usage-instructions">
+                <h3>CurvedLoop 组件使用说明</h3>
+
+                <h4>1. 基本用法</h4>
+                <p>在HTML中直接使用组件标签：</p>
+                <pre><code>&lt;curved-loop :text="'显示文本'"&gt;&lt;/curved-loop&gt;</code></pre>
+
+                <h4>2. 可用属性</h4>
+                <ul>
+                    <li><strong>marquee-text</strong> (String): 要显示的文本内容</li>
+                    <li><strong>class-name</strong> (String): 应用于文本的CSS类名</li>
+                    <li><strong>speed</strong> (Number): 滚动速度，默认为1</li>
+                    <li><strong>curve-amount</strong> (Number): 曲线程度，默认为200</li>
+                    <li><strong>direction</strong> (String): 滚动方向，默认为'left'（'left'|'right'）</li>
+                    <li><strong>interactive</strong> (Boolean): 是否 interactive，默认为false</li>
+                </ul>
+
+                <h4>3. 示例代码</h4>
+                <pre><code>&lt;curved-loop 
+                    :marquee-text="'显示文本'" 
+                    :class-name="'demo-text'"
+                    :speed="1"
+                    :curve-amount="200"
+                    :direction="'left'"
+                    :interactive="true"&lt;/curved-loop&gt;</code></pre>
+            </div>
+            <div class="back-link">
+                <a href="../">← Back to mt</a>
+            </div>
+        </div>
+    </div>
+
+    <script src="../../dist/vue2bits.min.js"></script>
+    <script>
+        // 现在不需要手动注册组件，引入vue2bits.min.js后会自动注册
+        document.addEventListener('DOMContentLoaded', function () {
+            new Vue({
+                el: '#app',
+                data() {
+                    return {
+                        marqueeText: 'xxxxxxxxxxxxxxxxxx',
+                        className: 'demo-text',
+                        speed: 1,
+                        curveAmount: 400,
+                        direction: 'left',
+                        interactive: true
+                    }
+                }
+            });
+        });
+    </script>
+    <style>
+        .demo-text {
+            font-size: 2em !important;
+            font-weight: bold !important;
+            fill: #4880ff !important;
+        }
+    </style>
+</body>
+
+</html>
