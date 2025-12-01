@@ -3,12 +3,15 @@ import SplitText from './SplitText.c.vue'
 import ScrollFloat from './ScrollFloat.c.vue'
 import BlurText from './BlurText.c.vue'
 import CurvedLoop from './CurvedLoop.c.vue'
+import CircularText from './CircularText.c.vue'
+
 
 // 定义组件列表
 const components = [
   ScrollFloat,
   SplitText,
   BlurText,
+  CircularText,
   CurvedLoop
 ]
 
@@ -29,6 +32,7 @@ export default {
   ScrollFloat,
   SplitText,
   BlurText,
+  CircularText,
   CurvedLoop
 }
 
@@ -37,5 +41,6 @@ export {
   ScrollFloat,
   SplitText,
   BlurText,
+  CircularText,
   CurvedLoop
 }
