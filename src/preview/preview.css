@@ -48,6 +48,10 @@ body {
   border-radius: 4px;
 }
 
+.controls a {
+  margin-right: 20px;
+}
+
 
 /* use */
 
