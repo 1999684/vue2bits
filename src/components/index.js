@@ -7,6 +7,8 @@ import CircularText from './CircularText.c.vue'
 import AsciiText from './AsciiText.c.vue'
 import DecryptedText from './DecryptedText.c.vue'
 import FuzzyText from './FuzzyText.c.vue'
+import GlitchText from './GlitchText.c.vue'
+import GradientText from './GradientText.c.vue'
 
 // 定义组件列表
 const components = [
@@ -17,7 +19,9 @@ const components = [
   CurvedLoop,
   AsciiText,
   DecryptedText,
-  FuzzyText
+  FuzzyText,
+  GlitchText,
+  GradientText
 ]
 
 // 定义 install 方法，接收 Vue 作为参数
@@ -41,7 +45,9 @@ export default {
   CurvedLoop,
   AsciiText,
   DecryptedText,
-  FuzzyText
+  FuzzyText,
+  GlitchText,
+  GradientText
 }
 
 // 单独导出组件，支持按需引入
@@ -53,5 +59,7 @@ export {
   CurvedLoop,
   AsciiText,
   DecryptedText,
-  FuzzyText
+  FuzzyText,
+  GlitchText,
+  GradientText
 }
