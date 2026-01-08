@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ClickSpark 组件预览</title>
+    <script src="../libs/vue.js"></script>
+    <link rel="stylesheet" href="../../dist/vue2bits.css">
+    <link rel="stylesheet" href="preview.css">
+</head>
+
+<body>
+    <div id="app" style="display: flex;">
+        <div class="col" style="height: 100vh; width: 50%;">
+            <click-spark 
+                :spark-color="controls.sparkColor"
+                :spark-size="controls.sparkSize"
+                :spark-radius="controls.sparkRadius"
+                :spark-count="controls.sparkCount"
+                :duration="controls.duration"
+                :easing="controls.easing"
+                :extra-scale="controls.extraScale"
+            >
+                <div style="display: flex; justify-content: center; align-items: center; height: 100%; width: 100%; color: #ff0000; font-size: 54px; font-weight: bold; cursor: pointer;">
+                    点击
+                </div>
+            </click-spark>
+        </div>
+        <div class="use">
+            <h2>how to use</h2>
+            <div class="usage-instructions">
+                <h3>ClickSpark 组件使用说明</h3>
+
+                <h4>1. 基本用法</h4>
+                <p>在HTML中直接使用组件标签：</p>
+                <pre><code>&lt;click-spark 
+  spark-color="#fff" 
+  spark-size="10"&gt;
+  &lt;div&gt;点击区域&lt;/div&gt;
+&lt;/click-spark&gt;</code></pre>
+
+                <h4>2. 可用属性</h4>
+                <ul>
+                    <li><strong>sparkColor</strong> (String): 火花颜色，默认为'#fff'</li>
+                    <li><strong>sparkSize</strong> (Number): 火花大小（像素），默认为10</li>
+                    <li><strong>sparkRadius</strong> (Number): 火花半径（像素），默认为15</li>
+                    <li><strong>sparkCount</strong> (Number): 火花数量，默认为8</li>
+                    <li><strong>duration</strong> (Number): 动画持续时间（毫秒），默认为400</li>
+                    <li><strong>easing</strong> (String): 缓动函数，可选值：'linear', 'ease-in', 'ease-out', 'ease-in-out'，默认为'ease-out'</li>
+                    <li><strong>extraScale</strong> (Number): 额外缩放系数，默认为1.0</li>
+                </ul>
+
+                <h4>3. 示例代码</h4>
+                <pre><code>&lt;click-spark 
+  spark-color="#FF6B6B" 
+  spark-size="12"
+  spark-radius="20"
+  spark-count="10"
+  duration="500"
+  easing="ease-out"&gt;
+  &lt;div&gt;点击区域&lt;/div&gt;
+&lt;/click-spark&gt;</code></pre>
+
+            </div>
+            <div class="back-link">
+                <a href="../">← Back to index</a>
+            </div>
+        </div>
+    </div>
+
+    <script src="../../dist/vue2bits.min.js"></script>
+    <script>
+        // 确保 Vue 实例在 DOM 加载完成后创建
+        document.addEventListener('DOMContentLoaded', function() {
+            new Vue({
+                el: '#app',
+                data: {
+                    controls: {
+                        sparkColor: '#000',
+                        sparkSize: 100,
+                        sparkRadius: 150,
+                        sparkCount: 8,
+                        duration: 400,
+                        easing: 'ease-out',
+                        extraScale: 1.0
+                    }
+                }
+            });
+        });
+    </script>
+</body>
+</html>

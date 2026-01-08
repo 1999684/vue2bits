@@ -16,6 +16,8 @@ import VariableProximity from './VariableProximity.c.vue'
 import AnimatedContent from './AnimatedContent.c.vue'
 import Antigravity from './Antigravity.c.vue'
 import BlobCursor from './BlobCursor.c.vue'
+import ClickSpark from './ClickSpark.c.vue'
+import CountUp from './CountUp.c.vue'
 
 // 定义组件列表
 const components = [
@@ -35,7 +37,9 @@ const components = [
   VariableProximity,
   AnimatedContent,
   Antigravity,
-  BlobCursor
+  BlobCursor,
+  ClickSpark,
+  CountUp
 ]
 
 // 定义 install 方法，接收 Vue 作为参数
@@ -68,7 +72,9 @@ export default {
   VariableProximity,
   AnimatedContent,
   Antigravity,
-  BlobCursor
+  BlobCursor,
+  ClickSpark,
+  CountUp
 }
 
 // 单独导出组件，支持按需引入
@@ -89,5 +95,7 @@ export {
   VariableProximity,
   AnimatedContent,
   Antigravity,
-  BlobCursor
+  BlobCursor,
+  ClickSpark,
+  CountUp
 }
