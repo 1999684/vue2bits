@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AnimatedContent 组件预览</title>
+  <script src="../libs/vue.js"></script>
+  <link rel="stylesheet" href="../../dist/vue2bits.css">
+  <link rel="stylesheet" href="preview.css">
+  <style>
+    .demo-box {
+      padding: 20px;
+      margin: 10px;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+    }
+    
+    .demo-content {
+      font-size: 18px;
+      font-weight: bold;
+      color: #42b983;
+    }
+  </style>
+</head>
+<body>
+  <div id="app" style="display: flex;">
+    <div class="col" style="height: 100vh;width: 50%;">
+      <!-- 垂直方向动画示例 -->
+      <div class="demo-box">
+        <h3>垂直方向动画 (默认)</h3>
+        <animated-content 
+          :distance="100" 
+          :duration="1" 
+          :delay="0.2" 
+          class-name="demo-content">
+          <div>垂直方向进入动画</div>
+        </animated-content>
+      </div>
+      
+      <!-- 水平方向动画示例 -->
+      <div class="demo-box">
+        <h3>水平方向动画</h3>
+        <animated-content 
+          :distance="100" 
+          direction="horizontal"
+          :duration="1" 
+          :delay="0.2" 
+          class-name="demo-content">
+          <div>水平方向进入动画</div>
+        </animated-content>
+      </div>
+      
+      <!-- 反向动画示例 -->
+      <div class="demo-box">
+        <h3>反向动画</h3>
+        <animated-content 
+          :distance="100" 
+          :reverse="true"
+          :duration="1" 
+          :delay="0.2" 
+          class-name="demo-content">
+          <div>反向动画效果</div>
+        </animated-content>
+      </div>
+      
+      <!-- 自定义缩放和透明度动画 -->
+      <div class="demo-box">
+        <h3>缩放和透明度动画</h3>
+        <animated-content 
+          :distance="50"
+          :scale="0.8"
+          :initial-opacity="0.5"
+          :animate-opacity="true"
+          :duration="1.2" 
+          :delay="0.3" 
+          class-name="demo-content">
+          <div>带有缩放和透明度变化的动画</div>
+        </animated-content>
+      </div>
+    </div>
+    <div class="use">
+      <h2>how to use</h2>
+      <div class="usage-instructions">
+        <h3>AnimatedContent 组件使用说明</h3>
+
+        <h4>1. 基本用法</h4>
+        <p>在HTML中使用组件标签包裹需要动画的内容：</p>
+        <pre><code>&lt;animated-content&gt;
+  &lt;div&gt;需要动画的内容&lt;/div&gt;
+&lt;/animated-content&gt;</code></pre>
+
+        <h4>2. 可用属性</h4>
+        <ul>
+          <li><strong>distance</strong> (Number): 动画起始偏移距离，默认为100</li>
+          <li><strong>direction</strong> (String): 动画方向 ('vertical' 或 'horizontal')，默认为'vertical'</li>
+          <li><strong>reverse</strong> (Boolean): 是否反向动画，默认为false</li>
+          <li><strong>duration</strong> (Number): 动画持续时间，默认为0.8秒</li>
+          <li><strong>ease</strong> (String|Function): 缓动函数，默认为'power3.out'</li>
+          <li><strong>initial-opacity</strong> (Number): 初始透明度，默认为0</li>
+          <li><strong>animate-opacity</strong> (Boolean): 是否动画透明度，默认为true</li>
+          <li><strong>scale</strong> (Number): 初始缩放比例，默认为1</li>
+          <li><strong>threshold</strong> (Number): 触发动画的阈值，默认为0.1</li>
+          <li><strong>delay</strong> (Number): 动画延迟时间，默认为0</li>
+          <li><strong>class-name</strong> (String): 应用于容器的CSS类名</li>
+        </ul>
+
+        <h4>3. 事件</h4>
+        <ul>
+          <li><strong>complete</strong>: 动画完成时触发</li>
+        </ul>
+
+        <h4>4. 示例代码</h4>
+        <pre><code>&lt;animated-content 
+  :distance="100"
+  direction="horizontal"
+  :reverse="true"
+  :duration="1.2"
+  ease="power2.inOut"
+  :initial-opacity="0.3"
+  :animate-opacity="true"
+  :scale="0.8"
+  :threshold="0.2"
+  :delay="0.5"
+  class-name="my-animation-class"
+  @complete="onAnimationComplete"&gt;
+  &lt;div&gt;带动画效果的内容&lt;/div&gt;
+&lt;/animated-content&gt;</code></pre>
+      </div>
+      <div class="back-link">
+        <a href="../">← Back to index</a>
+      </div>
+    </div>
+  </div>
+
+  <script src="../../dist/vue2bits.min.js"></script>
+  <!-- 引入 GSAP 库 -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+  <script>
+    // 确保 Vue 实例在 DOM 加载完成后创建
+    document.addEventListener('DOMContentLoaded', function () {
+      new Vue({
+        el: '#app',
+        mounted() {
+          // 注册 GSAP 插件
+          if (window.gsap && window.ScrollTrigger) {
+            window.gsap.registerPlugin(window.ScrollTrigger);
+          }
+        },
+        methods: {
+          onAnimationComplete() {
+            console.log('动画已完成');
+          }
+        }
+      });
+    });
+  </script>
+</body>
+</html>

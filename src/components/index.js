@@ -13,6 +13,7 @@ import GradientText from './GradientText.c.vue'
 import ShinyText from './ShinyText.c.vue'
 import TextType from './TextType.c.vue'
 import VariableProximity from './VariableProximity.c.vue'
+import AnimatedContent from './AnimatedContent.c.vue'
 
 // 定义组件列表
 const components = [
@@ -29,7 +30,8 @@ const components = [
   GradientText,
   ShinyText,
   TextType,
-  VariableProximity
+  VariableProximity,
+  AnimatedContent
 ]
 
 // 定义 install 方法，接收 Vue 作为参数
@@ -59,7 +61,8 @@ export default {
   GradientText,
   ShinyText,
   TextType,
-  VariableProximity
+  VariableProximity,
+  AnimatedContent
 }
 
 // 单独导出组件，支持按需引入
@@ -77,5 +80,6 @@ export {
   GradientText,
   ShinyText,
   TextType,
-  VariableProximity
+  VariableProximity,
+  AnimatedContent
 }
