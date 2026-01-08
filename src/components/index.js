@@ -11,6 +11,8 @@ import FuzzyText from './FuzzyText.c.vue'
 import GlitchText from './GlitchText.c.vue'
 import GradientText from './GradientText.c.vue'
 import ShinyText from './ShinyText.c.vue'
+import TextType from './TextType.c.vue'
+import VariableProximity from './VariableProximity.c.vue'
 
 // 定义组件列表
 const components = [
@@ -25,7 +27,9 @@ const components = [
   FuzzyText,
   GlitchText,
   GradientText,
-  ShinyText
+  ShinyText,
+  TextType,
+  VariableProximity
 ]
 
 // 定义 install 方法，接收 Vue 作为参数
@@ -37,7 +41,6 @@ const install = function(Vue) {
   components.forEach(component => {
     Vue.component(component.name || component.__name, component)
   })
-  Vue.component(ShinyText.name || ShinyText.__name, ShinyText)
 }
 
 // 导出 install 方法和所有组件
@@ -54,7 +57,9 @@ export default {
   FuzzyText,
   GlitchText,
   GradientText,
-  ShinyText
+  ShinyText,
+  TextType,
+  VariableProximity
 }
 
 // 单独导出组件，支持按需引入
@@ -70,5 +75,7 @@ export {
   FuzzyText,
   GlitchText,
   GradientText,
-  ShinyText
+  ShinyText,
+  TextType,
+  VariableProximity
 }
