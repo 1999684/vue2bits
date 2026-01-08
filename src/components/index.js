@@ -20,6 +20,7 @@ import ClickSpark from './ClickSpark.c.vue'
 import CountUp from './CountUp.c.vue'
 import Crosshair from './Crosshair.c.vue'
 import ElectricBorder from './ElectricBorder.c.vue'
+import FadeContent from './FadeContent.c.vue'
 
 // 定义组件列表
 const components = [
@@ -43,7 +44,8 @@ const components = [
   ClickSpark,
   CountUp,
   Crosshair,
-  ElectricBorder
+  ElectricBorder,
+  FadeContent
 ]
 
 // 定义 install 方法，接收 Vue 作为参数
@@ -80,7 +82,8 @@ export default {
   ClickSpark,
   CountUp,
   Crosshair,
-  ElectricBorder
+  ElectricBorder,
+  FadeContent
 }
 
 // 单独导出组件，支持按需引入
@@ -105,5 +108,6 @@ export {
   ClickSpark,
   CountUp,
   Crosshair,
-  ElectricBorder
+  ElectricBorder,
+  FadeContent
 }

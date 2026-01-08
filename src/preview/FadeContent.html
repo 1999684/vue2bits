@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FadeContent 组件预览</title>
+    <script src="../libs/vue.js"></script>
+    <link rel="stylesheet" href="../../dist/vue2bits.css">
+    <link rel="stylesheet" href="preview.css">
+    <style>
+        .demo-section {
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 24px;
+            margin: 20px 0;
+        }
+        
+        .fade-content-box {
+            padding: 20px;
+            background: #f0f0f0;
+            border-radius: 8px;
+            text-align: center;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="app" style="display: flex;">
+        <div class="col" style="height: 100vh; width: 50%;">
+            <div style="display: flex; justify-content: center; align-items: center; height: 100%; width: 100%; background: #f0f0f0; flex-direction: column;">
+                <h2 style="margin-bottom: 20px;">淡入淡出内容效果</h2>
+                
+                <div class="demo-section" style="background: #d0d0d0;">
+                    <fade-content 
+                        :blur="controls.blur"
+                        :duration="controls.duration"
+                        :easing="controls.easing"
+                        :delay="controls.delay"
+                        :threshold="controls.threshold"
+                        :initial-opacity="controls.initialOpacity"
+                        :class-name="controls.className"
+                    >
+                        <div class="fade-content-box">
+                            <p>滚动进入视窗时淡入显示</p>
+                        </div>
+                    </fade-content>
+                </div>
+                
+                <div class="demo-section" style="background: #d0d0d0;">
+                    <fade-content 
+                        :blur="true"
+                        :duration="1500"
+                        :easing="'ease-in-out'"
+                        :delay="200"
+                        :threshold="0.3"
+                        :initial-opacity="0.2"
+                        class-name="fade-content-box"
+                    >
+                        <div class="fade-content-box">
+                            <p>带模糊效果的淡入</p>
+                        </div>
+                    </fade-content>
+                </div>
+            </div>
+        </div>
+        <div class="use">
+            <h2>how to use</h2>
+            <div class="usage-instructions">
+                <h3>FadeContent 组件使用说明</h3>
+
+                <h4>1. 基本用法</h4>
+                <p>在HTML中直接使用组件标签：</p>
+                <pre><code>&lt;fade-content&gt;
+  &lt;div&gt;当进入视窗时淡入显示的内容&lt;/div&gt;
+&lt;/fade-content&gt;</code></pre>
+
+                <h4>2. 可用属性</h4>
+                <ul>
+                    <li><strong>blur</strong> (Boolean): 是否启用模糊过渡效果，默认为false</li>
+                    <li><strong>duration</strong> (Number): 过渡持续时间（毫秒），默认为1000</li>
+                    <li><strong>easing</strong> (String): 过渡缓动函数，默认为'ease-out'</li>
+                    <li><strong>delay</strong> (Number): 显示延迟时间（毫秒），默认为0</li>
+                    <li><strong>threshold</strong> (Number): Intersection Observer 阈值，默认为0.1</li>
+                    <li><strong>initialOpacity</strong> (Number): 初始透明度，默认为0</li>
+                    <li><strong>className</strong> (String): 自定义CSS类名，默认为空</li>
+                </ul>
+
+                <h4>3. 示例代码</h4>
+                <pre><code>&lt;fade-content 
+  :blur="true"
+  :duration="1500"
+  :easing="'ease-in-out'"
+  :delay="200"
+  :threshold="0.3"&gt;
+  &lt;div&gt;带模糊效果的淡入内容&lt;/div&gt;
+&lt;/fade-content&gt;</code></pre>
+
+            </div>
+            <div class="back-link">
+                <a href="../">← Back to index</a>
+            </div>
+        </div>
+    </div>
+
+    <script src="../../dist/vue2bits.min.js"></script>
+    <script>
+        // 确保 Vue 实例在 DOM 加载完成后创建
+        document.addEventListener('DOMContentLoaded', function() {
+            new Vue({
+                el: '#app',
+                data: {
+                    controls: {
+                        blur: false,
+                        duration: 1000,
+                        easing: 'ease-out',
+                        delay: 0,
+                        threshold: 0.1,
+                        initialOpacity: 0,
+                        className: ''
+                    }
+                }
+            });
+        });
+    </script>
+</body>
+</html>
