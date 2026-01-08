@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Crosshair 组件预览</title>
+    <script src="../libs/vue.js"></script>
+    <link rel="stylesheet" href="../../dist/vue2bits.css">
+    <link rel="stylesheet" href="preview.css">
+</head>
+
+<body>
+    <div id="app" style="display: flex;">
+        <div class="col" style="height: 100vh; width: 50%;">
+            <div ref="crosshairContainer" style="height: 100%; width: 100%; background: #f0f0f0; display: flex; justify-content: center; align-items: center; flex-direction: column;">
+                <h2 style="margin-bottom: 20px;">十字准星效果</h2>
+                <div style="margin-top: 20px;">
+                    <a href="#" style="display: inline-block; margin: 10px; padding: 10px 20px; background: #b5c4e4; color: black; text-decoration: none; border-radius: 4px;">悬停测试链接 1</a>
+                </div>
+                <crosshair 
+                    :color="controls.color"
+                    :container-ref="crosshairContainerRef"
+                />
+            </div>
+        </div>
+        <div class="use">
+            <h2>how to use</h2>
+            <div class="usage-instructions">
+                <h3>Crosshair 组件使用说明</h3>
+
+                <h4>1. 基本用法</h4>
+                <p>在HTML中直接使用组件标签：</p>
+                <pre><code>&lt;crosshair 
+  color="white"&gt;
+&lt;/crosshair&gt;</code></pre>
+
+                <h4>2. 可用属性</h4>
+                <ul>
+                    <li><strong>color</strong> (String): 十字线颜色，默认为'white'</li>
+                    <li><strong>containerRef</strong> (Object): 容器引用，用于限制十字线范围，默认为null（全窗口）</li>
+                </ul>
+
+                <h4>3. 示例代码</h4>
+                <pre><code>&lt;crosshair 
+  color="#FF0000"&gt;
+&lt;/crosshair&gt;</code></pre>
+
+                <h4>4. 存在问题</h4>
+                <ul>
+                    <li>containerRef失效，目前默认在window上生效</li>
+                    <li>在组件内设置hover动画效果，目前只支持了a标签，后续考虑支持自定义元素</li>
+                </ul>
+            </div>
+            <div class="back-link">
+                <a href="../">← Back to index</a>
+            </div>
+        </div>
+    </div>
+
+    <script src="../libs/gsap.min.js"></script>
+    <script src="../../dist/vue2bits.min.js"></script>
+    <script>
+        // 确保 Vue 实例在 DOM 加载完成后创建
+        document.addEventListener('DOMContentLoaded', function() {
+            new Vue({
+                el: '#app',
+                data: {
+                    controls: {
+                        color: '#333'
+                    }
+                },
+                computed: {
+                    crosshairContainerRef: function() {
+                        return this.$refs.crosshairContainer || null;
+                    }
+                }
+            });
+        });
+    </script>
+</body>
+</html>

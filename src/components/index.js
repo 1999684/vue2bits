@@ -18,6 +18,7 @@ import Antigravity from './Antigravity.c.vue'
 import BlobCursor from './BlobCursor.c.vue'
 import ClickSpark from './ClickSpark.c.vue'
 import CountUp from './CountUp.c.vue'
+import Crosshair from './Crosshair.c.vue'
 
 // 定义组件列表
 const components = [
@@ -39,7 +40,8 @@ const components = [
   Antigravity,
   BlobCursor,
   ClickSpark,
-  CountUp
+  CountUp,
+  Crosshair
 ]
 
 // 定义 install 方法，接收 Vue 作为参数
@@ -74,7 +76,8 @@ export default {
   Antigravity,
   BlobCursor,
   ClickSpark,
-  CountUp
+  CountUp,
+  Crosshair
 }
 
 // 单独导出组件，支持按需引入
@@ -97,5 +100,6 @@ export {
   Antigravity,
   BlobCursor,
   ClickSpark,
-  CountUp
+  CountUp,
+  Crosshair
 }
