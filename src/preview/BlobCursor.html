@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BlobCursor 组件预览</title>
+    <script src="../libs/vue.js"></script>
+    <link rel="stylesheet" href="../../dist/vue2bits.css">
+    <link rel="stylesheet" href="preview.css">
+    <style>
+    </style>
+</head>
+
+<body>
+    <div id="app" style="display: flex;">
+        <div class="col" style="height: 100vh; width: 50%;">
+            <blob-cursor 
+                :blob-type="controls.blobType"
+                :fill-color="controls.fillColor"
+                :trail-count="controls.trailCount"
+                :sizes="controls.sizes"
+                :inner-sizes="controls.innerSizes"
+                :inner-color="controls.innerColor"
+                :opacities="controls.opacities"
+                :shadow-color="controls.shadowColor"
+                :shadow-blur="controls.shadowBlur"
+                :shadow-offset-x="controls.shadowOffsetX"
+                :shadow-offset-y="controls.shadowOffsetY"
+                :filter-id="controls.filterId"
+                :filter-std-deviation="controls.filterStdDeviation"
+                :filter-color-matrix-values="controls.filterColorMatrixValues"
+                :use-filter="controls.useFilter"
+                :fast-duration="controls.fastDuration"
+                :slow-duration="controls.slowDuration"
+                :fast-ease="controls.fastEase"
+                :slow-ease="controls.slowEase"
+                :z-index="controls.zIndex"
+            ></blob-cursor>
+        </div>
+        <div class="use">
+            <h2>how to use</h2>
+            <div class="usage-instructions">
+                <h3>BlobCursor 使用说明</h3>
+                <h4>1. 基本用法</h4>
+                <p>在HTML中直接使用组件标签：</p>
+                <pre><code>&lt;blob-cursor 
+  blob-type="circle" 
+  fill-color="#27FF64"&gt;
+&lt;/blob-cursor&gt;</code></pre>
+                <h4>2. 可用属性</h4>
+                <ul>
+                    <li><strong>blobType</strong> (String): 形状，默认为'circle' 圆球或方块</li>
+                    <li><strong>fillColor</strong> (String): 填充颜色，默认为'#27FF64'</li>
+                    <li><strong>trailCount</strong> (Number): blob数量，默认为3</li>
+                    <li><strong>sizes</strong> (Array): 每个 blob 的大小（px）。长度必须 ≥ trailCount。默认为[60, 125, 75]</li>
+                    <li><strong>innerSizes</strong> (Array): 每个 blob 的内径（px）。长度必须 ≥ trailCount。默认为[20, 35, 25]</li>
+                    <li><strong>innerColor</strong> (String): 内圆点的背景颜色。，默认为'rgba(255,255,255,0.8)'</li>
+                    <li><strong>opacities</strong> (Array): 每个 blob 的不透明度。长度必须 ≥ trailCount。默认为[0.6, 0.6, 0.6]</li>
+                    <li><strong>shadowColor</strong> (String): 盒阴影颜色，默认为'rgba(0,0,0,0.75)'</li>
+                    <li><strong>shadowBlur</strong> (Number): 阴影模糊半径（像素），默认为5</li>
+                    <li><strong>shadowOffsetX</strong> (Number): 阴影水平偏移量，默认为10。默认为10</li>
+                    <li><strong>shadowOffsetY</strong> (Number): 阴影垂直偏移量，默认为10。默认为10</li>
+                    <li><strong>filterId</strong> (String): 可选的自定义滤镜 ID，用于多个实例，默认为'blob'</li>
+                    <li><strong>filterStdDeviation</strong> (Number): 过滤器标准差，默认为30</li>
+                    <li><strong>filterColorMatrixValues</strong> (String): 过滤器颜色矩阵值，默认为'1 0 0 0 0 0 1 0 0 0 0 0 1 0 0 0 0 0 35 -10'</li>
+                    <li><strong>useFilter</strong> (Boolean): 是否启用 SVG 滤镜，默认为true</li>
+                    <li><strong>fastDuration</strong> (Number): 主要动画的持续时间，默认为0.1</li>
+                    <li><strong>slowDuration</strong> (Number): 后续动画的持续时间，默认为0.5</li>
+                    <li><strong>fastEase</strong> (String): 主要动画的缓动函数，默认为'power3.out'</li>
+                    <li><strong>slowEase</strong> (String): 后续动画的缓动函数，默认为'power1.out'</li>
+                    <li><strong>zIndex</strong> (Number): 整个组件的 z-index 值，默认为100</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <script src="../libs/gsap.min.js"></script>
+    <script src="../../dist/vue2bits.min.js"></script>
+    <script>
+        // 确保 Vue 实例在 DOM 加载完成后创建
+        document.addEventListener('DOMContentLoaded', function() {
+            new Vue({
+                el: '#app',
+                data: {
+                    controls: {
+                        blobType: 'aaa',
+                        fillColor: '#27FF64',
+                        trailCount: 3,
+                        sizes: [60, 125, 75],
+                        innerSizes: [20, 35, 25],
+                        innerColor: 'rgba(255,255,255,0.8)',
+                        opacities: [0.6, 0.6, 0.6],
+                        shadowColor: 'rgba(0,0,0,0.75)',
+                        shadowBlur: 5,
+                        shadowOffsetX: 10,
+                        shadowOffsetY: 10,
+                        filterId: 'blob',
+                        filterStdDeviation: 30,
+                        filterColorMatrixValues: '1 0 0 0 0 0 1 0 0 0 0 0 1 0 0 0 0 0 35 -10',
+                        useFilter: true,
+                        fastDuration: 0.1,
+                        slowDuration: 0.5,
+                        fastEase: 'power3.out',
+                        slowEase: 'power1.out',
+                        zIndex: 100
+                    }
+                }
+            });
+        });
+    </script>
+</body>
+</html>

@@ -14,6 +14,8 @@ import ShinyText from './ShinyText.c.vue'
 import TextType from './TextType.c.vue'
 import VariableProximity from './VariableProximity.c.vue'
 import AnimatedContent from './AnimatedContent.c.vue'
+import Antigravity from './Antigravity.c.vue'
+import BlobCursor from './BlobCursor.c.vue'
 
 // 定义组件列表
 const components = [
@@ -31,7 +33,9 @@ const components = [
   ShinyText,
   TextType,
   VariableProximity,
-  AnimatedContent
+  AnimatedContent,
+  Antigravity,
+  BlobCursor
 ]
 
 // 定义 install 方法，接收 Vue 作为参数
@@ -62,7 +66,9 @@ export default {
   ShinyText,
   TextType,
   VariableProximity,
-  AnimatedContent
+  AnimatedContent,
+  Antigravity,
+  BlobCursor
 }
 
 // 单独导出组件，支持按需引入
@@ -81,5 +87,7 @@ export {
   ShinyText,
   TextType,
   VariableProximity,
-  AnimatedContent
+  AnimatedContent,
+  Antigravity,
+  BlobCursor
 }

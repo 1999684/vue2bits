@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Antigravity 组件预览</title>
+    <script src="../libs/vue.js"></script>
+    <link rel="stylesheet" href="../../dist/vue2bits.css">
+    <link rel="stylesheet" href="preview.css">
+    <style>
+    </style>
+</head>
+
+<body>
+    <div id="app" style="display: flex;">
+        <div class="col" style="height: 100vh; width: 50%;">
+            <!-- 默认设置演示 -->
+            <antigravity :count="300" :magnet-radius="10" :ring-radius="10" :wave-speed="0.4" :color="'#27FF64'"
+                :auto-animate="true" :rotation-speed="0.5" class="antigravity-demo" particle-shape="sphere">
+            </antigravity>
+        </div>
+        <div class="use">
+            <h2>how to use</h2>
+            <div class="usage-instructions">
+                <h3>Antigravity 组件使用说明</h3>
+
+                <h4>1. 基本用法</h4>
+                <p>在HTML中直接使用组件标签：</p>
+                <pre><code>&lt;antigravity 
+  :count="300" 
+  :color="'#27FF64'"&gt;
+&lt;/antigravity&gt;</code></pre>
+
+                <h4>2. 可用属性</h4>
+                <ul>
+                    <li><strong>count</strong> (Number): 粒子数量，默认为300</li>
+                    <li><strong>magnetRadius</strong> (Number): 磁场影响半径，默认为10</li>
+                    <li><strong>ringRadius</strong> (Number): 粒子环半径，默认为10</li>
+                    <li><strong>waveSpeed</strong> (Number): 波动速度，默认为0.4</li>
+                    <li><strong>waveAmplitude</strong> (Number): 波动幅度，默认为1</li>
+                    <li><strong>particleSize</strong> (Number): 粒子大小，默认为2</li>
+                    <li><strong>lerpSpeed</strong> (Number): 插值速度，默认为0.1</li>
+                    <li><strong>color</strong> (String): 粒子颜色，默认为'#27FF64'</li>
+                    <li><strong>autoAnimate</strong> (Boolean): 是否自动动画，默认为false</li>
+                    <li><strong>particleVariance</strong> (Number): 粒子变化系数，默认为1</li>
+                    <li><strong>rotationSpeed</strong> (Number): 旋转速度，默认为0</li>
+                    <li><strong>depthFactor</strong> (Number): 深度因子，默认为1</li>
+                    <li><strong>pulseSpeed</strong> (Number): 脉冲速度，默认为3</li>
+                    <li><strong>particleShape</strong> (String): 粒子形状 ('cylinder', 'sphere', 'box',
+                        'tetrahedron')，默认为'cylinder'</li>
+                    <li><strong>fieldStrength</strong> (Number): 场强，默认为10</li>
+                </ul>
+
+                <h4>3. 示例代码</h4>
+                <pre><code>&lt;antigravity 
+  :count="200"
+  :magnet-radius="8"
+  :ring-radius="12"
+  :wave-speed="0.6"
+  :wave-amplitude="1.5"
+  :particle-size="1.8"
+  :color="'#FF6B6B'"
+  :auto-animate="true"
+  :rotation-speed="0.3"
+  :particle-variance="1.2"
+  particle-shape="sphere"&gt;
+&lt;/antigravity&gt;</code></pre>
+
+                <h4>4. 注意事项</h4>
+                <p>此组件依赖于 THREE.js 库，请确保在使用前已正确引入该库。</p>
+                <p>在背景中使用：<a href="./AntigravityBackgroundInteractive.html">AntigravityBackgroundInteractive</a></p>
+            </div>
+            <div class="back-link">
+                <a href="../">← Back to index</a>
+            </div>
+        </div>
+    </div>
+
+    <script src="../../dist/vue2bits.min.js"></script>
+    <!-- 引入 THREE.js 库 -->
+    <script src="../libs/three.min.js"></script>
+    <script>
+        // 确保 Vue 实例在 DOM 加载完成后创建
+        document.addEventListener('DOMContentLoaded', function () {
+            new Vue({
+                el: '#app',
+                data: {
+                    controls: {
+                        count: 150,
+                        magnetRadius: 10,
+                        ringRadius: 10,
+                        waveSpeed: 0.4,
+                        waveAmplitude: 1,
+                        particleSize: 2,
+                        color: '#27FF64',
+                        autoAnimate: true,
+                        rotationSpeed: 0.2,
+                        particleVariance: 1,
+                        depthFactor: 1,
+                        pulseSpeed: 3,
+                        fieldStrength: 10,
+                        showControls: true
+                    }
+                }
+            });
+        });
+    </script>
+</body>
+
+</html>
