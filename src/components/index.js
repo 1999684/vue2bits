@@ -19,6 +19,7 @@ import BlobCursor from './BlobCursor.c.vue'
 import ClickSpark from './ClickSpark.c.vue'
 import CountUp from './CountUp.c.vue'
 import Crosshair from './Crosshair.c.vue'
+import ElectricBorder from './ElectricBorder.c.vue'
 
 // 定义组件列表
 const components = [
@@ -41,7 +42,8 @@ const components = [
   BlobCursor,
   ClickSpark,
   CountUp,
-  Crosshair
+  Crosshair,
+  ElectricBorder
 ]
 
 // 定义 install 方法，接收 Vue 作为参数
@@ -77,7 +79,8 @@ export default {
   BlobCursor,
   ClickSpark,
   CountUp,
-  Crosshair
+  Crosshair,
+  ElectricBorder
 }
 
 // 单独导出组件，支持按需引入
@@ -101,5 +104,6 @@ export {
   BlobCursor,
   ClickSpark,
   CountUp,
-  Crosshair
+  Crosshair,
+  ElectricBorder
 }
