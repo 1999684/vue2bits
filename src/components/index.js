@@ -21,6 +21,7 @@ import CountUp from './CountUp.c.vue'
 import Crosshair from './Crosshair.c.vue'
 import ElectricBorder from './ElectricBorder.c.vue'
 import FadeContent from './FadeContent.c.vue'
+import GlareHover from './GlareHover.c.vue'
 
 // 定义组件列表
 const components = [
@@ -45,7 +46,8 @@ const components = [
   CountUp,
   Crosshair,
   ElectricBorder,
-  FadeContent
+  FadeContent,
+  GlareHover
 ]
 
 // 定义 install 方法，接收 Vue 作为参数
@@ -83,7 +85,8 @@ export default {
   CountUp,
   Crosshair,
   ElectricBorder,
-  FadeContent
+  FadeContent,
+  GlareHover
 }
 
 // 单独导出组件，支持按需引入
@@ -109,5 +112,6 @@ export {
   CountUp,
   Crosshair,
   ElectricBorder,
-  FadeContent
+  FadeContent,
+  GlareHover
 }

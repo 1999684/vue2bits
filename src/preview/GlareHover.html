@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GlareHover 组件预览</title>
+    <script src="../libs/vue.js"></script>
+    <link rel="stylesheet" href="../../dist/vue2bits.css">
+    <link rel="stylesheet" href="preview.css">
+    <style>
+        .demo-box {
+            width: 300px;
+            height: 200px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 20px;
+            border-radius: 8px;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="app" style="display: flex;">
+        <div class="col" style="height: 100vh; width: 50%;">
+            <div style="display: flex; justify-content: center; align-items: center; height: 100%; width: 100%; background: #f0f0f0; flex-direction: column;">
+                <h2 style="margin-bottom: 20px;">眩光悬停效果</h2>
+                
+                <glare-hover 
+                    :width="controls.width"
+                    :height="controls.height"
+                    :background="controls.background"
+                    :border-radius="controls.borderRadius"
+                    :border-color="controls.borderColor"
+                    :glare-color="controls.glareColor"
+                    :glare-opacity="controls.glareOpacity"
+                    :glare-angle="controls.glareAngle"
+                    :glare-size="controls.glareSize"
+                    :transition-duration="controls.transitionDuration"
+                    :play-once="controls.playOnce"
+                    :class-name="controls.className"
+                    :custom-style="controls.customStyle"
+                >
+                    <div class="demo-box">
+                        <p>眩光悬停内容</p>
+                    </div>
+                </glare-hover>
+            </div>
+        </div>
+        <div class="use">
+            <h2>how to use</h2>
+            <div class="usage-instructions">
+                <h3>GlareHover 组件使用说明</h3>
+
+                <h4>1. 基本用法</h4>
+                <p>在HTML中直接使用组件标签：</p>
+                <pre><code>&lt;glare-hover&gt;
+  &lt;div&gt;带眩光悬停效果的内容&lt;/div&gt;
+&lt;/glare-hover&gt;</code></pre>
+
+                <h4>2. 可用属性</h4>
+                <ul>
+                    <li><strong>width</strong> (String): 容器宽度，默认为'500px'</li>
+                    <li><strong>height</strong> (String): 容器高度，默认为'500px'</li>
+                    <li><strong>background</strong> (String): 背景颜色，默认为'#000'</li>
+                    <li><strong>borderRadius</strong> (String): 边框圆角，默认为'10px'</li>
+                    <li><strong>borderColor</strong> (String): 边框颜色，默认为'#333'</li>
+                    <li><strong>glareColor</strong> (String): 眩光颜色，默认为'#ffffff'</li>
+                    <li><strong>glareOpacity</strong> (Number): 眩光透明度，默认为0.5</li>
+                    <li><strong>glareAngle</strong> (Number): 眩光角度，默认为-45</li>
+                    <li><strong>glareSize</strong> (Number): 眩光大小，默认为250</li>
+                    <li><strong>transitionDuration</strong> (Number): 过渡持续时间（毫秒），默认为650</li>
+                    <li><strong>playOnce</strong> (Boolean): 是否只播放一次动画，默认为false</li>
+                    <li><strong>className</strong> (String): 自定义CSS类名，默认为空</li>
+                    <li><strong>customStyle</strong> (Object): 自定义样式对象，默认为空对象</li>
+                </ul>
+
+                <h4>3. 示例代码</h4>
+                <pre><code>&lt;glare-hover 
+  width="300px"
+  height="200px"
+  background="#f0f0f0"
+  border-radius="15px"
+  glare-color="#ff6b6b"
+  glare-opacity="0.7"
+  transition-duration="800"&gt;
+  &lt;div&gt;自定义眩光效果&lt;/div&gt;
+&lt;/glare-hover&gt;</code></pre>
+
+            </div>
+            <div class="back-link">
+                <a href="../">← Back to index</a>
+            </div>
+        </div>
+    </div>
+
+    <script src="../../dist/vue2bits.min.js"></script>
+    <script>
+        // 确保 Vue 实例在 DOM 加载完成后创建
+        document.addEventListener('DOMContentLoaded', function() {
+            new Vue({
+                el: '#app',
+                data: {
+                    controls: {
+                        width: '500px',
+                        height: '500px',
+                        background: '#000',
+                        borderRadius: '10px',
+                        borderColor: '#333',
+                        glareColor: '#ffffff',
+                        glareOpacity: 0.5,
+                        glareAngle: -45,
+                        glareSize: 250,
+                        transitionDuration: 650,
+                        playOnce: false,
+                        className: '',
+                        customStyle: {}
+                    }
+                }
+            });
+        });
+    </script>
+</body>
+</html>
