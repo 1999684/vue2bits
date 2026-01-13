@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ImageTrail 组件预览</title>
+    <script src="../libs/vue.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <link rel="stylesheet" href="../../dist/vue2bits.css">
+    <link rel="stylesheet" href="preview.css">
+    <style>
+        .demo-box {
+            width: 500px;
+            height: 500px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 20px;
+            background: #f0f0f0;
+            border-radius: 8px;
+            overflow: hidden;
+            position: relative;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="app" style="display: flex;">
+        <div class="col" style="height: 100vh; width: 50%;">
+            <div style="display: flex; justify-content: center; align-items: center; height: 100%; width: 100%; background: #f0f0f0; flex-direction: column; position: relative; overflow: hidden;">
+                <h2 style="margin-bottom: 20px;">图像轨迹效果</h2>
+                
+                <image-trail 
+                    :items="controls.items"
+                    :variant="controls.variant"
+                />
+            </div>
+        </div>
+        <div class="use">
+            <h2>how to use</h2>
+            <div class="usage-instructions">
+                <h3>ImageTrail 组件使用说明</h3>
+
+                <h4>1. 基本用法</h4>
+                <p>在HTML中直接使用组件标签：</p>
+                <pre><code>&lt;image-trail :items="imageUrls" :variant="1"&gt;&lt;/image-trail&gt;</code></pre>
+
+                <h4>2. 可用属性</h4>
+                <ul>
+                    <li><strong>items</strong> (Array): 图像URL数组，默认为空数组</li>
+                    <li><strong>variant</strong> (Number): 变体类型（1-8），默认为1</li>
+                </ul>
+
+                <h4>3. 示例代码</h4>
+                <pre><code>&lt;image-trail 
+  :items="['image1.jpg', 'image2.jpg', 'image3.jpg']"
+  :variant="1"&gt;
+&lt;/image-trail&gt;</code></pre>
+
+            </div>
+            <div class="back-link">
+                <a href="../">← Back to index</a>
+            </div>
+        </div>
+    </div>
+
+    <script src="../../dist/vue2bits.min.js"></script>
+    <script>
+        // 确保 Vue 实例在 DOM 加载完成后创建
+        document.addEventListener('DOMContentLoaded', function() {
+            new Vue({
+                el: '#app',
+                data: {
+                    controls: {
+                        items: [
+                            'https://picsum.photos/200/200?random=1',
+                            'https://picsum.photos/200/200?random=2',
+                            'https://picsum.photos/200/200?random=3',
+                            'https://picsum.photos/200/200?random=4',
+                            'https://picsum.photos/200/200?random=5'
+                        ],
+                        variant: 6
+                    }
+                }
+
+            });
+        });
+    </script>
+</body>
+</html>

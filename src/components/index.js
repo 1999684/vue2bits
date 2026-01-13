@@ -22,6 +22,7 @@ import Crosshair from './Crosshair.c.vue'
 import ElectricBorder from './ElectricBorder.c.vue'
 import FadeContent from './FadeContent.c.vue'
 import GlareHover from './GlareHover.c.vue'
+import ImageTrail from './ImageTrail.c.vue'
 
 // 定义组件列表
 const components = [
@@ -47,7 +48,8 @@ const components = [
   Crosshair,
   ElectricBorder,
   FadeContent,
-  GlareHover
+  GlareHover,
+  ImageTrail
 ]
 
 // 定义 install 方法，接收 Vue 作为参数
@@ -86,7 +88,8 @@ export default {
   Crosshair,
   ElectricBorder,
   FadeContent,
-  GlareHover
+  GlareHover,
+  ImageTrail
 }
 
 // 单独导出组件，支持按需引入
@@ -113,5 +116,6 @@ export {
   Crosshair,
   ElectricBorder,
   FadeContent,
-  GlareHover
+  GlareHover,
+  ImageTrail
 }
