@@ -25,6 +25,7 @@ import GlareHover from './GlareHover.c.vue'
 import ImageTrail from './ImageTrail.c.vue'
 import LogoLoop from './LogoLoop.c.vue'
 import LogoContent from './LogoContent.c.vue'
+import Noise from './Noise.c.vue'
 
 // 定义组件列表
 const components = [
@@ -53,7 +54,8 @@ const components = [
   GlareHover,
   ImageTrail,
   LogoLoop,
-  LogoContent
+  LogoContent,
+  Noise
 ]
 
 // 定义 install 方法，接收 Vue 作为参数
@@ -95,7 +97,8 @@ export default {
   GlareHover,
   ImageTrail,
   LogoLoop,
-  LogoContent
+  LogoContent,
+  Noise
 }
 
 // 单独导出组件，支持按需引入
@@ -125,5 +128,6 @@ export {
   GlareHover,
   ImageTrail,
   LogoLoop,
-  LogoContent
+  LogoContent,
+  Noise
 }
