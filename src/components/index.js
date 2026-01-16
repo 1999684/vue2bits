@@ -26,6 +26,7 @@ import ImageTrail from './ImageTrail.c.vue'
 import LogoLoop from './LogoLoop.c.vue'
 import LogoContent from './LogoContent.c.vue'
 import Noise from './Noise.c.vue'
+import PixelTrail from './PixelTrail.c.vue'
 
 // 定义组件列表
 const components = [
@@ -55,7 +56,8 @@ const components = [
   ImageTrail,
   LogoLoop,
   LogoContent,
-  Noise
+  Noise,
+  PixelTrail
 ]
 
 // 定义 install 方法，接收 Vue 作为参数
@@ -98,7 +100,8 @@ export default {
   ImageTrail,
   LogoLoop,
   LogoContent,
-  Noise
+  Noise,
+  PixelTrail
 }
 
 // 单独导出组件，支持按需引入
@@ -129,5 +132,6 @@ export {
   ImageTrail,
   LogoLoop,
   LogoContent,
-  Noise
+  Noise,
+  PixelTrail
 }
