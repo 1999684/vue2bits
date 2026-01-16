@@ -23,6 +23,8 @@ import ElectricBorder from './ElectricBorder.c.vue'
 import FadeContent from './FadeContent.c.vue'
 import GlareHover from './GlareHover.c.vue'
 import ImageTrail from './ImageTrail.c.vue'
+import LogoLoop from './LogoLoop.c.vue'
+import LogoContent from './LogoContent.c.vue'
 
 // 定义组件列表
 const components = [
@@ -49,7 +51,9 @@ const components = [
   ElectricBorder,
   FadeContent,
   GlareHover,
-  ImageTrail
+  ImageTrail,
+  LogoLoop,
+  LogoContent
 ]
 
 // 定义 install 方法，接收 Vue 作为参数
@@ -89,7 +93,9 @@ export default {
   ElectricBorder,
   FadeContent,
   GlareHover,
-  ImageTrail
+  ImageTrail,
+  LogoLoop,
+  LogoContent
 }
 
 // 单独导出组件，支持按需引入
@@ -117,5 +123,7 @@ export {
   ElectricBorder,
   FadeContent,
   GlareHover,
-  ImageTrail
+  ImageTrail,
+  LogoLoop,
+  LogoContent
 }
