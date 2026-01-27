@@ -1,27 +1,23 @@
 <template>
-  <canvas
-    ref="grainRef"
-    class="grain-canvas"
-    :style="canvasStyle"
-  ></canvas>
+  <canvas ref="grainRef" class="grain-canvas" :style="canvasStyle"></canvas>
 </template>
 
 <script>
 export default {
-  name: 'Noise',
+  name: "Noise",
   props: {
     patternRefreshInterval: {
       type: Number,
-      default: 2
+      default: 2,
     },
     patternAlpha: {
       type: Number,
-      default: 10
+      default: 10,
     },
     mixBlendMode: {
       type: String,
-      default: 'normal'
-    }
+      default: "normal",
+    },
   },
 
   data() {
@@ -31,32 +27,32 @@ export default {
       canvasSize: 1024,
       noiseData: null,
       noise32: null,
-      ctx: null
+      ctx: null,
     };
   },
 
   computed: {
     canvasStyle() {
       return {
-        imageRendering: 'pixelated',
+        imageRendering: "pixelated",
         mixBlendMode: this.mixBlendMode,
-        pointerEvents: 'none',
-        position: 'absolute',
+        pointerEvents: "none",
+        position: "absolute",
         top: 0,
         left: 0,
-        width: '100vw',
-        height: '100vh'
+        width: "100vw",
+        height: "100vh",
       };
-    }
+    },
   },
 
   mounted() {
     this.initialize();
-    window.addEventListener('resize', this.resize);
+    window.addEventListener("resize", this.resize);
   },
 
   beforeDestroy() {
-    window.removeEventListener('resize', this.resize);
+    window.removeEventListener("resize", this.resize);
     if (this.animationId) {
       cancelAnimationFrame(this.animationId);
     }
@@ -67,7 +63,7 @@ export default {
       const canvas = this.$refs.grainRef;
       if (!canvas) return;
 
-      this.ctx = canvas.getContext('2d', { alpha: true });
+      this.ctx = canvas.getContext("2d", { alpha: true });
       if (!this.ctx) return;
 
       this.resize();
@@ -83,8 +79,8 @@ export default {
 
       canvas.width = this.canvasSize;
       canvas.height = this.canvasSize;
-      canvas.style.width = '100vw';
-      canvas.style.height = '100vh';
+      canvas.style.width = "100vw";
+      canvas.style.height = "100vh";
     },
 
     initImageData() {
@@ -116,8 +112,8 @@ export default {
 
       this.frame++;
       this.animationId = requestAnimationFrame(() => this.loop());
-    }
-  }
+    },
+  },
 };
 </script>
 

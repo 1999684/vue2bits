@@ -4,122 +4,126 @@
 
 <script>
 export default {
-  name: 'CountUp',
+  name: "CountUp",
   props: {
     to: {
       type: Number,
-      required: true
+      required: true,
     },
     from: {
       type: Number,
-      default: 0
+      default: 0,
     },
     direction: {
       type: String,
-      default: 'up',
+      default: "up",
       validator: function (value) {
-        return ['up', 'down'].indexOf(value) !== -1
-      }
+        return ["up", "down"].indexOf(value) !== -1;
+      },
     },
     delay: {
       type: Number,
-      default: 0
+      default: 0,
     },
     duration: {
       type: Number,
-      default: 2
+      default: 2,
     },
     className: {
       type: String,
-      default: ''
+      default: "",
     },
     startWhen: {
       type: Boolean,
-      default: true
+      default: true,
     },
     separator: {
       type: String,
-      default: ''
+      default: "",
     },
     onStart: {
       type: Function,
-      default: null
+      default: null,
     },
     onEnd: {
       type: Function,
-      default: null
-    }
+      default: null,
+    },
   },
-  data: function() {
+  data: function () {
     return {
-      currentValue: this.direction === 'down' ? this.to : this.from,
+      currentValue: this.direction === "down" ? this.to : this.from,
       isInView: false,
       animationId: null,
       hasStarted: false,
       velocity: 0,
       startTime: 0,
-      intersectionObserver: null
+      intersectionObserver: null,
     };
   },
   computed: {
-    damping: function() {
+    damping: function () {
       return 20 + 40 * (1 / this.duration);
     },
-    stiffness: function() {
+    stiffness: function () {
       return 100 * (1 / this.duration);
-    }
+    },
   },
-  mounted: function() {
+  mounted: function () {
     this.updateDisplay();
     this.setupIntersectionObserver();
   },
-  beforeDestroy: function() {
+  beforeDestroy: function () {
     this.cleanup();
   },
   watch: {
-    'from': function() {
-      this.currentValue = this.direction === 'down' ? this.to : this.from;
+    from: function () {
+      this.currentValue = this.direction === "down" ? this.to : this.from;
       this.updateDisplay();
       this.hasStarted = false;
     },
-    'to': function() {
-      this.currentValue = this.direction === 'down' ? this.to : this.from;
+    to: function () {
+      this.currentValue = this.direction === "down" ? this.to : this.from;
       this.updateDisplay();
       this.hasStarted = false;
     },
-    'direction': function() {
-      this.currentValue = this.direction === 'down' ? this.to : this.from;
+    direction: function () {
+      this.currentValue = this.direction === "down" ? this.to : this.from;
       this.updateDisplay();
       this.hasStarted = false;
     },
-    'startWhen': function() {
+    startWhen: function () {
       if (this.startWhen && this.isInView && !this.hasStarted) {
         this.startAnimation();
       }
-    }
+    },
   },
   methods: {
-    formatNumber: function(value) {
+    formatNumber: function (value) {
       const options = {
         useGrouping: !!this.separator,
         minimumFractionDigits: 0,
-        maximumFractionDigits: 0
+        maximumFractionDigits: 0,
       };
 
-      const formattedNumber = Intl.NumberFormat('en-US', options).format(Number(value.toFixed(0)));
+      const formattedNumber = Intl.NumberFormat("en-US", options).format(
+        Number(value.toFixed(0))
+      );
 
-      return this.separator ? formattedNumber.replace(/,/g, this.separator) : formattedNumber;
+      return this.separator
+        ? formattedNumber.replace(/,/g, this.separator)
+        : formattedNumber;
     },
-    updateDisplay: function() {
+    updateDisplay: function () {
       const element = this.$refs.elementRef;
       if (element) {
         element.textContent = this.formatNumber(this.currentValue);
       }
     },
-    springAnimation: function(timestamp) {
+    springAnimation: function (timestamp) {
       if (!this.startTime) this.startTime = timestamp;
 
-      const target = this.direction === 'down' ? this.from : this.to;
+      const target = this.direction === "down" ? this.from : this.to;
       const current = this.currentValue;
 
       const displacement = target - current;
@@ -144,7 +148,7 @@ export default {
         }
       }
     },
-    startAnimation: function() {
+    startAnimation: function () {
       if (this.hasStarted || !this.isInView || !this.startWhen) return;
 
       this.hasStarted = true;
@@ -159,16 +163,16 @@ export default {
         this.animationId = requestAnimationFrame(this.springAnimation);
       }, this.delay * 1000);
     },
-    setupIntersectionObserver: function() {
+    setupIntersectionObserver: function () {
       const element = this.$refs.elementRef;
       if (!element) return;
 
       // 在 Vue 2 中，我们使用原生 IntersectionObserver API
       // 但需要确保浏览器支持
-      if (typeof IntersectionObserver !== 'undefined') {
+      if (typeof IntersectionObserver !== "undefined") {
         this.intersectionObserver = new IntersectionObserver(
           (entries) => {
-            entries.forEach(entry => {
+            entries.forEach((entry) => {
               if (entry.isIntersecting && !this.isInView) {
                 this.isInView = true;
                 this.startAnimation();
@@ -177,7 +181,7 @@ export default {
           },
           {
             threshold: 0,
-            rootMargin: '0px'
+            rootMargin: "0px",
           }
         );
 
@@ -188,7 +192,7 @@ export default {
         this.startAnimation();
       }
     },
-    cleanup: function() {
+    cleanup: function () {
       if (this.animationId) {
         cancelAnimationFrame(this.animationId);
         this.animationId = null;
@@ -198,7 +202,7 @@ export default {
         this.intersectionObserver.disconnect();
         this.intersectionObserver = null;
       }
-    }
-  }
+    },
+  },
 };
 </script>

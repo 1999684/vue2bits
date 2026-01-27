@@ -1,93 +1,120 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>CountUp 组件预览</title>
     <script src="../libs/vue.js"></script>
-    <link rel="stylesheet" href="../../dist/vue2bits.css">
-    <link rel="stylesheet" href="preview.css">
-</head>
+    <link rel="stylesheet" href="../../dist/vue2bits.css" />
+    <link rel="stylesheet" href="preview.css" />
+  </head>
 
-<body>
-    <div id="app" style="display: flex;">
-        <div class="col" style="height: 100vh; width: 50%;">
-            <div style="display: flex; justify-content: center; align-items: center; height: 100%; width: 100%; background: #f0f0f0; flex-direction: column;">
-                <h2>数字计数动画</h2>
-                <div style="font-size: 60px; font-weight: bold; margin: 20px 0; color: #000000;">
-                    <count-up 
-                        :to="controls.to"
-                        :from="controls.from"
-                        :direction="controls.direction"
-                        :delay="controls.delay"
-                        :duration="controls.duration"
-                        :class-name="controls.className"
-                        :start-when="controls.startWhen"
-                        :separator="controls.separator"
-                    />
-                </div>
-            </div>
+  <body>
+    <div id="app" style="display: flex">
+      <div class="col" style="height: 100vh; width: 50%">
+        <div
+          style="
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100%;
+            width: 100%;
+            background: #f0f0f0;
+            flex-direction: column;
+          "
+        >
+          <h2>数字计数动画</h2>
+          <div
+            style="
+              font-size: 60px;
+              font-weight: bold;
+              margin: 20px 0;
+              color: #000000;
+            "
+          >
+            <count-up
+              :to="controls.to"
+              :from="controls.from"
+              :direction="controls.direction"
+              :delay="controls.delay"
+              :duration="controls.duration"
+              :class-name="controls.className"
+              :start-when="controls.startWhen"
+              :separator="controls.separator"
+            />
+          </div>
         </div>
-        <div class="use">
-            <h2>how to use</h2>
-            <div class="usage-instructions">
-                <h3>CountUp 组件使用说明</h3>
+      </div>
+      <div class="use">
+        <h2>how to use</h2>
+        <div class="usage-instructions">
+          <h3>CountUp 组件使用说明</h3>
 
-                <h4>1. 基本用法</h4>
-                <p>在HTML中直接使用组件标签：</p>
-                <pre><code>&lt;count-up 
-  to="1000" 
+          <h4>1. 基本用法</h4>
+          <p>在HTML中直接使用组件标签：</p>
+          <pre><code>&lt;count-up
+  to="1000"
   duration="2"&gt;
 &lt;/count-up&gt;</code></pre>
 
-                <h4>2. 可用属性</h4>
-                <ul>
-                    <li><strong>to</strong> (Number): 目标数字（必需）</li>
-                    <li><strong>from</strong> (Number): 起始数字，默认为0</li>
-                    <li><strong>direction</strong> (String): 计数方向，'up' 或 'down'，默认为'up'，选择'down'则为倒计数，从to开始到from结束</li>
-                    <li><strong>delay</strong> (Number): 延迟时间（秒），默认为0</li>
-                    <li><strong>duration</strong> (Number): 动画持续时间（秒），默认为2</li>
-                    <li><strong>className</strong> (String): 自定义CSS类名，默认为空</li>
-                    <li><strong>startWhen</strong> (Boolean): 是否在内容可视时再开始动画，默认为true</li>
-                    <li><strong>separator</strong> (String): 数字千位分隔符，默认为空</li>
-                </ul>
+          <h4>2. 可用属性</h4>
+          <ul>
+            <li><strong>to</strong> (Number): 目标数字（必需）</li>
+            <li><strong>from</strong> (Number): 起始数字，默认为0</li>
+            <li>
+              <strong>direction</strong> (String): 计数方向，'up' 或
+              'down'，默认为'up'，选择'down'则为倒计数，从to开始到from结束
+            </li>
+            <li><strong>delay</strong> (Number): 延迟时间（秒），默认为0</li>
+            <li>
+              <strong>duration</strong> (Number): 动画持续时间（秒），默认为2
+            </li>
+            <li>
+              <strong>className</strong> (String): 自定义CSS类名，默认为空
+            </li>
+            <li>
+              <strong>startWhen</strong> (Boolean):
+              是否在内容可视时再开始动画，默认为true
+            </li>
+            <li>
+              <strong>separator</strong> (String): 数字千位分隔符，默认为空
+            </li>
+          </ul>
 
-                <h4>3. 示例代码</h4>
-                <pre><code>&lt;count-up 
-  to="10000" 
+          <h4>3. 示例代码</h4>
+          <pre><code>&lt;count-up
+  to="10000"
   from="0"
   duration="3"
   separator=","&gt;
 &lt;/count-up&gt;</code></pre>
-
-            </div>
-            <div class="back-link">
-                <a href="../">← Back to index</a>
-            </div>
         </div>
+        <div class="back-link">
+          <a href="../">← Back to index</a>
+        </div>
+      </div>
     </div>
 
     <script src="../../dist/vue2bits.min.js"></script>
     <script>
-        // 确保 Vue 实例在 DOM 加载完成后创建
-        document.addEventListener('DOMContentLoaded', function() {
-            new Vue({
-                el: '#app',
-                data: {
-                    controls: {
-                        to: 1000,
-                        from: 0,
-                        direction: 'up',
-                        delay: 0,
-                        duration: 2,
-                        className: '',
-                        startWhen: true,
-                        separator: ','
-                    }
-                }
-            });
+      // 确保 Vue 实例在 DOM 加载完成后创建
+      document.addEventListener("DOMContentLoaded", function () {
+        new Vue({
+          el: "#app",
+          data: {
+            controls: {
+              to: 1000,
+              from: 0,
+              direction: "up",
+              delay: 0,
+              duration: 2,
+              className: "",
+              startWhen: true,
+              separator: ",",
+            },
+          },
         });
+      });
     </script>
-</body>
+  </body>
 </html>

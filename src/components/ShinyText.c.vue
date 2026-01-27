@@ -1,33 +1,33 @@
 <script>
 export default {
-  name: 'ShinyText',
+  name: "ShinyText",
   props: {
     // 显示的文字内容
     text: {
       type: String,
-      default: ''
+      default: "",
     },
     // 是否禁用动画
     disabled: {
       type: Boolean,
-      default: false
+      default: false,
     },
     // 动画速度（秒）
     speed: {
       type: Number,
-      default: 5
+      default: 5,
     },
     // CSS类名
     className: {
       type: String,
-      default: ''
-    }
+      default: "",
+    },
   },
   computed: {
-    animationDuration: function() {
-      return this.speed + 's';
-    }
-  }
+    animationDuration: function () {
+      return this.speed + "s";
+    },
+  },
 };
 </script>
 
@@ -39,7 +39,7 @@ export default {
         'linear-gradient(120deg, rgba(255, 255, 255, 0) 40%, rgba(255, 255, 255, 0.8) 50%, rgba(255, 255, 255, 0) 60%)',
       backgroundSize: '200% 100%',
       WebkitBackgroundClip: 'text',
-      animationDuration: animationDuration
+      animationDuration: animationDuration,
     }"
   >
     {{ text }}

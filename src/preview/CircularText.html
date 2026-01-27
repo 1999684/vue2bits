@@ -1,49 +1,60 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Vue2bits 组件预览</title>
     <script src="../libs/vue.js"></script>
-    <link rel="stylesheet" href="../../dist/vue2bits.css">
-    <link rel="stylesheet" href="preview.css">
-</head>
+    <link rel="stylesheet" href="../../dist/vue2bits.css" />
+    <link rel="stylesheet" href="preview.css" />
+  </head>
 
-<body>
-    <div id="app" style="display: flex;">
-        <div class="col flex-center flex-column" style="height: 100vh;width: 50%;">
-            <circular-text 
-                :text="text" 
-                :class-name="className" 
-                :spin-duration="spinDuration" 
-                :on-hover="onHover"
-                :font-size="fontSize"
-                :container-size="containerSize">
-            </circular-text>
-        </div>
-        <div class="use">
-            <h2>how to use</h2>
-            <div class="usage-instructions">
-                <h3>CircularText 组件使用说明</h3>
+  <body>
+    <div id="app" style="display: flex">
+      <div
+        class="col flex-center flex-column"
+        style="height: 100vh; width: 50%"
+      >
+        <circular-text
+          :text="text"
+          :class-name="className"
+          :spin-duration="spinDuration"
+          :on-hover="onHover"
+          :font-size="fontSize"
+          :container-size="containerSize"
+        >
+        </circular-text>
+      </div>
+      <div class="use">
+        <h2>how to use</h2>
+        <div class="usage-instructions">
+          <h3>CircularText 组件使用说明</h3>
 
-                <h4>1. 基本用法</h4>
-                <p>在HTML中直接使用组件标签：</p>
-                <pre><code>&lt;circular-text :text="'显示文本'"&gt;&lt;/circular-text&gt;</code></pre>
+          <h4>1. 基本用法</h4>
+          <p>在HTML中直接使用组件标签：</p>
+          <pre><code>&lt;circular-text :text="'显示文本'"&gt;&lt;/circular-text&gt;</code></pre>
 
-                <h4>2. 可用属性</h4>
-                <ul>
-                    <li><strong>text</strong> (String): 要显示的文本内容</li>
-                    <li><strong>class-name</strong> (String): 应用于文本的CSS类名</li>
-                    <li><strong>spin-duration</strong> (Number): � 循环旋转的持续时间（秒），默认为5</li>
-                    <li><strong>on-hover</strong> (String): 鼠标悬停时的旋转效果('speedUp'|'slowDown'|'reverse')，默认为'speedUp'</li>
-                    <li><strong>font-size</strong> (Number): 文字大小，默认为24</li>
-                    <li><strong>container-size</strong> (Number): 容器大小，默认为200</li>
-                </ul>
+          <h4>2. 可用属性</h4>
+          <ul>
+            <li><strong>text</strong> (String): 要显示的文本内容</li>
+            <li><strong>class-name</strong> (String): 应用于文本的CSS类名</li>
+            <li>
+              <strong>spin-duration</strong> (Number): �
+              循环旋转的持续时间（秒），默认为5
+            </li>
+            <li>
+              <strong>on-hover</strong> (String):
+              鼠标悬停时的旋转效果('speedUp'|'slowDown'|'reverse')，默认为'speedUp'
+            </li>
+            <li><strong>font-size</strong> (Number): 文字大小，默认为24</li>
+            <li>
+              <strong>container-size</strong> (Number): 容器大小，默认为200
+            </li>
+          </ul>
 
-                <h4>3. 示例代码</h4>
-                <pre><code>&lt;circular-text 
-                    :text="'显示文本'" 
+          <h4>3. 示例代码</h4>
+          <pre><code>&lt;circular-text
+                    :text="'显示文本'"
                     :class-name="'demo-text'"
                     :spin-duration="5"
                     :on-hover="'speedUp'"
@@ -51,11 +62,11 @@
                     :container-size="100"
 &gt;
 &lt;/circular-text&gt;</code></pre>
-            </div>
-            <div class="back-link">
-                <a href="../">← Back to mt</a>
-            </div>
         </div>
+        <div class="back-link">
+          <a href="../">← Back to mt</a>
+        </div>
+      </div>
     </div>
 
     <script src="../../dist/vue2bits.min.js"></script>
@@ -65,28 +76,27 @@
     <!-- SplitText 需要单独引入 -->
     <script src="../libs/SplitText.min.js"></script>
     <script>
-        // 现在不需要手动注册组件，引入vue2bits.min.js后会自动注册
-        document.addEventListener('DOMContentLoaded', function () {
-            new Vue({
-                el: '#app',
-                data() {
-                    return {
-                        text: 'text show itis cool',
-                        className: 'demo-text',
-                        spinDuration: 20,
-                        onHover: 'speedUp',
-                        fontSize: 12,
-                        containerSize: 100
-                    }
-                }
-            });
+      // 现在不需要手动注册组件，引入vue2bits.min.js后会自动注册
+      document.addEventListener("DOMContentLoaded", function () {
+        new Vue({
+          el: "#app",
+          data() {
+            return {
+              text: "text show itis cool",
+              className: "demo-text",
+              spinDuration: 20,
+              onHover: "speedUp",
+              fontSize: 12,
+              containerSize: 100,
+            };
+          },
         });
+      });
     </script>
     <style>
-        .demo-text {
-            color: #333 !important;
-        }
+      .demo-text {
+        color: #333 !important;
+      }
     </style>
-</body>
-
+  </body>
 </html>

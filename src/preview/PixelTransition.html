@@ -1,48 +1,64 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>PixelTransition 组件预览</title>
     <script src="../libs/vue.js"></script>
-    <link rel="stylesheet" href="../../dist/vue2bits.css">
-    <link rel="stylesheet" href="preview.css">
+    <link rel="stylesheet" href="../../dist/vue2bits.css" />
+    <link rel="stylesheet" href="preview.css" />
     <style>
-        .pixel-card {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
+      .pixel-card {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
     </style>
-</head>
+  </head>
 
-<body>
-    <div id="app" style="display: flex;">
-        <div class="col" style="height: 100vh; width: 50%; display: flex; align-items: center; justify-content: center;">
-            <pixel-transition
-                :animation-step-duration="0.5"
-                pixel-color="#00ff00"
-                class-name="custom-card"
-                aspect-ratio="150%"
-            >
-                <template #firstcontent>
-                    <img src="https://picsum.photos/200/200?random=6" alt="First" class="pixel-card" />
-                </template>
-                <template #secondcontent>
-                    <img src="https://picsum.photos/200/200?random=7" alt="Second" class="pixel-card" />
-                </template>
-            </pixel-transition>
-        </div>
-        <div class="use">
-            <h2>how to use</h2>
-            <div class="usage-instructions">
-                <h3>PixelTransition 组件使用说明</h3>
+  <body>
+    <div id="app" style="display: flex">
+      <div
+        class="col"
+        style="
+          height: 100vh;
+          width: 50%;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+        "
+      >
+        <pixel-transition
+          :animation-step-duration="0.5"
+          pixel-color="#00ff00"
+          class-name="custom-card"
+          aspect-ratio="150%"
+        >
+          <template #firstcontent>
+            <img
+              src="https://picsum.photos/200/200?random=6"
+              alt="First"
+              class="pixel-card"
+            />
+          </template>
+          <template #secondcontent>
+            <img
+              src="https://picsum.photos/200/200?random=7"
+              alt="Second"
+              class="pixel-card"
+            />
+          </template>
+        </pixel-transition>
+      </div>
+      <div class="use">
+        <h2>how to use</h2>
+        <div class="usage-instructions">
+          <h3>PixelTransition 组件使用说明</h3>
 
-                <h4>1. 基本用法</h4>
-                <p>在HTML中直接使用组件标签，并通过slot插入内容：</p>
-                <pre><code>&lt;pixel-transition 
-  :grid-size="10" 
+          <h4>1. 基本用法</h4>
+          <p>在HTML中直接使用组件标签，并通过slot插入内容：</p>
+          <pre><code>&lt;pixel-transition
+  :grid-size="10"
   :animation-step-duration="0.5"&gt;
   &lt;template #firstcontent&gt;
     &lt;img src="/image1.jpg" /&gt;
@@ -52,18 +68,29 @@
   &lt;/template&gt;
 &lt;/pixel-transition&gt;</code></pre>
 
-                <h4>2. 可用属性</h4>
-                <ul>
-                    <li><strong>gridSize</strong> (Number): 网格大小，控制像素分割的精细程度，默认为10</li>
-                    <li><strong>animationStepDuration</strong> (Number): 动画步进持续时间，控制过渡速度，默认为0.3</li>
-                    <li><strong>pixelColor</strong> (String): 像素颜色，默认为'#00ff00'</li>
-                    <li><strong>className</strong> (String): 自定义类名</li>
-                    <li><strong>ptStyle</strong> (Object): 自定义样式</li>
-                    <li><strong>aspectRatio</strong> (String): 设置容器的高宽比[百分比]。默认'100%'</li>
-                </ul>
+          <h4>2. 可用属性</h4>
+          <ul>
+            <li>
+              <strong>gridSize</strong> (Number):
+              网格大小，控制像素分割的精细程度，默认为10
+            </li>
+            <li>
+              <strong>animationStepDuration</strong> (Number):
+              动画步进持续时间，控制过渡速度，默认为0.3
+            </li>
+            <li>
+              <strong>pixelColor</strong> (String): 像素颜色，默认为'#00ff00'
+            </li>
+            <li><strong>className</strong> (String): 自定义类名</li>
+            <li><strong>ptStyle</strong> (Object): 自定义样式</li>
+            <li>
+              <strong>aspectRatio</strong> (String):
+              设置容器的高宽比[百分比]。默认'100%'
+            </li>
+          </ul>
 
-                <h4>3. 示例代码</h4>
-                <pre><code>&lt;pixel-transition 
+          <h4>3. 示例代码</h4>
+          <pre><code>&lt;pixel-transition
   :grid-size="15"
   :animation-step-duration="0.8"
   pixel-color="#ff00ff"
@@ -75,25 +102,23 @@
     &lt;img src="/image2.jpg" alt="Second" class="pixel-card" /&gt;
   &lt;/template&gt;
 &lt;/pixel-transition&gt;</code></pre>
-
-            </div>
-            <div class="back-link">
-                <a href="../">← Back to index</a>
-            </div>
         </div>
+        <div class="back-link">
+          <a href="../">← Back to index</a>
+        </div>
+      </div>
     </div>
 
     <script src="../../dist/vue2bits.min.js"></script>
     <!-- 引入 GSAP 库 -->
     <script src="../libs/gsap.min.js"></script>
     <script>
-        // 确保 Vue 实例在 DOM 加载完成后创建
-        document.addEventListener('DOMContentLoaded', function () {
-            new Vue({
-                el: '#app'
-            });
+      // 确保 Vue 实例在 DOM 加载完成后创建
+      document.addEventListener("DOMContentLoaded", function () {
+        new Vue({
+          el: "#app",
         });
+      });
     </script>
-</body>
-
+  </body>
 </html>

@@ -7,7 +7,7 @@
       background: background,
       borderRadius: borderRadius,
       borderColor: borderColor,
-      ...customStyle
+      ...customStyle,
     }"
     @mouseenter="animateIn"
     @mouseleave="animateOut"
@@ -20,7 +20,7 @@
 
 <script>
 function hexToRgba(hex, opacity) {
-  const cleanHex = hex.replace('#', '');
+  const cleanHex = hex.replace("#", "");
   let result = hex;
 
   if (/^[\\dA-Fa-f]{6}$/.test(cleanHex)) {
@@ -39,64 +39,66 @@ function hexToRgba(hex, opacity) {
 }
 
 export default {
-  name: 'GlareHover',
+  name: "GlareHover",
   props: {
     width: {
       type: String,
-      default: '500px'
+      default: "500px",
     },
     height: {
       type: String,
-      default: '500px'
+      default: "500px",
     },
     background: {
       type: String,
-      default: '#000'
+      default: "#000",
     },
     borderRadius: {
       type: String,
-      default: '10px'
+      default: "10px",
     },
     borderColor: {
       type: String,
-      default: '#333'
+      default: "#333",
     },
     glareColor: {
       type: String,
-      default: '#ffffff'
+      default: "#ffffff",
     },
     glareOpacity: {
       type: Number,
-      default: 0.5
+      default: 0.5,
     },
     glareAngle: {
       type: Number,
-      default: -45
+      default: -45,
     },
     glareSize: {
       type: Number,
-      default: 250
+      default: 250,
     },
     transitionDuration: {
       type: Number,
-      default: 650
+      default: 650,
     },
     playOnce: {
       type: Boolean,
-      default: false
+      default: false,
     },
     className: {
       type: String,
-      default: ''
+      default: "",
     },
     customStyle: {
       type: Object,
-      default: function() { return {}; }
-    }
+      default: function () {
+        return {};
+      },
+    },
   },
   computed: {
-    rgba: function() {
-      const hex = this.glareColor.replace('#', '');
+    rgba: function () {
+      const hex = this.glareColor.replace("#", "");
       let result = this.glareColor;
 
       if (/^[\\dA-Fa-f]{6}$/.test(hex)) {
@@ -113,55 +115,60 @@ export default {
 
       return result;
     },
-    overlayStyle: function() {
+    overlayStyle: function () {
       return {
-        position: 'absolute',
-        top: '0',
-        left: '0',
-        right: '0',
-        bottom: '0',
-        background: 'linear-gradient(' + this.glareAngle + 'deg,\n      hsla(0,0%,0%,0) 60%,\n      ' + this.rgba + ' 70%,\n      hsla(0,0%,0%,0) 100%)',
-        backgroundSize: this.glareSize + '% ' + this.glareSize + '%, 100% 100%',
-        backgroundRepeat: 'no-repeat',
-        backgroundPosition: '-100% -100%, 0 0',
-        pointerEvents: 'none'
+        position: "absolute",
+        top: "0",
+        left: "0",
+        right: "0",
+        bottom: "0",
+        background:
+          "linear-gradient(" +
+          this.glareAngle +
+          "deg,\n      hsla(0,0%,0%,0) 60%,\n      " +
+          this.rgba +
+          " 70%,\n      hsla(0,0%,0%,0) 100%)",
+        backgroundSize: this.glareSize + "% " + this.glareSize + "%, 100% 100%",
+        backgroundRepeat: "no-repeat",
+        backgroundPosition: "-100% -100%, 0 0",
+        pointerEvents: "none",
       };
-    }
+    },
   },
   methods: {
-    animateIn: function() {
+    animateIn: function () {
       const el = this.$refs.overlayRef;
       if (!el) return;
 
-      el.style.transition = 'none';
-      el.style.backgroundPosition = '-100% -100%, 0 0';
+      el.style.transition = "none";
+      el.style.backgroundPosition = "-100% -100%, 0 0";
       void el.offsetHeight;
-      el.style.transition = this.transitionDuration + 'ms ease';
-      el.style.backgroundPosition = '100% 100%, 0 0';
+      el.style.transition = this.transitionDuration + "ms ease";
+      el.style.backgroundPosition = "100% 100%, 0 0";
     },
-    animateOut: function() {
+    animateOut: function () {
       const el = this.$refs.overlayRef;
       if (!el) return;
 
       if (this.playOnce) {
-        el.style.transition = 'none';
-        el.style.backgroundPosition = '-100% -100%, 0 0';
+        el.style.transition = "none";
+        el.style.backgroundPosition = "-100% -100%, 0 0";
       } else {
-        el.style.transition = this.transitionDuration + 'ms ease';
-        el.style.backgroundPosition = '-100% -100%, 0 0';
+        el.style.transition = this.transitionDuration + "ms ease";
+        el.style.backgroundPosition = "-100% -100%, 0 0";
       }
-    }
-  }
+    },
+  },
 };
 </script>
 
 <style scoped>
-  .glare-hover {
-    position: relative;
-    display: grid;
-    place-items: center;
-    overflow: hidden;
-    cursor: pointer;
-    border: 1px solid;
-  }
+.glare-hover {
+  position: relative;
+  display: grid;
+  place-items: center;
+  overflow: hidden;
+  cursor: pointer;
+  border: 1px solid;
+}
 </style>

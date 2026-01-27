@@ -30,37 +30,37 @@
 </template>
 <script>
 export default {
-  name: 'PixelTrail',
+  name: "PixelTrail",
 
   props: {
     gridSize: {
       type: Number,
-      default: 40
+      default: 40,
     },
     trailSize: {
       type: Number,
-      default: 0.1
+      default: 0.1,
     },
     maxAge: {
       type: Number,
-      default: 250
+      default: 250,
     },
     interpolate: {
       type: Number,
-      default: 5
+      default: 5,
     },
     color: {
       type: String,
-      default: '#ffffff'
+      default: "#ffffff",
     },
     gooeyFilter: {
       type: Object,
-      default: undefined
+      default: undefined,
     },
     className: {
       type: String,
-      default: ''
-    }
+      default: "",
+    },
   },
 
   data() {
@@ -81,7 +81,7 @@ export default {
       trailCtx: null,
       trailTexture: null,
       trail: [],
-      force: 0
+      force: 0,
     };
   },
 
@@ -89,7 +89,7 @@ export default {
     filterStyle() {
       if (!this.gooeyFilter) return undefined;
       return {
-        filter: `url(#${this.gooeyFilter.id})`
+        filter: `url(#${this.gooeyFilter.id})`,
       };
     },
 
@@ -126,7 +126,7 @@ export default {
           gl_FragColor = vec4(pixelColor, trail);
         }
       `;
-    }
+    },
   },
 
   mounted() {
@@ -152,7 +152,7 @@ export default {
     },
     color() {
       this.handlePropChange();
-    }
+    },
   },
 
   methods: {
@@ -174,15 +174,15 @@ export default {
 
       return {
         x: Math.max(0, Math.min(1, x)),
-        y: Math.max(0, Math.min(1, y))
+        y: Math.max(0, Math.min(1, y)),
       };
     },
 
     initTrailTexture() {
-      this.trailCanvas = document.createElement('canvas');
+      this.trailCanvas = document.createElement("canvas");
       this.trailCanvas.width = this.trailCanvas.height = this.TEXTURE_SIZE;
-      this.trailCtx = this.trailCanvas.getContext('2d');
-      this.trailCtx.fillStyle = 'black';
+      this.trailCtx = this.trailCanvas.getContext("2d");
+      this.trailCtx.fillStyle = "black";
       this.trailCtx.fillRect(0, 0, this.TEXTURE_SIZE, this.TEXTURE_SIZE);
 
       this.trailTexture = new THREE.CanvasTexture(this.trailCanvas);
@@ -194,8 +194,8 @@ export default {
 
     clearTrail() {
       if (!this.trailCtx) return;
-      this.trailCtx.globalCompositeOperation = 'source-over';
-      this.trailCtx.fillStyle = 'black';
+      this.trailCtx.globalCompositeOperation = "source-over";
+      this.trailCtx.fillStyle = "black";
       this.trailCtx.fillRect(0, 0, this.TEXTURE_SIZE, this.TEXTURE_SIZE);
     },
 
@@ -222,7 +222,7 @@ export default {
                 x: last.x - (dx / lines) * i,
                 y: last.y - (dy / lines) * i,
                 age: 0,
-                force: newForce
+                force: newForce,
               });
             }
           }
@@ -233,7 +233,7 @@ export default {
         x: point.x,
         y: point.y,
         age: 0,
-        force: this.force
+        force: this.force,
       });
     },
 
@@ -242,7 +242,7 @@ export default {
 
       const pos = {
         x: point.x * this.TEXTURE_SIZE,
-        y: (1 - point.y) * this.TEXTURE_SIZE
+        y: (1 - point.y) * this.TEXTURE_SIZE,
       };
 
       // 根据age计算强度
@@ -250,14 +250,13 @@ export default {
       if (point.age < this.maxAge * 0.3) {
         intensity = point.age / (this.maxAge * 0.3);
       } else {
-        intensity =
-          1 - (point.age - this.maxAge * 0.3) / (this.maxAge * 0.7);
+        intensity = 1 - (point.age - this.maxAge * 0.3) / (this.maxAge * 0.7);
       }
 
       intensity *= point.force;
 
       // Apply blending
-      this.trailCtx.globalCompositeOperation = 'screen';
+      this.trailCtx.globalCompositeOperation = "screen";
 
       const radius = this.TEXTURE_SIZE * this.trailSize * intensity;
 
@@ -272,7 +271,7 @@ export default {
         Math.max(0, radius)
       );
       grd.addColorStop(0, `rgba(255, 255, 255, ${this.INTENSITY})`);
-      grd.addColorStop(1, 'rgba(0, 0, 0, 0.0)');
+      grd.addColorStop(1, "rgba(0, 0, 0, 0.0)");
 
       this.trailCtx.beginPath();
       this.trailCtx.fillStyle = grd;
@@ -286,7 +285,7 @@ export default {
       this.clearTrail();
 
       // 增加点age并移除旧点
-      this.trail = this.trail.filter(point => {
+      this.trail = this.trail.filter((point) => {
         point.age += delta * 1000;
         return point.age <= this.maxAge;
       });
@@ -297,7 +296,7 @@ export default {
       }
 
       // 绘制所有点
-      this.trail.forEach(point => this.drawTouch(point));
+      this.trail.forEach((point) => this.drawTouch(point));
 
       this.trailTexture.needsUpdate = true;
     },
@@ -319,7 +318,7 @@ export default {
       this.renderer = new THREE.WebGLRenderer({
         antialias: false,
         alpha: true,
-        powerPreference: 'high-performance'
+        powerPreference: "high-performance",
       });
       this.renderer.setSize(width, height);
       this.renderer.setPixelRatio(dpr);
@@ -335,17 +334,17 @@ export default {
       const material = new THREE.ShaderMaterial({
         uniforms: {
           resolution: {
-            value: new THREE.Vector2(width * dpr, height * dpr)
+            value: new THREE.Vector2(width * dpr, height * dpr),
           },
           mouseTrail: { value: this.trailTexture },
           gridSize: { value: this.gridSize },
           pixelColor: {
-            value: new THREE.Vector3(pixelColor.r, pixelColor.g, pixelColor.b)
-          }
+            value: new THREE.Vector3(pixelColor.r, pixelColor.g, pixelColor.b),
+          },
         },
         vertexShader: this.vertexShader,
         fragmentShader: this.fragmentShader,
-        transparent: true
+        transparent: true,
       });
 
       const geometry = new THREE.PlaneGeometry(2, 2);
@@ -353,8 +352,8 @@ export default {
       this.scene.add(this.mesh);
 
       // 事件监听器
-      container.addEventListener('pointermove', this.handlePointerMove);
-      window.addEventListener('resize', this.handleResize);
+      container.addEventListener("pointermove", this.handlePointerMove);
+      window.addEventListener("resize", this.handleResize);
 
       // 开始动画
       this.trail = [];
@@ -419,9 +418,9 @@ export default {
 
       const container = this.$refs.containerRef;
       if (container) {
-        container.removeEventListener('pointermove', this.handlePointerMove);
+        container.removeEventListener("pointermove", this.handlePointerMove);
       }
-      window.removeEventListener('resize', this.handleResize);
+      window.removeEventListener("resize", this.handleResize);
 
       // 清空轨迹数据
       this.trail = [];
@@ -457,25 +456,25 @@ export default {
       this.$nextTick(() => {
         this.setupScene();
       });
-    }
-  }
+    },
+  },
 };
 </script>
 <style scoped>
-    .pixel-trail-container {
-      position: relative;
-      width: 100%;
-      height: 100%;
-    }
-    .pixel-trail-container-svg {
-      position: absolute;
-      overflow: hidden;
-      z-index: 1;
-    }
-    .pixel-trail-container-ref {
-      position: absolute;
-      z-index: 1;
-      width: 100%;
-      height: 100%;
-    }
+.pixel-trail-container {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+.pixel-trail-container-svg {
+  position: absolute;
+  overflow: hidden;
+  z-index: 1;
+}
+.pixel-trail-container-ref {
+  position: absolute;
+  z-index: 1;
+  width: 100%;
+  height: 100%;
+}
 </style>

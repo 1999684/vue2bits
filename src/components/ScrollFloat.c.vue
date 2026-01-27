@@ -1,26 +1,31 @@
 <template>
-    <h2 
-        ref="containerRef" 
-        :class="'scroll-float-normal' + ' ' + containerClassName">
+  <h2
+    ref="containerRef"
+    :class="'scroll-float-normal' + ' ' + containerClassName"
+  >
+    <span
+      :class="'scroll-float-normal-span' + ' ' + textClassName"
+      style="font-size: clamp(20px, 25px, 34px)"
+    >
       <span
-        :class="'scroll-float-normal-span' + ' ' + textClassName"
-        style="font-size: clamp(20px, 25px, 34px)"
+        v-for="(char, index) in splitText"
+        :key="index"
+        class="scroll-float-normal-span-split char"
       >
-        <span v-for="(char, index) in splitText" :key="index" class="scroll-float-normal-span-split char">
-          {{ char === ' ' ? '\u00A0' : char }}
-        </span>
+        {{ char === " " ? "\u00A0" : char }}
       </span>
-    </h2>
+    </span>
+  </h2>
 </template>
 
 <script>
 export default {
-  name: 'ScrollFloat',
+  name: "ScrollFloat",
   props: {
     // 文字内容
     children: {
       type: String,
-      default: ''
+      default: "",
     },
     // // 定义相对容器窗口
     // scrollContainerRef: {
@@ -32,104 +37,106 @@ export default {
     // 为外容器添加类名
     containerClassName: {
       type: String,
-      default: ''
+      default: "",
     },
     // 文字类名，用于为文字添加样式
     textClassName: {
       type: String,
-      default: ''
+      default: "",
     },
     animationDuration: {
       type: Number,
-      default: 1
+      default: 1,
     },
     ease: {
       type: String,
-      default: 'back.inOut(2)'
+      default: "back.inOut(2)",
     },
     scrollStart: {
       type: String,
-      default: 'top bottom'
+      default: "top bottom",
     },
     scrollEnd: {
       type: String,
-      default: 'bottom bottom-=40%'
+      default: "bottom bottom-=40%",
     },
     stagger: {
       type: Number,
-      default: 0.03
-    }
+      default: 0.03,
+    },
   },
-  data: function() {
+  data: function () {
     return {
-      scrollTriggerInstance: null
+      scrollTriggerInstance: null,
     };
   },
   computed: {
-    splitText: function() {
-      var text = typeof this.children === 'string' ? this.children : '';
-      return text.split('');
-    }
+    splitText: function () {
+      var text = typeof this.children === "string" ? this.children : "";
+      return text.split("");
+    },
   },
-  mounted: function() {
+  mounted: function () {
     this.initializeAnimation();
   },
-  beforeDestroy: function() {
+  beforeDestroy: function () {
     if (this.scrollTriggerInstance) {
       this.scrollTriggerInstance.kill();
     }
   },
   watch: {
-    children: function() {
+    children: function () {
       this.initializeAnimation();
     },
-    scrollContainerRef: function() {
+    scrollContainerRef: function () {
       this.initializeAnimation();
     },
-    animationDuration: function() {
+    animationDuration: function () {
       this.initializeAnimation();
     },
-    ease: function() {
+    ease: function () {
       this.initializeAnimation();
     },
-    scrollStart: function() {
+    scrollStart: function () {
       this.initializeAnimation();
     },
-    scrollEnd: function() {
+    scrollEnd: function () {
       this.initializeAnimation();
     },
-    stagger: function() {
+    stagger: function () {
       this.initializeAnimation();
-    }
+    },
   },
   methods: {
-    initializeAnimation: function() {
+    initializeAnimation: function () {
       var self = this;
       var el = this.$refs.containerRef;
       if (!el) return;
 
-      var scroller = this.scrollContainerRef && this.scrollContainerRef.current ? 
-                     this.scrollContainerRef.current : window;
+      var scroller =
+        this.scrollContainerRef && this.scrollContainerRef.current
+          ? this.scrollContainerRef.current
+          : window;
 
-      var charElements = el.querySelectorAll('.char');
+      var charElements = el.querySelectorAll(".char");
 
       if (this.scrollTriggerInstance) {
         this.scrollTriggerInstance.kill();
       }
 
       // 注意：这里需要确保GSAP库已加载
-      if (typeof gsap !== 'undefined' && typeof ScrollTrigger !== 'undefined') {
+      if (typeof gsap !== "undefined" && typeof ScrollTrigger !== "undefined") {
         gsap.registerPlugin(ScrollTrigger);
 
         var tl = gsap.fromTo(
           charElements,
           {
-            willChange: 'opacity, transform',
+            willChange: "opacity, transform",
             opacity: 0,
             yPercent: 120,
             scaleY: 2.3,
             scaleX: 0.7,
-            transformOrigin: '50% 0%'
+            transformOrigin: "50% 0%",
           },
           {
             duration: this.animationDuration,
@@ -144,16 +151,16 @@ export default {
               scroller: scroller,
               start: this.scrollStart,
               end: this.scrollEnd,
-              scrub: true
-            }
+              scrub: true,
+            },
           }
         );
 
         this.scrollTriggerInstance = tl.scrollTrigger || null;
       }
-    }
-  }
-}
+    },
+  },
+};
 </script>
 
 <style scoped>

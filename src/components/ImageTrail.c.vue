@@ -21,16 +21,16 @@ function lerp(a, b, n) {
 function getLocalPointerPos(e, rect) {
   let clientX = 0,
     clientY = 0;
-  if ('touches' in e && e.touches.length > 0) {
+  if ("touches" in e && e.touches.length > 0) {
     clientX = e.touches[0].clientX;
     clientY = e.touches[0].clientY;
-  } else if ('clientX' in e) {
+  } else if ("clientX" in e) {
     clientX = e.clientX;
     clientY = e.clientY;
   }
   return {
     x: clientX - rect.left,
-    y: clientY - rect.top
+    y: clientY - rect.top,
   };
 }
 
@@ -43,34 +43,34 @@ function getMouseDistance(p1, p2) {
 function ImageItem(DOM_el) {
   this.DOM = {
     el: DOM_el,
-    inner: null
+    inner: null,
   };
   this.defaultStyle = { scale: 1, x: 0, y: 0, opacity: 0 };
   this.rect = null;
   this.resize = null;
 
-  this.init = function() {
-    this.DOM.inner = this.DOM.el.querySelector('.content__img-inner');
+  this.init = function () {
+    this.DOM.inner = this.DOM.el.querySelector(".content__img-inner");
     this.getRect();
     this.initEvents();
   };
 
-  this.initEvents = function() {
+  this.initEvents = function () {
     var self = this;
-    this.resize = function() {
+    this.resize = function () {
       if (window.gsap) {
         window.gsap.set(self.DOM.el, self.defaultStyle);
       } else {
         // 备用方案：如果没有 GSAP，使用原生 CSS
-        self.DOM.el.style.transform = 'scale(1) translate(0px, 0px)';
-        self.DOM.el.style.opacity = '0';
+        self.DOM.el.style.transform = "scale(1) translate(0px, 0px)";
+        self.DOM.el.style.opacity = "0";
       }
       self.getRect();
     };
-    window.addEventListener('resize', this.resize);
+    window.addEventListener("resize", this.resize);
   };
 
-  this.getRect = function() {
+  this.getRect = function () {
     this.rect = this.DOM.el.getBoundingClientRect();
   };
 
@@ -81,7 +81,9 @@ function ImageTrailVariant1(container) {
   var self = this;
   this.container = container;
   this.DOM = { el: container };
-  this.images = [...container.querySelectorAll('.content__img')].map(function(img) {
+  this.images = [...container.querySelectorAll(".content__img")].map(function (
+    img
+  ) {
     var imageItem = new ImageItem(img);
     imageItem.init();
     return imageItem;
@@ -96,26 +98,28 @@ function ImageTrailVariant1(container) {
   this.lastMousePos = { x: 0, y: 0 };
   this.cacheMousePos = { x: 0, y: 0 };
 
-  var handlePointerMove = function(ev) {
+  var handlePointerMove = function (ev) {
     var rect = self.container.getBoundingClientRect();
     self.mousePos = getLocalPointerPos(ev, rect);
   };
-  container.addEventListener('mousemove', handlePointerMove);
-  container.addEventListener('touchmove', handlePointerMove);
+  container.addEventListener("mousemove", handlePointerMove);
+  container.addEventListener("touchmove", handlePointerMove);
 
-  var initRender = function(ev) {
+  var initRender = function (ev) {
     var rect = self.container.getBoundingClientRect();
     self.mousePos = getLocalPointerPos(ev, rect);
     self.cacheMousePos = { x: self.mousePos.x, y: self.mousePos.y };
-    requestAnimationFrame(function() { self.render(); });
-    container.removeEventListener('mousemove', initRender);
-    container.removeEventListener('touchmove', initRender);
+    requestAnimationFrame(function () {
+      self.render();
+    });
+    container.removeEventListener("mousemove", initRender);
+    container.removeEventListener("touchmove", initRender);
   };
-  container.addEventListener('mousemove', initRender);
-  container.addEventListener('touchmove', initRender);
+  container.addEventListener("mousemove", initRender);
+  container.addEventListener("touchmove", initRender);
 }
 
-ImageTrailVariant1.prototype.render = function() {
+ImageTrailVariant1.prototype.render = function () {
   var distance = getMouseDistance(this.mousePos, this.lastMousePos);
   this.cacheMousePos.x = lerp(this.cacheMousePos.x, this.mousePos.x, 0.1);
   this.cacheMousePos.y = lerp(this.cacheMousePos.y, this.mousePos.y, 0.1);
@@ -128,20 +132,27 @@ ImageTrailVariant1.prototype.render = function() {
     this.zIndexVal = 1;
   }
   var self = this;
-  requestAnimationFrame(function() { self.render(); });
+  requestAnimationFrame(function () {
+    self.render();
+  });
 };
 
-ImageTrailVariant1.prototype.showNextImage = function() {
+ImageTrailVariant1.prototype.showNextImage = function () {
   ++this.zIndexVal;
-  this.imgPosition = this.imgPosition < this.imagesTotal - 1 ? this.imgPosition + 1 : 0;
+  this.imgPosition =
+    this.imgPosition < this.imagesTotal - 1 ? this.imgPosition + 1 : 0;
   var img = this.images[this.imgPosition];
 
   if (window.gsap) {
     window.gsap.killTweensOf(img.DOM.el);
     window.gsap
       .timeline({
-        onStart: function() { self.onImageActivated(); },
-        onComplete: function() { self.onImageDeactivated(); }
+        onStart: function () {
+          self.onImageActivated();
+        },
+        onComplete: function () {
+          self.onImageDeactivated();
+        },
       })
       .fromTo(
         img.DOM.el,
@@ -150,13 +161,13 @@ ImageTrailVariant1.prototype.showNextImage = function() {
           scale: 1,
           zIndex: this.zIndexVal,
           x: this.cacheMousePos.x - (img.rect ? img.rect.width : 0) / 2,
-          y: this.cacheMousePos.y - (img.rect ? img.rect.height : 0) / 2
+          y: this.cacheMousePos.y - (img.rect ? img.rect.height : 0) / 2,
         },
         {
           duration: 0.4,
-          ease: 'power1',
+          ease: "power1",
           x: this.mousePos.x - (img.rect ? img.rect.width : 0) / 2,
-          y: this.mousePos.y - (img.rect ? img.rect.height : 0) / 2
+          y: this.mousePos.y - (img.rect ? img.rect.height : 0) / 2,
         },
         0
       )
@@ -164,9 +175,9 @@ ImageTrailVariant1.prototype.showNextImage = function() {
         img.DOM.el,
         {
           duration: 0.4,
-          ease: 'power3',
+          ease: "power3",
           opacity: 0,
-          scale: 0.2
+          scale: 0.2,
         },
         0.4
       );
@@ -174,35 +185,41 @@ ImageTrailVariant1.prototype.showNextImage = function() {
     // 备用方案：如果没有 GSAP，使用原生 CSS 动画
     var self = this;
     var el = img.DOM.el;
-    el.style.transition = 'none';
-    el.style.opacity = '1';
-    el.style.transform = 'scale(1) translate(' + 
-      (this.cacheMousePos.x - (img.rect ? img.rect.width : 0) / 2) + 'px, ' + 
-      (this.cacheMousePos.y - (img.rect ? img.rect.height : 0) / 2) + 'px)';
+    el.style.transition = "none";
+    el.style.opacity = "1";
+    el.style.transform =
+      "scale(1) translate(" +
+      (this.cacheMousePos.x - (img.rect ? img.rect.width : 0) / 2) +
+      "px, " +
+      (this.cacheMousePos.y - (img.rect ? img.rect.height : 0) / 2) +
+      "px)";
     el.style.zIndex = this.zIndexVal;
-    
+
     this.onImageActivated();
-    
-    setTimeout(function() {
-      el.style.transition = 'transform 0.4s ease, opacity 0.4s ease';
-      el.style.transform = 'scale(0.2) translate(' + 
-        (self.mousePos.x - (img.rect ? img.rect.width : 0) / 2) + 'px, ' + 
-        (self.mousePos.y - (img.rect ? img.rect.height : 0) / 2) + 'px)';
-      el.style.opacity = '0';
+
+    setTimeout(function () {
+      el.style.transition = "transform 0.4s ease, opacity 0.4s ease";
+      el.style.transform =
+        "scale(0.2) translate(" +
+        (self.mousePos.x - (img.rect ? img.rect.width : 0) / 2) +
+        "px, " +
+        (self.mousePos.y - (img.rect ? img.rect.height : 0) / 2) +
+        "px)";
+      el.style.opacity = "0";
     }, 10);
-    
-    setTimeout(function() {
+
+    setTimeout(function () {
       self.onImageDeactivated();
     }, 400);
   }
 };
 
-ImageTrailVariant1.prototype.onImageActivated = function() {
+ImageTrailVariant1.prototype.onImageActivated = function () {
   this.activeImagesCount++;
   this.isIdle = false;
 };
 
-ImageTrailVariant1.prototype.onImageDeactivated = function() {
+ImageTrailVariant1.prototype.onImageDeactivated = function () {
   this.activeImagesCount--;
   if (this.activeImagesCount === 0) {
     this.isIdle = true;
@@ -213,7 +230,9 @@ function ImageTrailVariant2(container) {
   var self = this;
   this.container = container;
   this.DOM = { el: container };
-  this.images = [...container.querySelectorAll('.content__img')].map(function(img) {
+  this.images = [...container.querySelectorAll(".content__img")].map(function (
+    img
+  ) {
     var imageItem = new ImageItem(img);
     imageItem.init();
     return imageItem;
@@ -228,26 +247,28 @@ function ImageTrailVariant2(container) {
   this.lastMousePos = { x: 0, y: 0 };
   this.cacheMousePos = { x: 0, y: 0 };
 
-  var handlePointerMove = function(ev) {
+  var handlePointerMove = function (ev) {
     var rect = container.getBoundingClientRect();
     self.mousePos = getLocalPointerPos(ev, rect);
   };
-  container.addEventListener('mousemove', handlePointerMove);
-  container.addEventListener('touchmove', handlePointerMove);
+  container.addEventListener("mousemove", handlePointerMove);
+  container.addEventListener("touchmove", handlePointerMove);
 
-  var initRender = function(ev) {
+  var initRender = function (ev) {
     var rect = container.getBoundingClientRect();
     self.mousePos = getLocalPointerPos(ev, rect);
     self.cacheMousePos = { x: self.mousePos.x, y: self.mousePos.y };
-    requestAnimationFrame(function() { self.render(); });
-    container.removeEventListener('mousemove', initRender);
-    container.removeEventListener('touchmove', initRender);
+    requestAnimationFrame(function () {
+      self.render();
+    });
+    container.removeEventListener("mousemove", initRender);
+    container.removeEventListener("touchmove", initRender);
   };
-  container.addEventListener('mousemove', initRender);
-  container.addEventListener('touchmove', initRender);
+  container.addEventListener("mousemove", initRender);
+  container.addEventListener("touchmove", initRender);
 }
 
-ImageTrailVariant2.prototype.render = function() {
+ImageTrailVariant2.prototype.render = function () {
   var distance = getMouseDistance(this.mousePos, this.lastMousePos);
   this.cacheMousePos.x = lerp(this.cacheMousePos.x, this.mousePos.x, 0.1);
   this.cacheMousePos.y = lerp(this.cacheMousePos.y, this.mousePos.y, 0.1);
@@ -260,20 +281,27 @@ ImageTrailVariant2.prototype.render = function() {
     this.zIndexVal = 1;
   }
   var self = this;
-  requestAnimationFrame(function() { self.render(); });
+  requestAnimationFrame(function () {
+    self.render();
+  });
 };
 
-ImageTrailVariant2.prototype.showNextImage = function() {
+ImageTrailVariant2.prototype.showNextImage = function () {
   ++this.zIndexVal;
-  this.imgPosition = this.imgPosition < this.imagesTotal - 1 ? this.imgPosition + 1 : 0;
+  this.imgPosition =
+    this.imgPosition < this.imagesTotal - 1 ? this.imgPosition + 1 : 0;
   var img = this.images[this.imgPosition];
 
   if (window.gsap) {
     window.gsap.killTweensOf(img.DOM.el);
     window.gsap
       .timeline({
-        onStart: function() { this.onImageActivated(); }.bind(this),
-        onComplete: function() { this.onImageDeactivated(); }.bind(this)
+        onStart: function () {
+          this.onImageActivated();
+        }.bind(this),
+        onComplete: function () {
+          this.onImageDeactivated();
+        }.bind(this),
       })
       .fromTo(
         img.DOM.el,
@@ -282,25 +310,25 @@ ImageTrailVariant2.prototype.showNextImage = function() {
           scale: 0,
           zIndex: this.zIndexVal,
           x: this.cacheMousePos.x - (img.rect ? img.rect.width : 0) / 2,
-          y: this.cacheMousePos.y - (img.rect ? img.rect.height : 0) / 2
+          y: this.cacheMousePos.y - (img.rect ? img.rect.height : 0) / 2,
         },
         {
           duration: 0.4,
-          ease: 'power1',
+          ease: "power1",
           scale: 1,
           x: this.mousePos.x - (img.rect ? img.rect.width : 0) / 2,
-          y: this.mousePos.y - (img.rect ? img.rect.height : 0) / 2
+          y: this.mousePos.y - (img.rect ? img.rect.height : 0) / 2,
         },
         0
       )
       .fromTo(
         img.DOM.inner,
-        { scale: 2.8, filter: 'brightness(250%)' },
+        { scale: 2.8, filter: "brightness(250%)" },
         {
           duration: 0.4,
-          ease: 'power1',
+          ease: "power1",
           scale: 1,
-          filter: 'brightness(100%)'
+          filter: "brightness(100%)",
         },
         0
       )
@@ -308,9 +336,9 @@ ImageTrailVariant2.prototype.showNextImage = function() {
         img.DOM.el,
         {
           duration: 0.4,
-          ease: 'power2',
+          ease: "power2",
           opacity: 0,
-          scale: 0.2
+          scale: 0.2,
         },
         0.45
       );
@@ -319,60 +347,70 @@ ImageTrailVariant2.prototype.showNextImage = function() {
     var self = this;
     var el = img.DOM.el;
     var inner = img.DOM.inner;
-    el.style.transition = 'none';
-    inner.style.transition = 'none';
-    el.style.opacity = '1';
-    el.style.transform = 'scale(0) translate(' + 
-      (this.cacheMousePos.x - (img.rect ? img.rect.width : 0) / 2) + 'px, ' + 
-      (this.cacheMousePos.y - (img.rect ? img.rect.height : 0) / 2) + 'px)';
+    el.style.transition = "none";
+    inner.style.transition = "none";
+    el.style.opacity = "1";
+    el.style.transform =
+      "scale(0) translate(" +
+      (this.cacheMousePos.x - (img.rect ? img.rect.width : 0) / 2) +
+      "px, " +
+      (this.cacheMousePos.y - (img.rect ? img.rect.height : 0) / 2) +
+      "px)";
     el.style.zIndex = this.zIndexVal;
-    inner.style.transform = 'scale(2.8)';
-    inner.style.filter = 'brightness(250%)';
-    
+    inner.style.transform = "scale(2.8)";
+    inner.style.filter = "brightness(250%)";
+
     this.onImageActivated();
-    
-    setTimeout(function() {
-      el.style.transition = 'transform 0.4s ease, opacity 0.4s ease';
-      inner.style.transition = 'transform 0.4s ease, filter 0.4s ease';
-      el.style.transform = 'scale(1) translate(' + 
-        (self.mousePos.x - (img.rect ? img.rect.width : 0) / 2) + 'px, ' + 
-        (self.mousePos.y - (img.rect ? img.rect.height : 0) / 2) + 'px)';
-      inner.style.transform = 'scale(1)';
-      inner.style.filter = 'brightness(100%)';
+
+    setTimeout(function () {
+      el.style.transition = "transform 0.4s ease, opacity 0.4s ease";
+      inner.style.transition = "transform 0.4s ease, filter 0.4s ease";
+      el.style.transform =
+        "scale(1) translate(" +
+        (self.mousePos.x - (img.rect ? img.rect.width : 0) / 2) +
+        "px, " +
+        (self.mousePos.y - (img.rect ? img.rect.height : 0) / 2) +
+        "px)";
+      inner.style.transform = "scale(1)";
+      inner.style.filter = "brightness(100%)";
     }, 10);
-    
-    setTimeout(function() {
-      el.style.transition = 'transform 0.4s ease, opacity 0.4s ease';
-      el.style.opacity = '0';
-      el.style.transform = 'scale(0.2) translate(' + 
-        (self.mousePos.x - (img.rect ? img.rect.width : 0) / 2) + 'px, ' + 
-        (self.mousePos.y - (img.rect ? img.rect.height : 0) / 2) + 'px)';
+
+    setTimeout(function () {
+      el.style.transition = "transform 0.4s ease, opacity 0.4s ease";
+      el.style.opacity = "0";
+      el.style.transform =
+        "scale(0.2) translate(" +
+        (self.mousePos.x - (img.rect ? img.rect.width : 0) / 2) +
+        "px, " +
+        (self.mousePos.y - (img.rect ? img.rect.height : 0) / 2) +
+        "px)";
     }, 400);
-    
-    setTimeout(function() {
+
+    setTimeout(function () {
       self.onImageDeactivated();
     }, 850);
   }
 };
 
-ImageTrailVariant2.prototype.onImageActivated = function() {
+ImageTrailVariant2.prototype.onImageActivated = function () {
   this.activeImagesCount++;
   this.isIdle = false;
 };
 
-ImageTrailVariant2.prototype.onImageDeactivated = function() {
+ImageTrailVariant2.prototype.onImageDeactivated = function () {
   this.activeImagesCount--;
   if (this.activeImagesCount === 0) {
     this.isIdle = true;
   }
 };
 
-
 function ImageTrailVariant3(container) {
   var self = this;
   this.container = container;
   this.DOM = { el: container };
-  this.images = [...container.querySelectorAll('.content__img')].map(function(img) {
+  this.images = [...container.querySelectorAll(".content__img")].map(function (
+    img
+  ) {
     var imageItem = new ImageItem(img);
     imageItem.init();
     return imageItem;
@@ -387,26 +425,28 @@ function ImageTrailVariant3(container) {
   this.lastMousePos = { x: 0, y: 0 };
   this.cacheMousePos = { x: 0, y: 0 };
 
-  var handlePointerMove = function(ev) {
+  var handlePointerMove = function (ev) {
     var rect = container.getBoundingClientRect();
     self.mousePos = getLocalPointerPos(ev, rect);
   };
-  container.addEventListener('mousemove', handlePointerMove);
-  container.addEventListener('touchmove', handlePointerMove);
+  container.addEventListener("mousemove", handlePointerMove);
+  container.addEventListener("touchmove", handlePointerMove);
 
-  var initRender = function(ev) {
+  var initRender = function (ev) {
     var rect = container.getBoundingClientRect();
     self.mousePos = getLocalPointerPos(ev, rect);
     self.cacheMousePos = { x: self.mousePos.x, y: self.mousePos.y };
-    requestAnimationFrame(function() { self.render(); });
-    container.removeEventListener('mousemove', initRender);
-    container.removeEventListener('touchmove', initRender);
+    requestAnimationFrame(function () {
+      self.render();
+    });
+    container.removeEventListener("mousemove", initRender);
+    container.removeEventListener("touchmove", initRender);
   };
-  container.addEventListener('mousemove', initRender);
-  container.addEventListener('touchmove', initRender);
+  container.addEventListener("mousemove", initRender);
+  container.addEventListener("touchmove", initRender);
 }
 
-ImageTrailVariant3.prototype.render = function() {
+ImageTrailVariant3.prototype.render = function () {
   var distance = getMouseDistance(this.mousePos, this.lastMousePos);
   this.cacheMousePos.x = lerp(this.cacheMousePos.x, this.mousePos.x, 0.1);
   this.cacheMousePos.y = lerp(this.cacheMousePos.y, this.mousePos.y, 0.1);
@@ -419,20 +459,27 @@ ImageTrailVariant3.prototype.render = function() {
     this.zIndexVal = 1;
   }
   var self = this;
-  requestAnimationFrame(function() { self.render(); });
+  requestAnimationFrame(function () {
+    self.render();
+  });
 };
 
-ImageTrailVariant3.prototype.showNextImage = function() {
+ImageTrailVariant3.prototype.showNextImage = function () {
   ++this.zIndexVal;
-  this.imgPosition = this.imgPosition < this.imagesTotal - 1 ? this.imgPosition + 1 : 0;
+  this.imgPosition =
+    this.imgPosition < this.imagesTotal - 1 ? this.imgPosition + 1 : 0;
   var img = this.images[this.imgPosition];
 
   if (window.gsap) {
     window.gsap.killTweensOf(img.DOM.el);
     window.gsap
       .timeline({
-        onStart: function() { this.onImageActivated(); }.bind(this),
-        onComplete: function() { this.onImageDeactivated(); }.bind(this)
+        onStart: function () {
+          this.onImageActivated();
+        }.bind(this),
+        onComplete: function () {
+          this.onImageDeactivated();
+        }.bind(this),
       })
       .fromTo(
         img.DOM.el,
@@ -443,14 +490,14 @@ ImageTrailVariant3.prototype.showNextImage = function() {
           xPercent: 0,
           yPercent: 0,
           x: this.cacheMousePos.x - (img.rect ? img.rect.width : 0) / 2,
-          y: this.cacheMousePos.y - (img.rect ? img.rect.height : 0) / 2
+          y: this.cacheMousePos.y - (img.rect ? img.rect.height : 0) / 2,
         },
         {
           duration: 0.4,
-          ease: 'power1',
+          ease: "power1",
           scale: 1,
           x: this.mousePos.x - (img.rect ? img.rect.width : 0) / 2,
-          y: this.mousePos.y - (img.rect ? img.rect.height : 0) / 2
+          y: this.mousePos.y - (img.rect ? img.rect.height : 0) / 2,
         },
         0
       )
@@ -459,8 +506,8 @@ ImageTrailVariant3.prototype.showNextImage = function() {
         { scale: 1.2 },
         {
           duration: 0.4,
-          ease: 'power1',
-          scale: 1
+          ease: "power1",
+          scale: 1,
         },
         0
       )
@@ -468,11 +515,13 @@ ImageTrailVariant3.prototype.showNextImage = function() {
         img.DOM.el,
         {
           duration: 0.6,
-          ease: 'power2',
+          ease: "power2",
           opacity: 0,
           scale: 0.2,
-          xPercent: function() { return window.gsap.utils.random(-30, 30); },
-          yPercent: -200
+          xPercent: function () {
+            return window.gsap.utils.random(-30, 30);
+          },
+          yPercent: -200,
         },
         0.6
       );
@@ -481,44 +530,50 @@ ImageTrailVariant3.prototype.showNextImage = function() {
     var self = this;
     var el = img.DOM.el;
     var inner = img.DOM.inner;
-    el.style.transition = 'none';
-    inner.style.transition = 'none';
-    el.style.opacity = '1';
-    el.style.transform = 'scale(0) translate(' + 
-      (this.cacheMousePos.x - (img.rect ? img.rect.width : 0) / 2) + 'px, ' + 
-      (this.cacheMousePos.y - (img.rect ? img.rect.height : 0) / 2) + 'px)';
+    el.style.transition = "none";
+    inner.style.transition = "none";
+    el.style.opacity = "1";
+    el.style.transform =
+      "scale(0) translate(" +
+      (this.cacheMousePos.x - (img.rect ? img.rect.width : 0) / 2) +
+      "px, " +
+      (this.cacheMousePos.y - (img.rect ? img.rect.height : 0) / 2) +
+      "px)";
     el.style.zIndex = this.zIndexVal;
-    inner.style.transform = 'scale(1.2)';
-    
+    inner.style.transform = "scale(1.2)";
+
     this.onImageActivated();
-    
-    setTimeout(function() {
-      el.style.transition = 'transform 0.4s ease, opacity 0.4s ease';
-      inner.style.transition = 'transform 0.4s ease';
-      el.style.transform = 'scale(1) translate(' + 
-        (self.mousePos.x - (img.rect ? img.rect.width : 0) / 2) + 'px, ' + 
-        (self.mousePos.y - (img.rect ? img.rect.height : 0) / 2) + 'px)';
-      inner.style.transform = 'scale(1)';
+
+    setTimeout(function () {
+      el.style.transition = "transform 0.4s ease, opacity 0.4s ease";
+      inner.style.transition = "transform 0.4s ease";
+      el.style.transform =
+        "scale(1) translate(" +
+        (self.mousePos.x - (img.rect ? img.rect.width : 0) / 2) +
+        "px, " +
+        (self.mousePos.y - (img.rect ? img.rect.height : 0) / 2) +
+        "px)";
+      inner.style.transform = "scale(1)";
     }, 10);
-    
-    setTimeout(function() {
-      el.style.transition = 'transform 0.6s ease, opacity 0.6s ease';
-      el.style.opacity = '0';
-      el.style.transform = 'scale(0.2) translate(0, -200%)';
+
+    setTimeout(function () {
+      el.style.transition = "transform 0.6s ease, opacity 0.6s ease";
+      el.style.opacity = "0";
+      el.style.transform = "scale(0.2) translate(0, -200%)";
     }, 400);
-    
-    setTimeout(function() {
+
+    setTimeout(function () {
       self.onImageDeactivated();
     }, 1000);
   }
 };
 
-ImageTrailVariant3.prototype.onImageActivated = function() {
+ImageTrailVariant3.prototype.onImageActivated = function () {
   this.activeImagesCount++;
   this.isIdle = false;
 };
 
-ImageTrailVariant3.prototype.onImageDeactivated = function() {
+ImageTrailVariant3.prototype.onImageDeactivated = function () {
   this.activeImagesCount--;
   if (this.activeImagesCount === 0) {
     this.isIdle = true;
@@ -529,7 +584,9 @@ function ImageTrailVariant4(container) {
   var self = this;
   this.container = container;
   this.DOM = { el: container };
-  this.images = [...container.querySelectorAll('.content__img')].map(function(img) {
+  this.images = [...container.querySelectorAll(".content__img")].map(function (
+    img
+  ) {
     var imageItem = new ImageItem(img);
     imageItem.init();
     return imageItem;
@@ -544,26 +601,28 @@ function ImageTrailVariant4(container) {
   this.lastMousePos = { x: 0, y: 0 };
   this.cacheMousePos = { x: 0, y: 0 };
 
-  var handlePointerMove = function(ev) {
+  var handlePointerMove = function (ev) {
     var rect = container.getBoundingClientRect();
     self.mousePos = getLocalPointerPos(ev, rect);
   };
-  container.addEventListener('mousemove', handlePointerMove);
-  container.addEventListener('touchmove', handlePointerMove);
+  container.addEventListener("mousemove", handlePointerMove);
+  container.addEventListener("touchmove", handlePointerMove);
 
-  var initRender = function(ev) {
+  var initRender = function (ev) {
     var rect = container.getBoundingClientRect();
     self.mousePos = getLocalPointerPos(ev, rect);
     self.cacheMousePos = { x: self.mousePos.x, y: self.mousePos.y };
-    requestAnimationFrame(function() { self.render(); });
-    container.removeEventListener('mousemove', initRender);
-    container.removeEventListener('touchmove', initRender);
+    requestAnimationFrame(function () {
+      self.render();
+    });
+    container.removeEventListener("mousemove", initRender);
+    container.removeEventListener("touchmove", initRender);
   };
-  container.addEventListener('mousemove', initRender);
-  container.addEventListener('touchmove', initRender);
+  container.addEventListener("mousemove", initRender);
+  container.addEventListener("touchmove", initRender);
 }
 
-ImageTrailVariant4.prototype.render = function() {
+ImageTrailVariant4.prototype.render = function () {
   var distance = getMouseDistance(this.mousePos, this.lastMousePos);
   if (distance > this.threshold) {
     this.showNextImage();
@@ -574,14 +633,17 @@ ImageTrailVariant4.prototype.render = function() {
 
   if (this.isIdle && this.zIndexVal !== 1) this.zIndexVal = 1;
   var self = this;
-  requestAnimationFrame(function() { self.render(); });
+  requestAnimationFrame(function () {
+    self.render();
+  });
 };
 
-ImageTrailVariant4.prototype.showNextImage = function() {
+ImageTrailVariant4.prototype.showNextImage = function () {
   ++this.zIndexVal;
-  this.imgPosition = this.imgPosition < this.imagesTotal - 1 ? this.imgPosition + 1 : 0;
+  this.imgPosition =
+    this.imgPosition < this.imagesTotal - 1 ? this.imgPosition + 1 : 0;
   var img = this.images[this.imgPosition];
-  
+
   if (window.gsap) {
     window.gsap.killTweensOf(img.DOM.el);
 
@@ -597,8 +659,12 @@ ImageTrailVariant4.prototype.showNextImage = function() {
 
     window.gsap
       .timeline({
-        onStart: function() { this.onImageActivated(); }.bind(this),
-        onComplete: function() { this.onImageDeactivated(); }.bind(this)
+        onStart: function () {
+          this.onImageActivated();
+        }.bind(this),
+        onComplete: function () {
+          this.onImageDeactivated();
+        }.bind(this),
       })
       .fromTo(
         img.DOM.el,
@@ -607,14 +673,14 @@ ImageTrailVariant4.prototype.showNextImage = function() {
           scale: 0,
           zIndex: this.zIndexVal,
           x: this.cacheMousePos.x - (img.rect ? img.rect.width : 0) / 2,
-          y: this.cacheMousePos.y - (img.rect ? img.rect.height : 0) / 2
+          y: this.cacheMousePos.y - (img.rect ? img.rect.height : 0) / 2,
         },
         {
           duration: 0.4,
-          ease: 'power1',
+          ease: "power1",
           scale: 1,
           x: this.mousePos.x - (img.rect ? img.rect.width : 0) / 2,
-          y: this.mousePos.y - (img.rect ? img.rect.height : 0) / 2
+          y: this.mousePos.y - (img.rect ? img.rect.height : 0) / 2,
         },
         0
       )
@@ -622,16 +688,18 @@ ImageTrailVariant4.prototype.showNextImage = function() {
         img.DOM.inner,
         {
           scale: 2,
-          filter: 'brightness(' + Math.max((400 * distance) / 100, 100) + '%) contrast(' + Math.max(
-            (400 * distance) / 100,
-            100
-          ) + '%)'
+          filter:
+            "brightness(" +
+            Math.max((400 * distance) / 100, 100) +
+            "%) contrast(" +
+            Math.max((400 * distance) / 100, 100) +
+            "%)",
         },
         {
           duration: 0.4,
-          ease: 'power1',
+          ease: "power1",
           scale: 1,
-          filter: 'brightness(100%) contrast(100%)'
+          filter: "brightness(100%) contrast(100%)",
         },
         0
       )
@@ -639,8 +707,8 @@ ImageTrailVariant4.prototype.showNextImage = function() {
         img.DOM.el,
         {
           duration: 0.4,
-          ease: 'power3',
-          opacity: 0
+          ease: "power3",
+          opacity: 0,
         },
         0.4
       )
@@ -648,9 +716,9 @@ ImageTrailVariant4.prototype.showNextImage = function() {
         img.DOM.el,
         {
           duration: 1.5,
-          ease: 'power4',
-          x: '+=' + (dx * 110),
-          y: '+=' + (dy * 110)
+          ease: "power4",
+          x: "+=" + dx * 110,
+          y: "+=" + dy * 110,
         },
         0.05
       );
@@ -666,53 +734,65 @@ ImageTrailVariant4.prototype.showNextImage = function() {
     }
     dx *= distance / 100;
     dy *= distance / 100;
-    
+
     var el = img.DOM.el;
     var inner = img.DOM.inner;
-    el.style.transition = 'none';
-    inner.style.transition = 'none';
-    el.style.opacity = '1';
-    el.style.transform = 'scale(0) translate(' + 
-      (this.cacheMousePos.x - (img.rect ? img.rect.width : 0) / 2) + 'px, ' + 
-      (this.cacheMousePos.y - (img.rect ? img.rect.height : 0) / 2) + 'px)';
+    el.style.transition = "none";
+    inner.style.transition = "none";
+    el.style.opacity = "1";
+    el.style.transform =
+      "scale(0) translate(" +
+      (this.cacheMousePos.x - (img.rect ? img.rect.width : 0) / 2) +
+      "px, " +
+      (this.cacheMousePos.y - (img.rect ? img.rect.height : 0) / 2) +
+      "px)";
     el.style.zIndex = this.zIndexVal;
-    inner.style.transform = 'scale(2)';
-    inner.style.filter = 'brightness(' + Math.max((400 * distance) / 100, 100) + '%) contrast(' + Math.max(
-            (400 * distance) / 100, 100
-          ) + '%)';
-    
+    inner.style.transform = "scale(2)";
+    inner.style.filter =
+      "brightness(" +
+      Math.max((400 * distance) / 100, 100) +
+      "%) contrast(" +
+      Math.max((400 * distance) / 100, 100) +
+      "%)";
+
     this.onImageActivated();
-    
-    setTimeout(function() {
-      el.style.transition = 'transform 0.4s ease, opacity 0.4s ease';
-      inner.style.transition = 'transform 0.4s ease, filter 0.4s ease';
-      el.style.transform = 'scale(1) translate(' + 
-        (self.mousePos.x - (img.rect ? img.rect.width : 0) / 2) + 'px, ' + 
-        (self.mousePos.y - (img.rect ? img.rect.height : 0) / 2) + 'px)';
-      inner.style.transform = 'scale(1)';
-      inner.style.filter = 'brightness(100%) contrast(100%)';
+
+    setTimeout(function () {
+      el.style.transition = "transform 0.4s ease, opacity 0.4s ease";
+      inner.style.transition = "transform 0.4s ease, filter 0.4s ease";
+      el.style.transform =
+        "scale(1) translate(" +
+        (self.mousePos.x - (img.rect ? img.rect.width : 0) / 2) +
+        "px, " +
+        (self.mousePos.y - (img.rect ? img.rect.height : 0) / 2) +
+        "px)";
+      inner.style.transform = "scale(1)";
+      inner.style.filter = "brightness(100%) contrast(100%)";
     }, 10);
-    
-    setTimeout(function() {
-      el.style.transition = 'opacity 0.4s ease, transform 1.5s ease';
-      el.style.opacity = '0';
-      el.style.transform = 'scale(1) translate(' + 
-        (self.mousePos.x - (img.rect ? img.rect.width : 0) / 2 + dx * 110) + 'px, ' + 
-        (self.mousePos.y - (img.rect ? img.rect.height : 0) + dy * 110) + 'px)';
+
+    setTimeout(function () {
+      el.style.transition = "opacity 0.4s ease, transform 1.5s ease";
+      el.style.opacity = "0";
+      el.style.transform =
+        "scale(1) translate(" +
+        (self.mousePos.x - (img.rect ? img.rect.width : 0) / 2 + dx * 110) +
+        "px, " +
+        (self.mousePos.y - (img.rect ? img.rect.height : 0) + dy * 110) +
+        "px)";
     }, 400);
-    
-    setTimeout(function() {
+
+    setTimeout(function () {
       self.onImageDeactivated();
     }, 2000);
   }
 };
 
-ImageTrailVariant4.prototype.onImageActivated = function() {
+ImageTrailVariant4.prototype.onImageActivated = function () {
   this.activeImagesCount++;
   this.isIdle = false;
 };
 
-ImageTrailVariant4.prototype.onImageDeactivated = function() {
+ImageTrailVariant4.prototype.onImageDeactivated = function () {
   this.activeImagesCount--;
   if (this.activeImagesCount === 0) {
     this.isIdle = true;
@@ -723,7 +803,9 @@ function ImageTrailVariant5(container) {
   var self = this;
   this.container = container;
   this.DOM = { el: container };
-  this.images = [...container.querySelectorAll('.content__img')].map(function(img) {
+  this.images = [...container.querySelectorAll(".content__img")].map(function (
+    img
+  ) {
     var imageItem = new ImageItem(img);
     imageItem.init();
     return imageItem;
@@ -739,26 +821,28 @@ function ImageTrailVariant5(container) {
   this.cacheMousePos = { x: 0, y: 0 };
   this.lastAngle = 0;
 
-  var handlePointerMove = function(ev) {
+  var handlePointerMove = function (ev) {
     var rect = container.getBoundingClientRect();
     self.mousePos = getLocalPointerPos(ev, rect);
   };
-  container.addEventListener('mousemove', handlePointerMove);
-  container.addEventListener('touchmove', handlePointerMove);
+  container.addEventListener("mousemove", handlePointerMove);
+  container.addEventListener("touchmove", handlePointerMove);
 
-  var initRender = function(ev) {
+  var initRender = function (ev) {
     var rect = container.getBoundingClientRect();
     self.mousePos = getLocalPointerPos(ev, rect);
     self.cacheMousePos = { x: self.mousePos.x, y: self.mousePos.y };
-    requestAnimationFrame(function() { self.render(); });
-    container.removeEventListener('mousemove', initRender);
-    container.removeEventListener('touchmove', initRender);
+    requestAnimationFrame(function () {
+      self.render();
+    });
+    container.removeEventListener("mousemove", initRender);
+    container.removeEventListener("touchmove", initRender);
   };
-  container.addEventListener('mousemove', initRender);
-  container.addEventListener('touchmove', initRender);
+  container.addEventListener("mousemove", initRender);
+  container.addEventListener("touchmove", initRender);
 }
 
-ImageTrailVariant5.prototype.render = function() {
+ImageTrailVariant5.prototype.render = function () {
   var distance = getMouseDistance(this.mousePos, this.lastMousePos);
   if (distance > this.threshold) {
     this.showNextImage();
@@ -768,10 +852,12 @@ ImageTrailVariant5.prototype.render = function() {
   this.cacheMousePos.y = lerp(this.cacheMousePos.y, this.mousePos.y, 0.1);
   if (this.isIdle && this.zIndexVal !== 1) this.zIndexVal = 1;
   var self = this;
-  requestAnimationFrame(function() { self.render(); });
+  requestAnimationFrame(function () {
+    self.render();
+  });
 };
 
-ImageTrailVariant5.prototype.showNextImage = function() {
+ImageTrailVariant5.prototype.showNextImage = function () {
   var dx = this.mousePos.x - this.cacheMousePos.x;
   var dy = this.mousePos.y - this.cacheMousePos.y;
   var angle = Math.atan2(dy, dx) * (180 / Math.PI);
@@ -789,36 +875,41 @@ ImageTrailVariant5.prototype.showNextImage = function() {
   dy *= distance / 150;
 
   ++this.zIndexVal;
-  this.imgPosition = this.imgPosition < this.imagesTotal - 1 ? this.imgPosition + 1 : 0;
+  this.imgPosition =
+    this.imgPosition < this.imagesTotal - 1 ? this.imgPosition + 1 : 0;
   var img = this.images[this.imgPosition];
-  
+
   if (window.gsap) {
     window.gsap.killTweensOf(img.DOM.el);
-    
+
     window.gsap
       .timeline({
-        onStart: function() { this.onImageActivated(); }.bind(this),
-        onComplete: function() { this.onImageDeactivated(); }.bind(this)
+        onStart: function () {
+          this.onImageActivated();
+        }.bind(this),
+        onComplete: function () {
+          this.onImageDeactivated();
+        }.bind(this),
       })
       .fromTo(
         img.DOM.el,
         {
           opacity: 1,
-          filter: 'brightness(80%)',
+          filter: "brightness(80%)",
           scale: 0.1,
           zIndex: this.zIndexVal,
           x: this.cacheMousePos.x - (img.rect ? img.rect.width : 0) / 2,
           y: this.cacheMousePos.y - (img.rect ? img.rect.height : 0) / 2,
-          rotation: startAngle
+          rotation: startAngle,
         },
         {
           duration: 1,
-          ease: 'power2',
+          ease: "power2",
           scale: 1,
-          filter: 'brightness(100%)',
+          filter: "brightness(100%)",
           x: this.mousePos.x - (img.rect ? img.rect.width : 0) / 2 + dx * 70,
           y: this.mousePos.y - (img.rect ? img.rect.height : 0) / 2 + dy * 70,
-          rotation: this.lastAngle
+          rotation: this.lastAngle,
         },
         0
       )
@@ -826,8 +917,8 @@ ImageTrailVariant5.prototype.showNextImage = function() {
         img.DOM.el,
         {
           duration: 0.4,
-          ease: 'expo',
-          opacity: 0
+          ease: "expo",
+          opacity: 0,
         },
         0.5
       )
@@ -835,9 +926,9 @@ ImageTrailVariant5.prototype.showNextImage = function() {
         img.DOM.el,
         {
           duration: 1.5,
-          ease: 'power4',
-          x: '+=' + (dx * 120),
-          y: '+=' + (dy * 120)
+          ease: "power4",
+          x: "+=" + dx * 120,
+          y: "+=" + dy * 120,
         },
         0.05
       );
@@ -859,54 +950,70 @@ ImageTrailVariant5.prototype.showNextImage = function() {
     }
     dx *= distance / 150;
     dy *= distance / 150;
-    
+
     var el = img.DOM.el;
-    el.style.transition = 'none';
-    el.style.opacity = '1';
-    el.style.filter = 'brightness(80%)';
-    el.style.transform = 'scale(0.1) rotate(' + startAngle + 'deg) translate(' + 
-      (this.cacheMousePos.x - (img.rect ? img.rect.width : 0) / 2) + 'px, ' + 
-      (this.cacheMousePos.y - (img.rect ? img.rect.height : 0) / 2) + 'px)';
+    el.style.transition = "none";
+    el.style.opacity = "1";
+    el.style.filter = "brightness(80%)";
+    el.style.transform =
+      "scale(0.1) rotate(" +
+      startAngle +
+      "deg) translate(" +
+      (this.cacheMousePos.x - (img.rect ? img.rect.width : 0) / 2) +
+      "px, " +
+      (this.cacheMousePos.y - (img.rect ? img.rect.height : 0) / 2) +
+      "px)";
     el.style.zIndex = this.zIndexVal;
-    
+
     this.onImageActivated();
-    
-    setTimeout(function() {
-      el.style.transition = 'transform 1s ease, opacity 0.4s ease, filter 1s ease';
-      el.style.transform = 'scale(1) rotate(' + self.lastAngle + 'deg) translate(' + 
-        (self.mousePos.x - (img.rect ? img.rect.width : 0) / 2 + dx * 70) + 'px, ' + 
-        (self.mousePos.y - (img.rect ? img.rect.height : 0) / 2 + dy * 70) + 'px)';
-      el.style.filter = 'brightness(100%)';
+
+    setTimeout(function () {
+      el.style.transition =
+        "transform 1s ease, opacity 0.4s ease, filter 1s ease";
+      el.style.transform =
+        "scale(1) rotate(" +
+        self.lastAngle +
+        "deg) translate(" +
+        (self.mousePos.x - (img.rect ? img.rect.width : 0) / 2 + dx * 70) +
+        "px, " +
+        (self.mousePos.y - (img.rect ? img.rect.height : 0) / 2 + dy * 70) +
+        "px)";
+      el.style.filter = "brightness(100%)";
     }, 10);
-    
-    setTimeout(function() {
-      el.style.transition = 'opacity 0.4s ease';
-      el.style.opacity = '0';
+
+    setTimeout(function () {
+      el.style.transition = "opacity 0.4s ease";
+      el.style.opacity = "0";
     }, 1500);
-    
-    setTimeout(function() {
-      el.style.transition = 'transform 1.5s ease';
+
+    setTimeout(function () {
+      el.style.transition = "transform 1.5s ease";
       var currentTransform = window.getComputedStyle(el).transform;
       var matrix = new DOMMatrix(currentTransform);
       var translateX = matrix.m41;
       var translateY = matrix.m42;
-      el.style.transform = 'rotate(' + self.lastAngle + 'deg) translate(' + 
-        (translateX + dx * 120) + 'px, ' + 
-        (translateY + dy * 120) + 'px)';
+      el.style.transform =
+        "rotate(" +
+        self.lastAngle +
+        "deg) translate(" +
+        (translateX + dx * 120) +
+        "px, " +
+        (translateY + dy * 120) +
+        "px)";
     }, 1550);
-    
-    setTimeout(function() {
+
+    setTimeout(function () {
       self.onImageDeactivated();
     }, 3000);
   }
 };
 
-ImageTrailVariant5.prototype.onImageActivated = function() {
+ImageTrailVariant5.prototype.onImageActivated = function () {
   this.activeImagesCount++;
   this.isIdle = false;
 };
 
-ImageTrailVariant5.prototype.onImageDeactivated = function() {
+ImageTrailVariant5.prototype.onImageDeactivated = function () {
   this.activeImagesCount--;
   if (this.activeImagesCount === 0) this.isIdle = true;
 };
@@ -915,7 +1022,9 @@ function ImageTrailVariant6(container) {
   var self = this;
   this.container = container;
   this.DOM = { el: container };
-  this.images = [...container.querySelectorAll('.content__img')].map(function(img) {
+  this.images = [...container.querySelectorAll(".content__img")].map(function (
+    img
+  ) {
     var imageItem = new ImageItem(img);
     imageItem.init();
     return imageItem;
@@ -930,26 +1039,28 @@ function ImageTrailVariant6(container) {
   this.lastMousePos = { x: 0, y: 0 };
   this.cacheMousePos = { x: 0, y: 0 };
 
-  var handlePointerMove = function(ev) {
+  var handlePointerMove = function (ev) {
     var rect = container.getBoundingClientRect();
     self.mousePos = getLocalPointerPos(ev, rect);
   };
-  container.addEventListener('mousemove', handlePointerMove);
-  container.addEventListener('touchmove', handlePointerMove);
+  container.addEventListener("mousemove", handlePointerMove);
+  container.addEventListener("touchmove", handlePointerMove);
 
-  var initRender = function(ev) {
+  var initRender = function (ev) {
     var rect = container.getBoundingClientRect();
     self.mousePos = getLocalPointerPos(ev, rect);
     self.cacheMousePos = { x: self.mousePos.x, y: self.mousePos.y };
-    requestAnimationFrame(function() { self.render(); });
-    container.removeEventListener('mousemove', initRender);
-    container.removeEventListener('touchmove', initRender);
+    requestAnimationFrame(function () {
+      self.render();
+    });
+    container.removeEventListener("mousemove", initRender);
+    container.removeEventListener("touchmove", initRender);
   };
-  container.addEventListener('mousemove', initRender);
-  container.addEventListener('touchmove', initRender);
+  container.addEventListener("mousemove", initRender);
+  container.addEventListener("touchmove", initRender);
 }
 
-ImageTrailVariant6.prototype.render = function() {
+ImageTrailVariant6.prototype.render = function () {
   var distance = getMouseDistance(this.mousePos, this.lastMousePos);
   this.cacheMousePos.x = lerp(this.cacheMousePos.x, this.mousePos.x, 0.3);
   this.cacheMousePos.y = lerp(this.cacheMousePos.y, this.mousePos.y, 0.3);
@@ -962,36 +1073,55 @@ ImageTrailVariant6.prototype.render = function() {
     this.zIndexVal = 1;
   }
   var self = this;
-  requestAnimationFrame(function() { self.render(); });
+  requestAnimationFrame(function () {
+    self.render();
+  });
 };
 
-ImageTrailVariant6.prototype.mapSpeedToSize = function(speed, minSize, maxSize) {
+ImageTrailVariant6.prototype.mapSpeedToSize = function (
+  speed,
+  minSize,
+  maxSize
+) {
   var maxSpeed = 200;
   return minSize + (maxSize - minSize) * Math.min(speed / maxSpeed, 1);
 };
 
-ImageTrailVariant6.prototype.mapSpeedToBrightness = function(speed, minB, maxB) {
+ImageTrailVariant6.prototype.mapSpeedToBrightness = function (
+  speed,
+  minB,
+  maxB
+) {
   var maxSpeed = 70;
   return minB + (maxB - minB) * Math.min(speed / maxSpeed, 1);
 };
 
-ImageTrailVariant6.prototype.mapSpeedToBlur = function(speed, minBlur, maxBlur) {
+ImageTrailVariant6.prototype.mapSpeedToBlur = function (
+  speed,
+  minBlur,
+  maxBlur
+) {
   var maxSpeed = 90;
   return minBlur + (maxBlur - minBlur) * Math.min(speed / maxSpeed, 1);
 };
 
-ImageTrailVariant6.prototype.mapSpeedToGrayscale = function(speed, minG, maxG) {
+ImageTrailVariant6.prototype.mapSpeedToGrayscale = function (
+  speed,
+  minG,
+  maxG
+) {
   var maxSpeed = 90;
   return minG + (maxG - minG) * Math.min(speed / maxSpeed, 1);
 };
 
-ImageTrailVariant6.prototype.showNextImage = function() {
+ImageTrailVariant6.prototype.showNextImage = function () {
   var dx = this.mousePos.x - this.cacheMousePos.x;
   var dy = this.mousePos.y - this.cacheMousePos.y;
   var speed = Math.sqrt(dx * dx + dy * dy);
 
   ++this.zIndexVal;
-  this.imgPosition = this.imgPosition < this.imagesTotal - 1 ? this.imgPosition + 1 : 0;
+  this.imgPosition =
+    this.imgPosition < this.imagesTotal - 1 ? this.imgPosition + 1 : 0;
   var img = this.images[this.imgPosition];
 
   var scaleFactor = this.mapSpeedToSize(speed, 0.3, 2);
@@ -1003,8 +1133,12 @@ ImageTrailVariant6.prototype.showNextImage = function() {
     window.gsap.killTweensOf(img.DOM.el);
     window.gsap
       .timeline({
-        onStart: function() { this.onImageActivated(); }.bind(this),
-        onComplete: function() { this.onImageDeactivated(); }.bind(this)
+        onStart: function () {
+          this.onImageActivated();
+        }.bind(this),
+        onComplete: function () {
+          this.onImageDeactivated();
+        }.bind(this),
       })
       .fromTo(
         img.DOM.el,
@@ -1013,15 +1147,22 @@ ImageTrailVariant6.prototype.showNextImage = function() {
           scale: 0,
           zIndex: this.zIndexVal,
           x: this.cacheMousePos.x - (img.rect ? img.rect.width : 0) / 2,
-          y: this.cacheMousePos.y - (img.rect ? img.rect.height : 0) / 2
+          y: this.cacheMousePos.y - (img.rect ? img.rect.height : 0) / 2,
         },
         {
           duration: 0.8,
-          ease: 'power3',
+          ease: "power3",
           scale: scaleFactor,
-          filter: 'grayscale(' + (grayscaleValue * 100) + '%) brightness(' + (brightnessValue * 100) + '%) blur(' + blurValue + 'px)',
+          filter:
+            "grayscale(" +
+            grayscaleValue * 100 +
+            "%) brightness(" +
+            brightnessValue * 100 +
+            "%) blur(" +
+            blurValue +
+            "px)",
           x: this.mousePos.x - (img.rect ? img.rect.width : 0) / 2,
-          y: this.mousePos.y - (img.rect ? img.rect.height : 0) / 2
+          y: this.mousePos.y - (img.rect ? img.rect.height : 0) / 2,
         },
         0
       )
@@ -1030,8 +1171,8 @@ ImageTrailVariant6.prototype.showNextImage = function() {
         { scale: 2 },
         {
           duration: 0.8,
-          ease: 'power3',
-          scale: 1
+          ease: "power3",
+          scale: 1,
         },
         0
       )
@@ -1039,9 +1180,9 @@ ImageTrailVariant6.prototype.showNextImage = function() {
         img.DOM.el,
         {
           duration: 0.4,
-          ease: 'power3.in',
+          ease: "power3.in",
           opacity: 0,
-          scale: 0.2
+          scale: 0.2,
         },
         0.45
       );
@@ -1051,50 +1192,69 @@ ImageTrailVariant6.prototype.showNextImage = function() {
     var dx = this.mousePos.x - this.cacheMousePos.x;
     var dy = this.mousePos.y - this.cacheMousePos.y;
     var speed = Math.sqrt(dx * dx + dy * dy);
-    
+
     var el = img.DOM.el;
     var inner = img.DOM.inner;
-    el.style.transition = 'none';
-    inner.style.transition = 'none';
-    el.style.opacity = '1';
-    el.style.transform = 'scale(0) translate(' + 
-      (this.cacheMousePos.x - (img.rect ? img.rect.width : 0) / 2) + 'px, ' + 
-      (this.cacheMousePos.y - (img.rect ? img.rect.height : 0) / 2) + 'px)';
+    el.style.transition = "none";
+    inner.style.transition = "none";
+    el.style.opacity = "1";
+    el.style.transform =
+      "scale(0) translate(" +
+      (this.cacheMousePos.x - (img.rect ? img.rect.width : 0) / 2) +
+      "px, " +
+      (this.cacheMousePos.y - (img.rect ? img.rect.height : 0) / 2) +
+      "px)";
     el.style.zIndex = this.zIndexVal;
-    el.style.filter = 'grayscale(' + (grayscaleValue * 100) + '%) brightness(' + (brightnessValue * 100) + '%) blur(' + blurValue + 'px)';
-    inner.style.transform = 'scale(2)';
-    
+    el.style.filter =
+      "grayscale(" +
+      grayscaleValue * 100 +
+      "%) brightness(" +
+      brightnessValue * 100 +
+      "%) blur(" +
+      blurValue +
+      "px)";
+    inner.style.transform = "scale(2)";
+
     this.onImageActivated();
-    
-    setTimeout(function() {
-      el.style.transition = 'transform 0.8s ease, opacity 0.8s ease, filter 0.8s ease';
-      inner.style.transition = 'transform 0.8s ease';
-      el.style.transform = 'scale(' + scaleFactor + ') translate(' + 
-        (self.mousePos.x - (img.rect ? img.rect.width : 0) / 2) + 'px, ' + 
-        (self.mousePos.y - (img.rect ? img.rect.height : 0) / 2) + 'px)';
-      inner.style.transform = 'scale(1)';
+
+    setTimeout(function () {
+      el.style.transition =
+        "transform 0.8s ease, opacity 0.8s ease, filter 0.8s ease";
+      inner.style.transition = "transform 0.8s ease";
+      el.style.transform =
+        "scale(" +
+        scaleFactor +
+        ") translate(" +
+        (self.mousePos.x - (img.rect ? img.rect.width : 0) / 2) +
+        "px, " +
+        (self.mousePos.y - (img.rect ? img.rect.height : 0) / 2) +
+        "px)";
+      inner.style.transform = "scale(1)";
     }, 10);
-    
-    setTimeout(function() {
-      el.style.transition = 'transform 0.4s ease, opacity 0.4s ease';
-      el.style.opacity = '0';
-      el.style.transform = 'scale(0.2) translate(' + 
-        (self.mousePos.x - (img.rect ? img.rect.width : 0) / 2) + 'px, ' + 
-        (self.mousePos.y - (img.rect ? img.rect.height : 0) / 2) + 'px)';
+
+    setTimeout(function () {
+      el.style.transition = "transform 0.4s ease, opacity 0.4s ease";
+      el.style.opacity = "0";
+      el.style.transform =
+        "scale(0.2) translate(" +
+        (self.mousePos.x - (img.rect ? img.rect.width : 0) / 2) +
+        "px, " +
+        (self.mousePos.y - (img.rect ? img.rect.height : 0) / 2) +
+        "px)";
     }, 800);
-    
-    setTimeout(function() {
+
+    setTimeout(function () {
       self.onImageDeactivated();
     }, 1250);
   }
 };
 
-ImageTrailVariant6.prototype.onImageActivated = function() {
+ImageTrailVariant6.prototype.onImageActivated = function () {
   this.activeImagesCount++;
   this.isIdle = false;
 };
 
-ImageTrailVariant6.prototype.onImageDeactivated = function() {
+ImageTrailVariant6.prototype.onImageDeactivated = function () {
   this.activeImagesCount--;
   if (this.activeImagesCount === 0) {
     this.isIdle = true;
@@ -1114,7 +1274,9 @@ function ImageTrailVariant7(container) {
   var self = this;
   this.container = container;
   this.DOM = { el: container };
-  this.images = [...container.querySelectorAll('.content__img')].map(function(img) {
+  this.images = [...container.querySelectorAll(".content__img")].map(function (
+    img
+  ) {
     var imageItem = new ImageItem(img);
     imageItem.init();
     return imageItem;
@@ -1130,28 +1292,33 @@ function ImageTrailVariant7(container) {
   this.cacheMousePos = { x: 0, y: 0 };
   this.visibleImagesCount = 0;
   this.visibleImagesTotal = 9;
-  this.visibleImagesTotal = Math.min(this.visibleImagesTotal, this.imagesTotal - 1);
+  this.visibleImagesTotal = Math.min(
+    this.visibleImagesTotal,
+    this.imagesTotal - 1
+  );
 
-  var handlePointerMove = function(ev) {
+  var handlePointerMove = function (ev) {
     var rect = container.getBoundingClientRect();
     self.mousePos = getLocalPointerPos(ev, rect);
   };
-  container.addEventListener('mousemove', handlePointerMove);
-  container.addEventListener('touchmove', handlePointerMove);
+  container.addEventListener("mousemove", handlePointerMove);
+  container.addEventListener("touchmove", handlePointerMove);
 
-  var initRender = function(ev) {
+  var initRender = function (ev) {
     var rect = container.getBoundingClientRect();
     self.mousePos = getLocalPointerPos(ev, rect);
     self.cacheMousePos = { x: self.mousePos.x, y: self.mousePos.y };
-    requestAnimationFrame(function() { self.render(); });
-    container.removeEventListener('mousemove', initRender);
-    container.removeEventListener('touchmove', initRender);
+    requestAnimationFrame(function () {
+      self.render();
+    });
+    container.removeEventListener("mousemove", initRender);
+    container.removeEventListener("touchmove", initRender);
   };
-  container.addEventListener('mousemove', initRender);
-  container.addEventListener('touchmove', initRender);
+  container.addEventListener("mousemove", initRender);
+  container.addEventListener("touchmove", initRender);
 }
 
-ImageTrailVariant7.prototype.render = function() {
+ImageTrailVariant7.prototype.render = function () {
   var distance = getMouseDistance(this.mousePos, this.lastMousePos);
   this.cacheMousePos.x = lerp(this.cacheMousePos.x, this.mousePos.x, 0.3);
   this.cacheMousePos.y = lerp(this.cacheMousePos.y, this.mousePos.y, 0.3);
@@ -1163,12 +1330,15 @@ ImageTrailVariant7.prototype.render = function() {
   if (this.isIdle && this.zIndexVal !== 1) this.zIndexVal = 1;
 
   var self = this;
-  requestAnimationFrame(function() { self.render(); });
+  requestAnimationFrame(function () {
+    self.render();
+  });
 };
 
-ImageTrailVariant7.prototype.showNextImage = function() {
+ImageTrailVariant7.prototype.showNextImage = function () {
   ++this.zIndexVal;
-  this.imgPosition = this.imgPosition < this.imagesTotal - 1 ? this.imgPosition + 1 : 0;
+  this.imgPosition =
+    this.imgPosition < this.imagesTotal - 1 ? this.imgPosition + 1 : 0;
   var img = this.images[this.imgPosition];
   ++this.visibleImagesCount;
 
@@ -1178,8 +1348,12 @@ ImageTrailVariant7.prototype.showNextImage = function() {
 
     window.gsap
       .timeline({
-        onStart: function() { this.onImageActivated(); }.bind(this),
-        onComplete: function() { this.onImageDeactivated(); }.bind(this)
+        onStart: function () {
+          this.onImageActivated();
+        }.bind(this),
+        onComplete: function () {
+          this.onImageDeactivated();
+        }.bind(this),
       })
       .fromTo(
         img.DOM.el,
@@ -1189,15 +1363,15 @@ ImageTrailVariant7.prototype.showNextImage = function() {
           opacity: 1,
           zIndex: this.zIndexVal,
           x: this.cacheMousePos.x - (img.rect ? img.rect.width : 0) / 2,
-          y: this.cacheMousePos.y - (img.rect ? img.rect.height : 0) / 2
+          y: this.cacheMousePos.y - (img.rect ? img.rect.height : 0) / 2,
         },
         {
           duration: 0.4,
-          ease: 'power3',
+          ease: "power3",
           scale: scaleValue,
           rotationZ: window.gsap.utils.random(-3, 3),
           x: this.mousePos.x - (img.rect ? img.rect.width : 0) / 2,
-          y: this.mousePos.y - (img.rect ? img.rect.height : 0) / 2
+          y: this.mousePos.y - (img.rect ? img.rect.height : 0) / 2,
         },
         0
       );
@@ -1205,53 +1379,72 @@ ImageTrailVariant7.prototype.showNextImage = function() {
     // 备用方案：如果没有 GSAP，使用原生 CSS 动画
     var scaleValue = Math.random() * 1.1 + 0.5; // 模拟 gsap.utils.random(0.5, 1.6)
     var rotationZ = Math.random() * 6 - 3; // 模拟 gsap.utils.random(-3, 3)
-    
+
     var el = img.DOM.el;
-    el.style.transition = 'none';
-    el.style.opacity = '1';
-    el.style.transform = 'scale(' + (scaleValue - Math.max(Math.random() * 0.4 + 0.2, 0)) + ') rotateZ(0deg) translate(' + 
-      (this.cacheMousePos.x - (img.rect ? img.rect.width : 0) / 2) + 'px, ' + 
-      (this.cacheMousePos.y - (img.rect ? img.rect.height : 0) / 2) + 'px)';
+    el.style.transition = "none";
+    el.style.opacity = "1";
+    el.style.transform =
+      "scale(" +
+      (scaleValue - Math.max(Math.random() * 0.4 + 0.2, 0)) +
+      ") rotateZ(0deg) translate(" +
+      (this.cacheMousePos.x - (img.rect ? img.rect.width : 0) / 2) +
+      "px, " +
+      (this.cacheMousePos.y - (img.rect ? img.rect.height : 0) / 2) +
+      "px)";
     el.style.zIndex = this.zIndexVal;
-    
+
     this.onImageActivated();
-    
-    setTimeout(function() {
-      el.style.transition = 'transform 0.4s ease, opacity 0.4s ease';
-      el.style.transform = 'scale(' + scaleValue + ') rotateZ(' + rotationZ + 'deg) translate(' + 
-        (self.mousePos.x - (img.rect ? img.rect.width : 0) / 2) + 'px, ' + 
-        (self.mousePos.y - (img.rect ? img.rect.height : 0) / 2) + 'px)';
+
+    setTimeout(function () {
+      el.style.transition = "transform 0.4s ease, opacity 0.4s ease";
+      el.style.transform =
+        "scale(" +
+        scaleValue +
+        ") rotateZ(" +
+        rotationZ +
+        "deg) translate(" +
+        (self.mousePos.x - (img.rect ? img.rect.width : 0) / 2) +
+        "px, " +
+        (self.mousePos.y - (img.rect ? img.rect.height : 0) / 2) +
+        "px)";
     }, 10);
-    
+
     if (this.visibleImagesCount >= this.visibleImagesTotal) {
-      var lastInQueue = getNewPosition(this.imgPosition, this.visibleImagesTotal, this.images);
+      var lastInQueue = getNewPosition(
+        this.imgPosition,
+        this.visibleImagesTotal,
+        this.images
+      );
       var oldImg = this.images[lastInQueue];
-      setTimeout(function() {
+      setTimeout(function () {
         var oldEl = oldImg.DOM.el;
-        oldEl.style.transition = 'opacity 0.4s ease, transform 0.4s ease';
-        oldEl.style.opacity = '0';
-        oldEl.style.transform = 'scale(1.3) translate(' + 
-          (self.mousePos.x - (oldImg.rect ? oldImg.rect.width : 0) / 2) + 'px, ' + 
-          (self.mousePos.y - (oldImg.rect ? oldImg.rect.height : 0) / 2) + 'px)';
-        
+        oldEl.style.transition = "opacity 0.4s ease, transform 0.4s ease";
+        oldEl.style.opacity = "0";
+        oldEl.style.transform =
+          "scale(1.3) translate(" +
+          (self.mousePos.x - (oldImg.rect ? oldImg.rect.width : 0) / 2) +
+          "px, " +
+          (self.mousePos.y - (oldImg.rect ? oldImg.rect.height : 0) / 2) +
+          "px)";
+
         if (self.activeImagesCount === 1) {
           self.isIdle = true;
         }
       }, 100);
     }
-    
-    setTimeout(function() {
+
+    setTimeout(function () {
       self.onImageDeactivated();
     }, 400);
   }
 };
 
-ImageTrailVariant7.prototype.onImageActivated = function() {
+ImageTrailVariant7.prototype.onImageActivated = function () {
   this.activeImagesCount++;
   this.isIdle = false;
 };
 
-ImageTrailVariant7.prototype.onImageDeactivated = function() {
+ImageTrailVariant7.prototype.onImageDeactivated = function () {
   this.activeImagesCount--;
 };
 
@@ -1259,7 +1452,9 @@ function ImageTrailVariant8(container) {
   var self = this;
   this.container = container;
   this.DOM = { el: container };
-  this.images = [...container.querySelectorAll('.content__img')].map(function(img) {
+  this.images = [...container.querySelectorAll(".content__img")].map(function (
+    img
+  ) {
     var imageItem = new ImageItem(img);
     imageItem.init();
     return imageItem;
@@ -1278,26 +1473,28 @@ function ImageTrailVariant8(container) {
   this.zValue = 0;
   this.cachedZValue = 0;
 
-  var handlePointerMove = function(ev) {
+  var handlePointerMove = function (ev) {
     var rect = container.getBoundingClientRect();
     self.mousePos = getLocalPointerPos(ev, rect);
   };
-  container.addEventListener('mousemove', handlePointerMove);
-  container.addEventListener('touchmove', handlePointerMove);
+  container.addEventListener("mousemove", handlePointerMove);
+  container.addEventListener("touchmove", handlePointerMove);
 
-  var initRender = function(ev) {
+  var initRender = function (ev) {
     var rect = container.getBoundingClientRect();
     self.mousePos = getLocalPointerPos(ev, rect);
     self.cacheMousePos = { x: self.mousePos.x, y: self.mousePos.y };
-    requestAnimationFrame(function() { self.render(); });
-    container.removeEventListener('mousemove', initRender);
-    container.removeEventListener('touchmove', initRender);
+    requestAnimationFrame(function () {
+      self.render();
+    });
+    container.removeEventListener("mousemove", initRender);
+    container.removeEventListener("touchmove", initRender);
   };
-  container.addEventListener('mousemove', initRender);
-  container.addEventListener('touchmove', initRender);
+  container.addEventListener("mousemove", initRender);
+  container.addEventListener("touchmove", initRender);
 }
 
-ImageTrailVariant8.prototype.render = function() {
+ImageTrailVariant8.prototype.render = function () {
   var distance = getMouseDistance(this.mousePos, this.lastMousePos);
   this.cacheMousePos.x = lerp(this.cacheMousePos.x, this.mousePos.x, 0.1);
   this.cacheMousePos.y = lerp(this.cacheMousePos.y, this.mousePos.y, 0.1);
@@ -1310,10 +1507,12 @@ ImageTrailVariant8.prototype.render = function() {
     this.zIndexVal = 1;
   }
   var self = this;
-  requestAnimationFrame(function() { self.render(); });
+  requestAnimationFrame(function () {
+    self.render();
+  });
 };
 
-ImageTrailVariant8.prototype.showNextImage = function() {
+ImageTrailVariant8.prototype.showNextImage = function () {
   var rect = this.container.getBoundingClientRect();
   var centerX = rect.width / 2;
   var centerY = rect.height / 2;
@@ -1333,16 +1532,21 @@ ImageTrailVariant8.prototype.showNextImage = function() {
   var brightness = 0.2 + normalizedZ * 2.3;
 
   ++this.zIndexVal;
-  this.imgPosition = this.imgPosition < this.imagesTotal - 1 ? this.imgPosition + 1 : 0;
+  this.imgPosition =
+    this.imgPosition < this.imagesTotal - 1 ? this.imgPosition + 1 : 0;
   var img = this.images[this.imgPosition];
-  
+
   if (window.gsap) {
     window.gsap.killTweensOf(img.DOM.el);
 
     window.gsap
       .timeline({
-        onStart: function() { this.onImageActivated(); }.bind(this),
-        onComplete: function() { this.onImageDeactivated(); }.bind(this)
+        onStart: function () {
+          this.onImageActivated();
+        }.bind(this),
+        onComplete: function () {
+          this.onImageDeactivated();
+        }.bind(this),
       })
       .set(this.DOM.el, { perspective: 1000 }, 0)
       .fromTo(
@@ -1356,16 +1560,16 @@ ImageTrailVariant8.prototype.showNextImage = function() {
           y: this.cacheMousePos.y - (img.rect ? img.rect.height : 0) / 2,
           rotationX: this.cachedRotation.x,
           rotationY: this.cachedRotation.y,
-          filter: 'brightness(' + brightness + ')'
+          filter: "brightness(" + brightness + ")",
         },
         {
           duration: 1,
-          ease: 'expo',
+          ease: "expo",
           scale: 1 + this.zValue / 1000,
           x: this.mousePos.x - (img.rect ? img.rect.width : 0) / 2,
           y: this.mousePos.y - (img.rect ? img.rect.height : 0) / 2,
           rotationX: this.rotation.x,
-          rotationY: this.rotation.y
+          rotationY: this.rotation.y,
         },
         0
       )
@@ -1373,9 +1577,9 @@ ImageTrailVariant8.prototype.showNextImage = function() {
         img.DOM.el,
         {
           duration: 0.4,
-          ease: 'power2',
+          ease: "power2",
           opacity: 0,
-          z: -800
+          z: -800,
         },
         0.3
       );
@@ -1399,45 +1603,75 @@ ImageTrailVariant8.prototype.showNextImage = function() {
     this.cachedZValue = this.zValue;
     var normalizedZ = (this.zValue + 600) / 1200;
     var brightness = 0.2 + normalizedZ * 2.3;
-    
+
     var el = img.DOM.el;
-    el.style.transition = 'none';
-    el.style.opacity = '1';
-    el.style.transform = 'translateZ(0) scale(' + (1 + this.cachedZValue / 1000) + ') rotateX(' + this.cachedRotation.x + 'deg) rotateY(' + this.cachedRotation.y + 'deg) translate(' + 
-      (this.cacheMousePos.x - (img.rect ? img.rect.width : 0) / 2) + 'px, ' + 
-      (this.cacheMousePos.y - (img.rect ? img.rect.height : 0) / 2) + 'px)';
+    el.style.transition = "none";
+    el.style.opacity = "1";
+    el.style.transform =
+      "translateZ(0) scale(" +
+      (1 + this.cachedZValue / 1000) +
+      ") rotateX(" +
+      this.cachedRotation.x +
+      "deg) rotateY(" +
+      this.cachedRotation.y +
+      "deg) translate(" +
+      (this.cacheMousePos.x - (img.rect ? img.rect.width : 0) / 2) +
+      "px, " +
+      (this.cacheMousePos.y - (img.rect ? img.rect.height : 0) / 2) +
+      "px)";
     el.style.zIndex = this.zIndexVal;
-    el.style.filter = 'brightness(' + brightness + ')';
-    
+    el.style.filter = "brightness(" + brightness + ")";
+
     this.onImageActivated();
-    
-    setTimeout(function() {
-      el.style.transition = 'transform 1s ease, opacity 1s ease, filter 1s ease';
-      el.style.transform = 'translateZ(' + self.zValue + 'px) scale(' + (1 + self.zValue / 1000) + ') rotateX(' + self.rotation.x + 'deg) rotateY(' + self.rotation.y + 'deg) translate(' + 
-        (self.mousePos.x - (img.rect ? img.rect.width : 0) / 2) + 'px, ' + 
-        (self.mousePos.y - (img.rect ? img.rect.height : 0) / 2) + 'px)';
+
+    setTimeout(function () {
+      el.style.transition =
+        "transform 1s ease, opacity 1s ease, filter 1s ease";
+      el.style.transform =
+        "translateZ(" +
+        self.zValue +
+        "px) scale(" +
+        (1 + self.zValue / 1000) +
+        ") rotateX(" +
+        self.rotation.x +
+        "deg) rotateY(" +
+        self.rotation.y +
+        "deg) translate(" +
+        (self.mousePos.x - (img.rect ? img.rect.width : 0) / 2) +
+        "px, " +
+        (self.mousePos.y - (img.rect ? img.rect.height : 0) / 2) +
+        "px)";
     }, 10);
-    
-    setTimeout(function() {
-      el.style.transition = 'transform 0.4s ease, opacity 0.4s ease';
-      el.style.opacity = '0';
-      el.style.transform = 'translateZ(-800px) scale(' + (1 + self.zValue / 1000) + ') rotateX(' + self.rotation.x + 'deg) rotateY(' + self.rotation.y + 'deg) translate(' + 
-        (self.mousePos.x - (img.rect ? img.rect.width : 0) / 2) + 'px, ' + 
-        (self.mousePos.y - (img.rect ? img.rect.height : 0) / 2) + 'px)';
+
+    setTimeout(function () {
+      el.style.transition = "transform 0.4s ease, opacity 0.4s ease";
+      el.style.opacity = "0";
+      el.style.transform =
+        "translateZ(-800px) scale(" +
+        (1 + self.zValue / 1000) +
+        ") rotateX(" +
+        self.rotation.x +
+        "deg) rotateY(" +
+        self.rotation.y +
+        "deg) translate(" +
+        (self.mousePos.x - (img.rect ? img.rect.width : 0) / 2) +
+        "px, " +
+        (self.mousePos.y - (img.rect ? img.rect.height : 0) / 2) +
+        "px)";
     }, 1000);
-    
-    setTimeout(function() {
+
+    setTimeout(function () {
       self.onImageDeactivated();
     }, 1400);
   }
 };
 
-ImageTrailVariant8.prototype.onImageActivated = function() {
+ImageTrailVariant8.prototype.onImageActivated = function () {
   this.activeImagesCount++;
   this.isIdle = false;
 };
 
-ImageTrailVariant8.prototype.onImageDeactivated = function() {
+ImageTrailVariant8.prototype.onImageDeactivated = function () {
   this.activeImagesCount--;
   if (this.activeImagesCount === 0) {
     this.isIdle = true;
@@ -1452,61 +1686,63 @@ var variantMap = {
   5: ImageTrailVariant5,
   6: ImageTrailVariant6,
   7: ImageTrailVariant7,
-  8: ImageTrailVariant8
+  8: ImageTrailVariant8,
 };
 
 export default {
-  name: 'ImageTrail',
+  name: "ImageTrail",
   props: {
     items: {
       type: Array,
-      default: function() { return []; }
+      default: function () {
+        return [];
+      },
     },
     variant: {
       type: Number,
-      default: 1
-    }
+      default: 1,
+    },
   },
-  mounted: function() {
+  mounted: function () {
     var self = this;
-    this.$nextTick(function() {
+    this.$nextTick(function () {
       if (!self.$refs.containerRef) return;
 
       var Cls = variantMap[self.variant] || variantMap[1];
       new Cls(self.$refs.containerRef);
     });
-  }
+  },
 };
 </script>
 
 <style scoped>
-    .image-trail-container {
-        z-index: 100;
-        position: absolute;
-        background: transparent;
-        border-radius: 8px;
-        overflow: visible;
-        width: 100%;
-        height: 100%;
-    }
-    .image-trail-container-div {
-        position: absolute;
-        top: 0;
-        left: 0;
-        opacity: 0;
-        border-radius: 15px;
-        width: 190px;
-        aspect-ratio: 1.1;
-        overflow: hidden;
-        will-change: transform, filter;
-    }
-    .image-trail-container-div-inner {
-        top: -10px;
-        left: -10px;
-        position: absolute;
-        background-size: cover;
-        background-position: center;
-        width: calc(100% + 20px);
-        height: calc(100% + 20px);
-    }
+.image-trail-container {
+  z-index: 100;
+  position: absolute;
+  background: transparent;
+  border-radius: 8px;
+  overflow: visible;
+  width: 100%;
+  height: 100%;
+}
+.image-trail-container-div {
+  position: absolute;
+  top: 0;
+  left: 0;
+  opacity: 0;
+  border-radius: 15px;
+  width: 190px;
+  aspect-ratio: 1.1;
+  overflow: hidden;
+  will-change: transform, filter;
+}
+.image-trail-container-div-inner {
+  top: -10px;
+  left: -10px;
+  position: absolute;
+  background-size: cover;
+  background-position: center;
+  width: calc(100% + 20px);
+  height: calc(100% + 20px);
+}
 </style>

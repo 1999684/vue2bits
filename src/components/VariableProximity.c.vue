@@ -4,7 +4,7 @@
     :class="[className]"
     :style="{
       display: 'inline',
-      ...customStyle
+      ...customStyle,
     }"
     @click="handleClick"
   >
@@ -27,19 +27,26 @@
       >
         {{ letter }}
       </span>
-      <span v-if="wordIndex < words.length - 1" class="inline-block" style="display: inline-block;">&nbsp;</span>
+      <span
+        v-if="wordIndex < words.length - 1"
+        class="inline-block"
+        style="display: inline-block"
+        >&nbsp;</span
+      >
     </span>
-    <span style="
-      position: absolute;
-      border: 0;
-      height: 1px;
-      width: 1px;
-      margin: -1px;
-      padding: 0;
-      overflow: hidden;
-      white-space: nowrap;
-      clip: rect(0, 0, 0, 0);
-    ">
+    <span
+      style="
+        position: absolute;
+        border: 0;
+        height: 1px;
+        width: 1px;
+        margin: -1px;
+        padding: 0;
+        overflow: hidden;
+        white-space: nowrap;
+        clip: rect(0, 0, 0, 0);
+      "
+    >
       <!-- {{ label }} -->
     </span>
   </span>
@@ -47,53 +54,53 @@
 
 <script>
 export default {
-  name: 'VariableProximity',
+  name: "VariableProximity",
   props: {
     color: {
       type: String,
-      default: 'black'
+      default: "black",
     },
     label: {
       type: String,
-      required: true
+      required: true,
     },
     fromFontVariationSettings: {
       type: String,
-      required: true
+      required: true,
     },
     toFontVariationSettings: {
       type: String,
-      required: true
+      required: true,
     },
     containerRef: {
       type: Object,
-      default: null
+      default: null,
     },
     radius: {
       type: Number,
-      default: 50
+      default: 50,
     },
     falloff: {
       type: String,
-      default: 'linear', // linear, exponential, gaussian
+      default: "linear", // linear, exponential, gaussian
       validator: function (value) {
-        return ['linear', 'exponential', 'gaussian'].indexOf(value) !== -1;
-      }
+        return ["linear", "exponential", "gaussian"].indexOf(value) !== -1;
+      },
     },
     className: {
       type: String,
-      default: ''
+      default: "",
     },
     customStyle: {
       type: Object,
-      default: function() {
+      default: function () {
         return {};
-      }
+      },
     },
     onClick: {
       type: Function,
-      default: null
-    }
+      default: null,
+    },
   },
   data() {
     return {
@@ -101,26 +108,26 @@ export default {
       mousePosition: { x: 0, y: 0 },
       lastPosition: { x: null, y: null },
       interpolatedSettings: [],
-      animationFrameId: null
+      animationFrameId: null,
     };
   },
   computed: {
-    words: function() {
+    words: function () {
       // 检查是否包含空格，如果没有则按字符分割
-      if (this.label.includes(' ')) {
-        return this.label.split(' ');
+      if (this.label.includes(" ")) {
+        return this.label.split(" ");
       } else {
         // 对于没有空格的文本（如中文），直接按字符分割
         return [this.label];
       }
     },
-    parsedSettings: function() {
+    parsedSettings: function () {
       const parseSettings = (settingsStr) => {
         const result = {};
-        settingsStr.split(',').forEach(s => {
-          const parts = s.trim().split(' ');
+        settingsStr.split(",").forEach((s) => {
+          const parts = s.trim().split(" ");
           if (parts.length === 2) {
-            const name = parts[0].replace(/['"]/g, '');
+            const name = parts[0].replace(/['"]/g, "");
             const value = parseFloat(parts[1]);
             result[name] = value;
           }
@@ -131,63 +138,68 @@ export default {
       const fromSettings = parseSettings(this.fromFontVariationSettings);
       const toSettings = parseSettings(this.toFontVariationSettings);
 
-      const fromEntries = Object.keys(fromSettings).map(key => [key, fromSettings[key]]);
+      const fromEntries = Object.keys(fromSettings).map((key) => [
+        key,
+        fromSettings[key],
+      ]);
       return fromEntries.map(([axis, fromValue]) => ({
         axis: axis,
         fromValue: fromValue,
-        toValue: toSettings[axis] !== undefined ? toSettings[axis] : fromValue
+        toValue: toSettings[axis] !== undefined ? toSettings[axis] : fromValue,
       }));
-    }
+    },
   },
   methods: {
-    calculateDistance: function(x1, y1, x2, y2) {
+    calculateDistance: function (x1, y1, x2, y2) {
       return Math.sqrt(Math.pow(x2 - x1, 2) + Math.pow(y2 - y1, 2));
     },
-    
-    calculateFalloff: function(distance) {
+
+    calculateFalloff: function (distance) {
       const norm = Math.min(Math.max(1 - distance / this.radius, 0), 1);
       switch (this.falloff) {
-        case 'exponential':
+        case "exponential":
           return Math.pow(norm, 2);
-        case 'gaussian':
+        case "gaussian":
           return Math.exp(-Math.pow(distance / (this.radius / 2), 2) / 2);
-        case 'linear':
+        case "linear":
         default:
           return norm;
       }
     },
-    
-    getLetterKey: function(wordIndex, letterIndex) {
-      return wordIndex + '-' + letterIndex;
+
+    getLetterKey: function (wordIndex, letterIndex) {
+      return wordIndex + "-" + letterIndex;
     },
-    
-    getGlobalLetterIndex: function(wordIndex, letterIndex) {
+
+    getGlobalLetterIndex: function (wordIndex, letterIndex) {
       let globalIndex = 0;
       for (let i = 0; i < wordIndex; i++) {
         globalIndex += this.words[i].length;
       }
       return globalIndex + letterIndex;
     },
-    
-    initializeLetterElements: function() {
+
+    initializeLetterElements: function () {
       if (!this.$refs.rootRef) return;
 
-      this.letterElements = Array.prototype.slice.call(this.$refs.rootRef.querySelectorAll('.letter'));
-      console.log('Found ' + this.letterElements.length + ' letter elements');
+      this.letterElements = Array.prototype.slice.call(
+        this.$refs.rootRef.querySelectorAll(".letter")
+      );
+      console.log("Found " + this.letterElements.length + " letter elements");
     },
-    
-    handleMouseMove: function(ev) {
+
+    handleMouseMove: function (ev) {
       const container = this.containerRef || this.$refs.rootRef;
       if (!container) return;
 
       const rect = container.getBoundingClientRect();
       this.mousePosition = {
         x: ev.clientX - rect.left,
-        y: ev.clientY - rect.top
+        y: ev.clientY - rect.top,
       };
     },
-    
-    handleTouchMove: function(ev) {
+
+    handleTouchMove: function (ev) {
       const container = this.containerRef || this.$refs.rootRef;
       if (!container) return;
 
@@ -195,11 +207,11 @@ export default {
       const rect = container.getBoundingClientRect();
       this.mousePosition = {
         x: touch.clientX - rect.left,
-        y: touch.clientY - rect.top
+        y: touch.clientY - rect.top,
       };
     },
-    
-    animationLoop: function() {
+
+    animationLoop: function () {
       const container = this.containerRef || this.$refs.rootRef;
       if (!container || this.letterElements.length === 0) {
         this.animationFrameId = requestAnimationFrame(this.animationLoop);
@@ -208,14 +220,19 @@ export default {
 
       const containerRect = container.getBoundingClientRect();
 
-      if (this.lastPosition.x === this.mousePosition.x && this.lastPosition.y === this.mousePosition.y) {
+      if (
+        this.lastPosition.x === this.mousePosition.x &&
+        this.lastPosition.y === this.mousePosition.y
+      ) {
         this.animationFrameId = requestAnimationFrame(this.animationLoop);
         return;
       }
 
       this.lastPosition = { x: this.mousePosition.x, y: this.mousePosition.y };
 
-      const newSettings = Array(this.letterElements.length).fill(this.fromFontVariationSettings);
+      const newSettings = Array(this.letterElements.length).fill(
+        this.fromFontVariationSettings
+      );
 
       this.letterElements.forEach((letterEl, index) => {
         if (!letterEl) return;
@@ -224,7 +241,12 @@ export default {
         const letterCenterX = rect.left + rect.width / 2 - containerRect.left;
         const letterCenterY = rect.top + rect.height / 2 - containerRect.top;
 
-        const distance = this.calculateDistance(this.mousePosition.x, this.mousePosition.y, letterCenterX, letterCenterY);
+        const distance = this.calculateDistance(
+          this.mousePosition.x,
+          this.mousePosition.y,
+          letterCenterX,
+          letterCenterY
+        );
 
         if (distance >= this.radius) {
           return;
@@ -233,10 +255,11 @@ export default {
         const falloffValue = this.calculateFalloff(distance);
         const setting = this.parsedSettings
           .map(({ axis, fromValue, toValue }) => {
-            const interpolatedValue = fromValue + (toValue - fromValue) * falloffValue;
+            const interpolatedValue =
+              fromValue + (toValue - fromValue) * falloffValue;
             return "'" + axis + "' " + interpolatedValue;
           })
-          .join(', ');
+          .join(", ");
 
         newSettings[index] = setting;
       });
@@ -245,40 +268,43 @@ export default {
 
       this.letterElements.forEach((letterEl, index) => {
         if (letterEl) {
-          letterEl.style.fontVariationSettings = this.interpolatedSettings[index];
+          letterEl.style.fontVariationSettings =
+            this.interpolatedSettings[index];
         }
       });
 
       this.animationFrameId = requestAnimationFrame(this.animationLoop);
     },
-    
-    handleClick: function() {
+
+    handleClick: function () {
       if (this.onClick) {
         this.onClick();
       }
-    }
+    },
   },
-  mounted: function() {
+  mounted: function () {
     var self = this; // 保存 this 引用
-    this.$nextTick(function() {
+    this.$nextTick(function () {
       // 延迟一点时间确保 DOM 完全渲染
-      setTimeout(function() {
+      setTimeout(function () {
         self.initializeLetterElements();
 
-        window.addEventListener('mousemove', self.handleMouseMove);
-        window.addEventListener('touchmove', self.handleTouchMove);
+        window.addEventListener("mousemove", self.handleMouseMove);
+        window.addEventListener("touchmove", self.handleTouchMove);
 
-        self.animationFrameId = requestAnimationFrame(function() { self.animationLoop(); });
+        self.animationFrameId = requestAnimationFrame(function () {
+          self.animationLoop();
+        });
       }, 100);
     });
   },
-  beforeDestroy: function() {
-    window.removeEventListener('mousemove', this.handleMouseMove);
-    window.removeEventListener('touchmove', this.handleTouchMove);
+  beforeDestroy: function () {
+    window.removeEventListener("mousemove", this.handleMouseMove);
+    window.removeEventListener("touchmove", this.handleTouchMove);
 
     if (this.animationFrameId) {
       cancelAnimationFrame(this.animationFrameId);
     }
-  }
+  },
 };
 </script>

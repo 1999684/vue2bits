@@ -8,25 +8,21 @@
     <span class="inline" :style="{ color: getCurrentTextColor() }">
       {{ displayedText }}
     </span>
-    <span
-      v-if="showCursor"
-      ref="cursorRef"
-      :class="cursorClass"
-    >
+    <span v-if="showCursor" ref="cursorRef" :class="cursorClass">
       {{ cursorCharacter }}
     </span>
   </component>
 </template>
 
 <script>
-import { gsap } from 'gsap';
+import { gsap } from "gsap";
 
 export default {
-  name: 'TextType',
+  name: "TextType",
   props: {
     className: {
       type: String,
-      default: '',
+      default: "",
     },
     showCursor: {
       type: Boolean,
@@ -38,7 +34,7 @@ export default {
     },
     cursorCharacter: {
       type: String,
-      default: '|',
+      default: "|",
     },
     cursorBlinkDuration: {
       type: Number,
@@ -46,7 +42,7 @@ export default {
     },
     cursorClassName: {
       type: String,
-      default: '',
+      default: "",
     },
     text: {
       type: [String, Array],
@@ -54,7 +50,7 @@ export default {
     },
     as: {
       type: String,
-      default: 'div',
+      default: "div",
     },
     typingSpeed: {
       type: Number,
@@ -99,7 +95,7 @@ export default {
   },
   data() {
     return {
-      displayedText: '',
+      displayedText: "",
       currentCharIndex: 0,
       isDeleting: false,
       currentTextIndex: 0,
@@ -113,15 +109,22 @@ export default {
       return Array.isArray(this.text) ? this.text : [this.text];
     },
     containerClass() {
-      return `inline-block whitespace-pre-wrap tracking-tight ${this.className || ''}`;
+      return `inline-block whitespace-pre-wrap tracking-tight ${
+        this.className || ""
+      }`;
     },
     cursorClass() {
-      const shouldHide = this.hideCursorWhileTyping && 
-        (this.currentCharIndex < (this.textArray[this.currentTextIndex] ? this.textArray[this.currentTextIndex].length : 0) || this.isDeleting);
+      const shouldHide =
+        this.hideCursorWhileTyping &&
+        (this.currentCharIndex <
+          (this.textArray[this.currentTextIndex]
+            ? this.textArray[this.currentTextIndex].length
+            : 0) ||
+          this.isDeleting);
       return [
-        'ml-1 inline-block opacity-100',
-        { 'hidden': shouldHide },
-        this.cursorClassName
+        "ml-1 inline-block opacity-100",
+        { hidden: shouldHide },
+        this.cursorClassName,
       ];
     },
   },
@@ -132,7 +135,7 @@ export default {
       return Math.random() * (max - min) + min;
     },
     getCurrentTextColor() {
-      if (!this.textColors.length) return '#ffffff';
+      if (!this.textColors.length) return "#ffffff";
       return this.textColors[this.currentTextIndex % this.textColors.length];
     },
     clearTimeoutIfNeeded() {
@@ -143,18 +146,25 @@ export default {
     },
     executeTypingAnimation() {
       const currentText = this.textArray[this.currentTextIndex];
-      const processedText = this.reverseMode ? currentText.split('').reverse().join('') : currentText;
+      const processedText = this.reverseMode
+        ? currentText.split("").reverse().join("")
+        : currentText;
 
       if (this.isDeleting) {
-        if (this.displayedText === '') {
+        if (this.displayedText === "") {
           this.isDeleting = false;
-          if (this.currentTextIndex === this.textArray.length - 1 && !this.loop) return;
+          if (this.currentTextIndex === this.textArray.length - 1 && !this.loop)
+            return;
 
           if (this.onSentenceComplete) {
-            this.onSentenceComplete(this.textArray[this.currentTextIndex], this.currentTextIndex);
+            this.onSentenceComplete(
+              this.textArray[this.currentTextIndex],
+              this.currentTextIndex
+            );
           }
 
-          this.currentTextIndex = (this.currentTextIndex + 1) % this.textArray.length;
+          this.currentTextIndex =
+            (this.currentTextIndex + 1) % this.textArray.length;
           this.currentCharIndex = 0;
           this.timeout = setTimeout(() => {
             this.startTypingAnimation();
@@ -184,7 +194,11 @@ export default {
       if (!this.isVisible) return;
       this.clearTimeoutIfNeeded();
 
-      if (this.currentCharIndex === 0 && !this.isDeleting && this.displayedText === '') {
+      if (
+        this.currentCharIndex === 0 &&
+        !this.isDeleting &&
+        this.displayedText === ""
+      ) {
         this.timeout = setTimeout(() => {
           this.executeTypingAnimation();
         }, this.initialDelay);
@@ -201,7 +215,7 @@ export default {
           duration: this.cursorBlinkDuration,
           repeat: -1,
           yoyo: true,
-          ease: 'power2.inOut'
+          ease: "power2.inOut",
         });
       }
     },
@@ -209,8 +223,8 @@ export default {
       const containerRef = this.$refs.containerRef;
       if (this.startOnVisible && containerRef) {
         const observer = new IntersectionObserver(
-          entries => {
-            entries.forEach(entry => {
+          (entries) => {
+            entries.forEach((entry) => {
               if (entry.isIntersecting) {
                 this.isVisible = true;
                 // 开始动画
@@ -221,7 +235,7 @@ export default {
           { threshold: 0.1 }
         );
         observer.observe(containerRef);
-        
+
         // 保存 observer 以便稍后清理
         this.visibilityObserver = observer;
       }
@@ -244,10 +258,10 @@ export default {
   mounted() {
     // 初始化可见性状态
     this.isVisible = !this.startOnVisible;
-    
+
     this.initCursorAnimation();
     this.initVisibilityObserver();
-    
+
     // 初始化时启动动画
     if (this.isVisible) {
       this.startTypingAnimation();

@@ -6,61 +6,61 @@
 
 <script>
 export default {
-  name: 'GlitchText',
+  name: "GlitchText",
   props: {
     // 文本内容
     children: {
       type: String,
-      required: true
+      required: true,
     },
     // 动画速度
     speed: {
       type: Number,
-      default: 0.5
+      default: 0.5,
     },
     // 是否启用阴影
     enableShadows: {
       type: Boolean,
-      default: true
+      default: true,
     },
     // 是否仅在悬停时启用效果
     enableOnHover: {
       type: Boolean,
-      default: false
+      default: false,
     },
     // 自定义CSS类名
     className: {
       type: String,
-      default: ''
-    }
+      default: "",
+    },
   },
   computed: {
     // 内联样式
-    inlineStyles: function() {
+    inlineStyles: function () {
       return {
-        '--after-duration': (this.speed * 3) + 's',
-        '--before-duration': (this.speed * 2) + 's',
-        '--after-shadow': this.enableShadows ? '-5px 0 red' : 'none',
-        '--before-shadow': this.enableShadows ? '5px 0 cyan' : 'none'
+        "--after-duration": this.speed * 3 + "s",
+        "--before-duration": this.speed * 2 + "s",
+        "--after-shadow": this.enableShadows ? "-5px 0 red" : "none",
+        "--before-shadow": this.enableShadows ? "5px 0 cyan" : "none",
       };
     },
     // 计算后的CSS类
-    computedClasses: function() {
-      var classes = ['glitch-text-base'];
-      
+    computedClasses: function () {
+      var classes = ["glitch-text-base"];
+
       if (this.enableOnHover) {
-        classes.push('glitch-text-hover');
+        classes.push("glitch-text-hover");
       } else {
-        classes.push('glitch-text-normal');
+        classes.push("glitch-text-normal");
       }
-      
+
       if (this.className) {
         classes.push(this.className);
       }
-      
-      return classes.join(' ');
-    }
-  }
+
+      return classes.join(" ");
+    },
+  },
 };
 </script>
 
@@ -100,13 +100,15 @@ export default {
 .glitch-text-normal::after {
   left: 10px;
   text-shadow: var(--after-shadow, -10px 0 red);
-  animation: animate-glitch var(--after-duration, 3s) infinite linear alternate-reverse;
+  animation: animate-glitch var(--after-duration, 3s) infinite linear
+    alternate-reverse;
 }
 
 .glitch-text-normal::before {
   left: -10px;
   text-shadow: var(--before-shadow, 10px 0 cyan);
-  animation: animate-glitch var(--before-duration, 2s) infinite linear alternate-reverse;
+  animation: animate-glitch var(--before-duration, 2s) infinite linear
+    alternate-reverse;
 }
 
 .glitch-text-hover::before {
@@ -126,7 +128,8 @@ export default {
   opacity: 1;
   left: -10px;
   text-shadow: var(--before-shadow, 10px 0 cyan);
-  animation: animate-glitch var(--before-duration, 2s) infinite linear alternate-reverse;
+  animation: animate-glitch var(--before-duration, 2s) infinite linear
+    alternate-reverse;
 }
 
 .glitch-text-hover:hover::after {
@@ -134,7 +137,8 @@ export default {
   opacity: 1;
   left: 10px;
   text-shadow: var(--after-shadow, -10px 0 red);
-  animation: animate-glitch var(--after-duration, 3s) infinite linear alternate-reverse;
+  animation: animate-glitch var(--after-duration, 3s) infinite linear
+    alternate-reverse;
 }
 
 @keyframes animate-glitch {

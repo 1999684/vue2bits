@@ -4,40 +4,40 @@
 
 <script>
 export default {
-  name: 'ShapeBlur',
+  name: "ShapeBlur",
   props: {
     className: {
       type: String,
-      default: ''
+      default: "",
     },
     variation: {
       type: Number,
-      default: 0
+      default: 0,
     },
     pixelRatioProp: {
       type: Number,
-      default: 2
+      default: 2,
     },
     shapeSize: {
       type: Number,
-      default: 1.2
+      default: 1.2,
     },
     roundness: {
       type: Number,
-      default: 0.4
+      default: 0.4,
     },
     borderSize: {
       type: Number,
-      default: 0.05
+      default: 0.05,
     },
     circleSize: {
       type: Number,
-      default: 0.3
+      default: 0.3,
     },
     circleEdge: {
       type: Number,
-      default: 0.5
-    }
+      default: 0.5,
+    },
   },
   data() {
     return {
@@ -54,7 +54,7 @@ export default {
       vMouseDamp: new THREE.Vector2(),
       vResolution: new THREE.Vector2(),
       w: 1,
-      h: 1
+      h: 1,
     };
   },
   computed: {
@@ -183,7 +183,7 @@ export default {
           gl_FragColor = vec4(color.rgb, alpha);
         }
       `;
-    }
+    },
   },
   watch: {
     variation() {
@@ -206,7 +206,7 @@ export default {
     },
     circleEdge() {
       this.updateMaterial();
-    }
+    },
   },
   mounted() {
     this.initShapeBlur();
@@ -270,9 +270,9 @@ export default {
       this.camera.position.z = 1;
       this.renderer = new THREE.WebGLRenderer({ alpha: true });
       this.renderer.setClearColor(0x000000, 0);
-      this.renderer.domElement.style.width = '100%';
-      this.renderer.domElement.style.height = '100%';
-      this.renderer.domElement.style.display = 'block';
+      this.renderer.domElement.style.width = "100%";
+      this.renderer.domElement.style.height = "100%";
+      this.renderer.domElement.style.display = "block";
       mount.appendChild(this.renderer.domElement);
       const geo = new THREE.PlaneGeometry(1, 1);
       this.material = new THREE.ShaderMaterial({
@@ -286,21 +286,21 @@ export default {
           u_roundness: { value: this.roundness },
           u_borderSize: { value: this.borderSize },
           u_circleSize: { value: this.circleSize },
-          u_circleEdge: { value: this.circleEdge }
+          u_circleEdge: { value: this.circleEdge },
         },
         defines: { VAR: this.variation },
-        transparent: true
+        transparent: true,
       });
       this.quad = new THREE.Mesh(geo, this.material);
       this.scene.add(this.quad);
-      document.addEventListener('mousemove', this.onPointerMove.bind(this));
-      document.addEventListener('pointermove', this.onPointerMove.bind(this));
+      document.addEventListener("mousemove", this.onPointerMove.bind(this));
+      document.addEventListener("pointermove", this.onPointerMove.bind(this));
       this.resize();
-      if (typeof ResizeObserver !== 'undefined') {
+      if (typeof ResizeObserver !== "undefined") {
         this.resizeObserver = new ResizeObserver(() => this.resize());
         this.resizeObserver.observe(mount);
       } else {
-        window.addEventListener('resize', () => this.resize());
+        window.addEventListener("resize", () => this.resize());
       }
       this.update();
     },
@@ -322,10 +322,13 @@ export default {
       if (this.resizeObserver) {
         this.resizeObserver.disconnect();
       } else {
-        window.removeEventListener('resize', () => this.resize());
+        window.removeEventListener("resize", () => this.resize());
       }
-      document.removeEventListener('mousemove', this.onPointerMove.bind(this));
-      document.removeEventListener('pointermove', this.onPointerMove.bind(this));
+      document.removeEventListener("mousemove", this.onPointerMove.bind(this));
+      document.removeEventListener(
+        "pointermove",
+        this.onPointerMove.bind(this)
+      );
       const mount = this.$refs.shapeBlurContainer;
       if (mount && this.renderer) {
         if (mount.contains(this.renderer.domElement)) {
@@ -333,8 +336,8 @@ export default {
         }
         this.renderer.dispose();
       }
-    }
-  }
+    },
+  },
 };
 </script>
 

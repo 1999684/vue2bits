@@ -10,49 +10,49 @@
 
 <script>
 export default {
-  name: 'LogoContent',
+  name: "LogoContent",
   props: {
     item: {
       type: Object,
-      required: true
+      required: true,
     },
     scaleOnHover: {
       type: Boolean,
-      default: false
-    }
+      default: false,
+    },
   },
 
   computed: {
     isNodeItem() {
-      return 'node' in this.item;
+      return "node" in this.item;
     },
 
     componentType() {
-      return this.isNodeItem ? 'span' : 'img';
+      return this.isNodeItem ? "span" : "img";
     },
 
     componentStyle() {
       const baseStyle = {
-        display: 'inline-flex',
-        alignItems: 'center'
+        display: "inline-flex",
+        alignItems: "center",
       };
 
       if (this.isNodeItem) {
         return {
           ...baseStyle,
-          fontSize: 'var(--logoloop-logoHeight)',
-          lineHeight: 1
+          fontSize: "var(--logoloop-logoHeight)",
+          lineHeight: 1,
         };
       } else {
         // 图片样式
         return {
-          height: 'var(--logoloop-logoHeight)',
-          width: 'auto',
-          display: 'block',
-          objectFit: 'contain',
-          userSelect: 'none',
-          pointerEvents: 'none',
-          imageRendering: '-webkit-optimize-contrast'
+          height: "var(--logoloop-logoHeight)",
+          width: "auto",
+          display: "block",
+          objectFit: "contain",
+          userSelect: "none",
+          pointerEvents: "none",
+          imageRendering: "-webkit-optimize-contrast",
         };
       }
     },
@@ -61,7 +61,7 @@ export default {
       const classes = [];
 
       if (this.scaleOnHover) {
-        classes.push('scale-on-hover2');
+        classes.push("scale-on-hover2");
       }
 
       return classes;
@@ -70,7 +70,7 @@ export default {
     componentAttrs() {
       if (this.isNodeItem) {
         return {
-          'aria-hidden': !this.item.ariaLabel ? 'true' : 'false'
+          "aria-hidden": !this.item.ariaLabel ? "true" : "false",
         };
       } else {
         // 图片属性
@@ -80,15 +80,15 @@ export default {
           sizes: this.item.sizes,
           width: this.item.width,
           height: this.item.height,
-          alt: this.item.alt || '',
+          alt: this.item.alt || "",
           title: this.item.title,
-          loading: 'lazy',
-          decoding: 'async',
-          draggable: false
+          loading: "lazy",
+          decoding: "async",
+          draggable: false,
         };
       }
-    }
-  }
+    },
+  },
 };
 </script>
 

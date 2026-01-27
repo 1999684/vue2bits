@@ -1,67 +1,99 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>TextType 组件预览</title>
-  <script src="../libs/vue.js"></script>
-  <link rel="stylesheet" href="../../dist/vue2bits.css">
-  <link rel="stylesheet" href="preview.css">
-</head>
-<body>
-  <div id="app" style="display: flex;">
-    <div class="col" style="height: 100vh;width: 50%;">
-      <text-type 
-        :text="['字段1', '字段2', '字段3']"
-        :text-colors="['#ff6b6b', '#4ecdc4', '#45b7d1', '#96ceb4']"
-        :typing-speed="100"
-        :deleting-speed="50"
-        :pause-duration="1500"
-        class-name="demo-text"
-      ></text-type>
-      
-      <h3 style="margin-top: 30px;">反向 Mode</h3>
-      <text-type 
-        :text="['字段1', '字段2', '字段3']"
-        :text-colors="['#ff6b6b', '#4ecdc4', '#45b7d1', '#96ceb4']"
-        :reverse-mode="true"
-        :typing-speed="70"
-        :deleting-speed="40"
-        :loop="true"
-        class-name="demo-text"
-      ></text-type>
-    </div>
-    
-    <div class="use">
-      <h2>how to use</h2>
-      <div class="usage-instructions">
-        <h3>TextType 组件使用说明</h3>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>TextType 组件预览</title>
+    <script src="../libs/vue.js"></script>
+    <link rel="stylesheet" href="../../dist/vue2bits.css" />
+    <link rel="stylesheet" href="preview.css" />
+  </head>
+  <body>
+    <div id="app" style="display: flex">
+      <div class="col" style="height: 100vh; width: 50%">
+        <text-type
+          :text="['字段1', '字段2', '字段3']"
+          :text-colors="['#ff6b6b', '#4ecdc4', '#45b7d1', '#96ceb4']"
+          :typing-speed="100"
+          :deleting-speed="50"
+          :pause-duration="1500"
+          class-name="demo-text"
+        ></text-type>
 
-        <h4>1. 基本用法</h4>
-        <p>在HTML中直接使用组件标签：</p>
-        <pre><code>&lt;text-type :text="'Hello World'"&gt;&lt;/text-type&gt;</code></pre>
+        <h3 style="margin-top: 30px">反向 Mode</h3>
+        <text-type
+          :text="['字段1', '字段2', '字段3']"
+          :text-colors="['#ff6b6b', '#4ecdc4', '#45b7d1', '#96ceb4']"
+          :reverse-mode="true"
+          :typing-speed="70"
+          :deleting-speed="40"
+          :loop="true"
+          class-name="demo-text"
+        ></text-type>
+      </div>
 
-        <h4>2. 可用属性</h4>
-        <ul>
-          <li><strong>text</strong> (String|Array): 要显示的文本内容，可以是单个字符串或字符串数组</li>
-          <li><strong>typing-speed</strong> (Number): 打字速度（毫秒），默认为50</li>
-          <li><strong>deleting-speed</strong> (Number): 删除速度（毫秒），默认为30</li>
-          <li><strong>pause-duration</strong> (Number): 暂停持续时间（毫秒），默认为2000</li>
-          <li><strong>initial-delay</strong> (Number): 初始延迟（毫秒），默认为0</li>
-          <li><strong>loop</strong> (Boolean): 是否循环播放，默认为true</li>
-          <li><strong>show-cursor</strong> (Boolean): 是否显示光标，默认为true</li>
-          <li><strong>cursor-character</strong> (String): 光标字符，默认为'|'</li>
-          <li><strong>cursor-blink-duration</strong> (Number): 光标闪烁持续时间（秒），默认为0.5</li>
-          <li><strong>hide-cursor-while-typing</strong> (Boolean): 打字时是否隐藏光标，默认为false</li>
-          <li><strong>text-colors</strong> (Array): 文本颜色数组，循环使用</li>
-          <li><strong>variable-speed</strong> (Object): 变速对象，格式为{min: number, max: number}</li>
-          <li><strong>reverse-mode</strong> (Boolean): 是否反向打字，默认为false</li>
-          <li><strong>as</strong> (String): 组件渲染的HTML标签，默认为'div'</li>
-          <li><strong>class-name</strong> (String): 应用于组件的CSS类名</li>
-        </ul>
+      <div class="use">
+        <h2>how to use</h2>
+        <div class="usage-instructions">
+          <h3>TextType 组件使用说明</h3>
 
-        <h4>3. 示例代码</h4>
-        <pre><code>&lt;text-type 
+          <h4>1. 基本用法</h4>
+          <p>在HTML中直接使用组件标签：</p>
+          <pre><code>&lt;text-type :text="'Hello World'"&gt;&lt;/text-type&gt;</code></pre>
+
+          <h4>2. 可用属性</h4>
+          <ul>
+            <li>
+              <strong>text</strong> (String|Array):
+              要显示的文本内容，可以是单个字符串或字符串数组
+            </li>
+            <li>
+              <strong>typing-speed</strong> (Number): 打字速度（毫秒），默认为50
+            </li>
+            <li>
+              <strong>deleting-speed</strong> (Number):
+              删除速度（毫秒），默认为30
+            </li>
+            <li>
+              <strong>pause-duration</strong> (Number):
+              暂停持续时间（毫秒），默认为2000
+            </li>
+            <li>
+              <strong>initial-delay</strong> (Number): 初始延迟（毫秒），默认为0
+            </li>
+            <li><strong>loop</strong> (Boolean): 是否循环播放，默认为true</li>
+            <li>
+              <strong>show-cursor</strong> (Boolean): 是否显示光标，默认为true
+            </li>
+            <li>
+              <strong>cursor-character</strong> (String): 光标字符，默认为'|'
+            </li>
+            <li>
+              <strong>cursor-blink-duration</strong> (Number):
+              光标闪烁持续时间（秒），默认为0.5
+            </li>
+            <li>
+              <strong>hide-cursor-while-typing</strong> (Boolean):
+              打字时是否隐藏光标，默认为false
+            </li>
+            <li>
+              <strong>text-colors</strong> (Array): 文本颜色数组，循环使用
+            </li>
+            <li>
+              <strong>variable-speed</strong> (Object): 变速对象，格式为{min:
+              number, max: number}
+            </li>
+            <li>
+              <strong>reverse-mode</strong> (Boolean): 是否反向打字，默认为false
+            </li>
+            <li>
+              <strong>as</strong> (String): 组件渲染的HTML标签，默认为'div'
+            </li>
+            <li><strong>class-name</strong> (String): 应用于组件的CSS类名</li>
+          </ul>
+
+          <h4>3. 示例代码</h4>
+          <pre><code>&lt;text-type
   :text="['Hello World', 'Vue 2 Animation']"
   :typing-speed="100"
   :deleting-speed="50"
@@ -70,28 +102,28 @@
   :loop="true"
   class-name="my-text-class"&gt;
 &lt;/text-type&gt;</code></pre>
-      </div>
-      <div class="back-link">
-        <a href="../">← Back to index</a>
+        </div>
+        <div class="back-link">
+          <a href="../">← Back to index</a>
+        </div>
       </div>
     </div>
-  </div>
 
-  <script src="../../dist/vue2bits.min.js"></script>
-  <script src="../libs/gsap.min.js"></script>
-  <script>
-    // 确保 Vue 实例在 DOM 加载完成后创建
-    document.addEventListener('DOMContentLoaded', function () {
-      new Vue({
-        el: '#app'
+    <script src="../../dist/vue2bits.min.js"></script>
+    <script src="../libs/gsap.min.js"></script>
+    <script>
+      // 确保 Vue 实例在 DOM 加载完成后创建
+      document.addEventListener("DOMContentLoaded", function () {
+        new Vue({
+          el: "#app",
+        });
       });
-    });
-  </script>
-  <style>
-    .demo-text {
-      font-size: 24px;
-      margin: 20px 0;
-    }
-  </style>
-</body>
+    </script>
+    <style>
+      .demo-text {
+        font-size: 24px;
+        margin: 20px 0;
+      }
+    </style>
+  </body>
 </html>

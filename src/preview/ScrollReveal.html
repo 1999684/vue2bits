@@ -1,53 +1,92 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Vue2bits 组件预览</title>
     <script src="../libs/vue.js"></script>
-    <link rel="stylesheet" href="../../dist/vue2bits.css">
-    <link rel="stylesheet" href="preview.css">
-</head>
+    <link rel="stylesheet" href="../../dist/vue2bits.css" />
+    <link rel="stylesheet" href="preview.css" />
+  </head>
 
-<body>
-    <div id="app" style="display: flex;">
-        <div class="col" style="height: 100vh;width: 50%;">
-            <div class="c"
-                style="height: 900px; width: 100%;font-size: 80px;font-weight: bold;text-align: center;line-height: 900px;opacity: 0.2;">
-                下滑预览效果</div>
-            <scroll-reveal :children="message" text-class-name="text-try"
-                container-class-name="text-center" :enable-blur="true" :base-opacity="0.1" :base-rotation="3"
-                :blur-strength="4" :rotation-end="'bottom bottom'" :word-animation-end="'bottom bottom'">
-            </scroll-reveal>
-            <div class="c" style="height: 50%; width: 100%;"></div>
+  <body>
+    <div id="app" style="display: flex">
+      <div class="col" style="height: 100vh; width: 50%">
+        <div
+          class="c"
+          style="
+            height: 900px;
+            width: 100%;
+            font-size: 80px;
+            font-weight: bold;
+            text-align: center;
+            line-height: 900px;
+            opacity: 0.2;
+          "
+        >
+          下滑预览效果
         </div>
-        <div class="use">
-            <h2>how to use</h2>
-            <div class="usage-instructions">
-                <h3>ScrollReveal 组件使用说明</h3>
+        <scroll-reveal
+          :children="message"
+          text-class-name="text-try"
+          container-class-name="text-center"
+          :enable-blur="true"
+          :base-opacity="0.1"
+          :base-rotation="3"
+          :blur-strength="4"
+          :rotation-end="'bottom bottom'"
+          :word-animation-end="'bottom bottom'"
+        >
+        </scroll-reveal>
+        <div class="c" style="height: 50%; width: 100%"></div>
+      </div>
+      <div class="use">
+        <h2>how to use</h2>
+        <div class="usage-instructions">
+          <h3>ScrollReveal 组件使用说明</h3>
 
-                <h4>1. 基本用法</h4>
-                <p>在HTML中直接使用组件标签：</p>
-                <pre><code>&lt;scroll-reveal :children="'显示文本'"&gt;&lt;/scroll-reveal&gt;</code></pre>
+          <h4>1. 基本用法</h4>
+          <p>在HTML中直接使用组件标签：</p>
+          <pre><code>&lt;scroll-reveal :children="'显示文本'"&gt;&lt;/scroll-reveal&gt;</code></pre>
 
-                <h4>2. 可用属性</h4>
-                <ul>
-                    <li><strong>children</strong> (String): 要显示的文本内容</li>
-                    <li><strong>scroll-container-ref</strong> (Object): 滚动容器引用，默认为window</li>
-                    <li><strong>enable-blur</strong> (Boolean): 是否启用模糊效果，默认为true</li>
-                    <li><strong>base-opacity</strong> (Number): 基础透明度，默认为0.1</li>
-                    <li><strong>base-rotation</strong> (Number): 基础旋转角度，默认为3</li>
-                    <li><strong>blur-strength</strong> (Number): 模糊强度，默认为4</li>
-                    <li><strong>container-class-name</strong> (String): 应用于容器的CSS类名</li>
-                    <li><strong>text-class-name</strong> (String): 应用于文本的CSS类名</li>
-                    <li><strong>rotation-end</strong> (String): 旋转动画结束位置，默认为'bottom bottom'</li>
-                    <li><strong>word-animation-end</strong> (String): 文字动画结束位置，默认为'bottom bottom'</li>
-                </ul>
+          <h4>2. 可用属性</h4>
+          <ul>
+            <li><strong>children</strong> (String): 要显示的文本内容</li>
+            <li>
+              <strong>scroll-container-ref</strong> (Object):
+              滚动容器引用，默认为window
+            </li>
+            <li>
+              <strong>enable-blur</strong> (Boolean):
+              是否启用模糊效果，默认为true
+            </li>
+            <li>
+              <strong>base-opacity</strong> (Number): 基础透明度，默认为0.1
+            </li>
+            <li>
+              <strong>base-rotation</strong> (Number): 基础旋转角度，默认为3
+            </li>
+            <li><strong>blur-strength</strong> (Number): 模糊强度，默认为4</li>
+            <li>
+              <strong>container-class-name</strong> (String):
+              应用于容器的CSS类名
+            </li>
+            <li>
+              <strong>text-class-name</strong> (String): 应用于文本的CSS类名
+            </li>
+            <li>
+              <strong>rotation-end</strong> (String):
+              旋转动画结束位置，默认为'bottom bottom'
+            </li>
+            <li>
+              <strong>word-animation-end</strong> (String):
+              文字动画结束位置，默认为'bottom bottom'
+            </li>
+          </ul>
 
-                <h4>3. 示例代码</h4>
-                <pre><code>&lt;scroll-reveal 
-    :children="message" 
+          <h4>3. 示例代码</h4>
+          <pre><code>&lt;scroll-reveal
+    :children="message"
     text-class-name="text-try"
     container-class-name="text-center"
     :enable-blur="true"
@@ -59,16 +98,16 @@
 &gt;
 &lt;/scroll-reveal&gt;</code></pre>
 
-                <h4>4. 自定义样式</h4>
-                <p>可以通过text-class-name属性添加自定义CSS类来改变文本样式：</p>
-                <pre><code>.text-try {
+          <h4>4. 自定义样式</h4>
+          <p>可以通过text-class-name属性添加自定义CSS类来改变文本样式：</p>
+          <pre><code>.text-try {
   color: #000;
 }</code></pre>
-            </div>
-            <div class="back-link">
-                <a href="../">← Back to mt</a>
-            </div>
         </div>
+        <div class="back-link">
+          <a href="../">← Back to mt</a>
+        </div>
+      </div>
     </div>
 
     <script src="../../dist/vue2bits.min.js"></script>
@@ -78,32 +117,31 @@
     <!-- SplitText 需要单独引入 -->
     <script src="../libs/SplitText.min.js"></script>
     <script>
-        // 现在不需要手动注册组件，引入vue2bits.min.js后会自动注册
-        document.addEventListener('DOMContentLoaded', function () {
-            new Vue({
-                el: '#app',
-                data() {
-                    return {
-                        message: '动画示例文字 toshow text'
-                    }
-                },
-                methods: {
-                    toshow: function () {
-                        console.log('动画完成');
-                    }
-                }
-            });
+      // 现在不需要手动注册组件，引入vue2bits.min.js后会自动注册
+      document.addEventListener("DOMContentLoaded", function () {
+        new Vue({
+          el: "#app",
+          data() {
+            return {
+              message: "动画示例文字 toshow text",
+            };
+          },
+          methods: {
+            toshow: function () {
+              console.log("动画完成");
+            },
+          },
         });
+      });
     </script>
     <style>
-        .text-try {
-            color: #000;
-        }
+      .text-try {
+        color: #000;
+      }
 
-        .text-center {
-            text-align: center;
-        }
+      .text-center {
+        text-align: center;
+      }
     </style>
-</body>
-
+  </body>
 </html>

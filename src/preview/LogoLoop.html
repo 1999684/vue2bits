@@ -1,71 +1,100 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>LogoLoop 组件预览</title>
     <script src="../libs/vue.js"></script>
-    <link rel="stylesheet" href="../../dist/vue2bits.css">
-    <link rel="stylesheet" href="preview.css">
+    <link rel="stylesheet" href="../../dist/vue2bits.css" />
+    <link rel="stylesheet" href="preview.css" />
     <style>
-        .icon-logo {
-            width: 100px;
-            height: 100px;
-            background: #4880ff;
-            border-radius: 50%;
-        }
+      .icon-logo {
+        width: 100px;
+        height: 100px;
+        background: #4880ff;
+        border-radius: 50%;
+      }
     </style>
-</head>
+  </head>
 
-<body>
-    <div id="app" style="display: flex;">
-        <div class="col" style="height: 100vh; width: 50%; display: flex; align-items: center; justify-content: center;">
-            <logo-loop
-                :logos="logos"
-                :speed="100"
-                direction="left"
-                width="100%"
-                :logo-height="60"
-                :gap="32"
-                :pause-on-hover="true"
-                :scale-on-hover="true"
-                :fade-out="true"
-                aria-label="logo loop"
-                fade-out-color="#fff"
-            />
-        </div>
-        <div class="use">
-            <h2>how to use</h2>
-            <div class="usage-instructions">
-                <h3>LogoLoop 组件使用说明</h3>
+  <body>
+    <div id="app" style="display: flex">
+      <div
+        class="col"
+        style="
+          height: 100vh;
+          width: 50%;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+        "
+      >
+        <logo-loop
+          :logos="logos"
+          :speed="100"
+          direction="left"
+          width="100%"
+          :logo-height="60"
+          :gap="32"
+          :pause-on-hover="true"
+          :scale-on-hover="true"
+          :fade-out="true"
+          aria-label="logo loop"
+          fade-out-color="#fff"
+        />
+      </div>
+      <div class="use">
+        <h2>how to use</h2>
+        <div class="usage-instructions">
+          <h3>LogoLoop 组件使用说明</h3>
 
-                <h4>1. 基本用法</h4>
-                <p>在HTML中直接使用组件标签：</p>
-                <pre><code>&lt;logo-loop 
-  :logos="logos" 
-  :speed="100" 
+          <h4>1. 基本用法</h4>
+          <p>在HTML中直接使用组件标签：</p>
+          <pre><code>&lt;logo-loop
+  :logos="logos"
+  :speed="100"
   direction="left"&gt;
 &lt;/logo-loop&gt;</code></pre>
 
-                <h4>2. 可用属性</h4>
-                <ul>
-                    <li><strong>logos</strong> (Array): logo数组，图片包含src、alt、href等属性 支持图片和HTML节点 html时传入node、title</li>
-                    <li><strong>speed</strong> (Number): 循环滚动速度，默认为100</li>
-                    <li><strong>direction</strong> (String): 滚动方向，'left'或'right'，默认为'left'</li>
-                    <li><strong>width</strong> (String): 容器宽度，默认为'100%'</li>
-                    <li><strong>logoHeight</strong> (Number): logo高度，默认为60</li>
-                    <li><strong>gap</strong> (Number): logo之间的间距，默认为32</li>
-                    <li><strong>pauseOnHover</strong> (Boolean): 鼠标悬停时是否暂停，默认为false</li>
-                    <li><strong>fadeOut</strong> (Boolean): 是否启用淡出效果，默认为false</li>
-                    <li><strong>fadeOutColor</strong> (String): 淡出效果的颜色，默认为'rgba(0, 0, 0, 0.5)'</li>
-                    <li><strong>scaleOnHover</strong> (Boolean): 鼠标悬停时是否缩放，默认为false</li>
-                    <li><strong>ariaLabel</strong> (String): 标志循环组件的可访问性标签，默认为'logo loop'</li>
-                    <li><strong>className</strong> (String): 自定义类名</li>
-                </ul>
+          <h4>2. 可用属性</h4>
+          <ul>
+            <li>
+              <strong>logos</strong> (Array):
+              logo数组，图片包含src、alt、href等属性 支持图片和HTML节点
+              html时传入node、title
+            </li>
+            <li><strong>speed</strong> (Number): 循环滚动速度，默认为100</li>
+            <li>
+              <strong>direction</strong> (String):
+              滚动方向，'left'或'right'，默认为'left'
+            </li>
+            <li><strong>width</strong> (String): 容器宽度，默认为'100%'</li>
+            <li><strong>logoHeight</strong> (Number): logo高度，默认为60</li>
+            <li><strong>gap</strong> (Number): logo之间的间距，默认为32</li>
+            <li>
+              <strong>pauseOnHover</strong> (Boolean):
+              鼠标悬停时是否暂停，默认为false
+            </li>
+            <li>
+              <strong>fadeOut</strong> (Boolean): 是否启用淡出效果，默认为false
+            </li>
+            <li>
+              <strong>fadeOutColor</strong> (String):
+              淡出效果的颜色，默认为'rgba(0, 0, 0, 0.5)'
+            </li>
+            <li>
+              <strong>scaleOnHover</strong> (Boolean):
+              鼠标悬停时是否缩放，默认为false
+            </li>
+            <li>
+              <strong>ariaLabel</strong> (String):
+              标志循环组件的可访问性标签，默认为'logo loop'
+            </li>
+            <li><strong>className</strong> (String): 自定义类名</li>
+          </ul>
 
-                <h4>3. 示例代码</h4>
-                <pre><code>&lt;logo-loop 
+          <h4>3. 示例代码</h4>
+          <pre><code>&lt;logo-loop
   :logos="logos"
   :speed="80"
   direction="right"
@@ -86,34 +115,56 @@
     { node: '&lt;div class="icon-logo"&gt;&lt;/div&gt;', title: 'Icon Logo' },
   ]
 </code></pre>
-
-            </div>
-            <div class="back-link">
-                <a href="../">← Back to index</a>
-            </div>
         </div>
+        <div class="back-link">
+          <a href="../">← Back to index</a>
+        </div>
+      </div>
     </div>
 
     <script src="../../dist/vue2bits.min.js"></script>
     <script>
-        // 确保 Vue 实例在 DOM 加载完成后创建
-        document.addEventListener('DOMContentLoaded', function () {
-            new Vue({
-                el: '#app',
-                data: {
-                    logos: [
-                        { href: 'http://www.baidu.com', alt: '', src: 'https://picsum.photos/200/200?random=1' },
-                        { href: 'http://www.baidu.com', alt: '', src: 'https://picsum.photos/200/200?random=2' },
-                        { href: 'http://www.baidu.com', alt: '', src: 'https://picsum.photos/200/200?random=3' },
-                        { href: 'http://www.baidu.com', alt: '', src: 'https://picsum.photos/200/200?random=4' },
-                        { href: 'http://www.baidu.com', alt: '', src: 'https://picsum.photos/200/200?random=5' },
-                        { href: 'http://www.baidu.com', alt: '', src: 'https://picsum.photos/200/200?random=6' },
-                        { node: '<div class="icon-logo"></div>', title: 'Icon Logo' },
-                    ]
-                }
-            });
+      // 确保 Vue 实例在 DOM 加载完成后创建
+      document.addEventListener("DOMContentLoaded", function () {
+        new Vue({
+          el: "#app",
+          data: {
+            logos: [
+              {
+                href: "http://www.baidu.com",
+                alt: "",
+                src: "https://picsum.photos/200/200?random=1",
+              },
+              {
+                href: "http://www.baidu.com",
+                alt: "",
+                src: "https://picsum.photos/200/200?random=2",
+              },
+              {
+                href: "http://www.baidu.com",
+                alt: "",
+                src: "https://picsum.photos/200/200?random=3",
+              },
+              {
+                href: "http://www.baidu.com",
+                alt: "",
+                src: "https://picsum.photos/200/200?random=4",
+              },
+              {
+                href: "http://www.baidu.com",
+                alt: "",
+                src: "https://picsum.photos/200/200?random=5",
+              },
+              {
+                href: "http://www.baidu.com",
+                alt: "",
+                src: "https://picsum.photos/200/200?random=6",
+              },
+              { node: '<div class="icon-logo"></div>', title: "Icon Logo" },
+            ],
+          },
         });
+      });
     </script>
-</body>
-
+  </body>
 </html>

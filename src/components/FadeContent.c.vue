@@ -4,8 +4,16 @@
     :class="className"
     :style="{
       opacity: inView ? 1 : initialOpacity,
-      transition: 'opacity ' + duration + 'ms ' + easing + ', filter ' + duration + 'ms ' + easing,
-      filter: blur ? (inView ? 'blur(0px)' : 'blur(10px)') : 'none'
+      transition:
+        'opacity ' +
+        duration +
+        'ms ' +
+        easing +
+        ', filter ' +
+        duration +
+        'ms ' +
+        easing,
+      filter: blur ? (inView ? 'blur(0px)' : 'blur(10px)') : 'none',
     }"
   >
     <slot />
@@ -14,56 +22,56 @@
 
 <script>
 export default {
-  name: 'FadeContent',
+  name: "FadeContent",
   props: {
     blur: {
       type: Boolean,
-      default: false
+      default: false,
     },
     duration: {
       type: Number,
-      default: 1000
+      default: 1000,
     },
     easing: {
       type: String,
-      default: 'ease-out'
+      default: "ease-out",
     },
     delay: {
       type: Number,
-      default: 0
+      default: 0,
     },
     threshold: {
       type: Number,
-      default: 0.1
+      default: 0.1,
     },
     initialOpacity: {
       type: Number,
-      default: 0
+      default: 0,
     },
     className: {
       type: String,
-      default: ''
-    }
+      default: "",
+    },
   },
-  data: function() {
+  data: function () {
     return {
       inView: false,
-      observer: null
+      observer: null,
     };
   },
-  mounted: function() {
+  mounted: function () {
     var self = this;
     var element = this.$refs.elementRef;
     if (!element) return;
 
     // IntersectionObserver 是浏览器原生 API，需要检查浏览器支持情况
-    if (typeof IntersectionObserver !== 'undefined') {
+    if (typeof IntersectionObserver !== "undefined") {
       this.observer = new IntersectionObserver(
-        function(entries) {
+        function (entries) {
           var entry = entries[0];
           if (entry.isIntersecting) {
             self.observer.unobserve(element);
-            setTimeout(function() {
+            setTimeout(function () {
               self.inView = true;
             }, self.delay);
           }
@@ -74,15 +82,15 @@ export default {
       this.observer.observe(element);
     } else {
       // 如果不支持 IntersectionObserver，则立即显示内容
-      setTimeout(function() {
+      setTimeout(function () {
         self.inView = true;
       }, self.delay);
     }
   },
-  beforeDestroy: function() {
+  beforeDestroy: function () {
     if (this.observer) {
       this.observer.disconnect();
     }
-  }
+  },
 };
 </script>

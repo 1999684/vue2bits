@@ -1,60 +1,80 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Vue2bits 组件预览</title>
+    <script src="../libs/vue.js"></script>
+    <link rel="stylesheet" href="../../dist/vue2bits.css" />
+    <link rel="stylesheet" href="preview.css" />
+  </head>
 
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Vue2bits 组件预览</title>
-  <script src="../libs/vue.js"></script>
-  <link rel="stylesheet" href="../../dist/vue2bits.css">
-  <link rel="stylesheet" href="preview.css">
-</head>
-
-<body>
-  <div id="app" style="display: flex;">
-    <div class="col" style="height: 100vh;width: 50%;">
-      <split-text 
-        :text="message" 
-        :duration="3" 
-        :delay="200" 
-        text-align="center" 
-        class-name="demo-text" 
-        :from="{
+  <body>
+    <div id="app" style="display: flex">
+      <div class="col" style="height: 100vh; width: 50%">
+        <split-text
+          :text="message"
+          :duration="3"
+          :delay="200"
+          text-align="center"
+          class-name="demo-text"
+          :from="{
           opacity: 0.1,
           y: 20
-        }" :to="{
+        }"
+          :to="{
           opacity: 1,
           y: 0
-        }" 
-        :threshold="0.1" 
-        :on-letter-animation-complete="toshow">
-      </split-text>
-    </div>
-    <div class="use">
-      <h2>how to use</h2>
-      <div class="usage-instructions">
-        <h3>SplitText 组件使用说明</h3>
+        }"
+          :threshold="0.1"
+          :on-letter-animation-complete="toshow"
+        >
+        </split-text>
+      </div>
+      <div class="use">
+        <h2>how to use</h2>
+        <div class="usage-instructions">
+          <h3>SplitText 组件使用说明</h3>
 
-        <h4>1. 基本用法</h4>
-        <p>在HTML中直接使用组件标签：</p>
-        <pre><code>&lt;split-text :text="'显示文本'"&gt;&lt;/split-text&gt;</code></pre>
+          <h4>1. 基本用法</h4>
+          <p>在HTML中直接使用组件标签：</p>
+          <pre><code>&lt;split-text :text="'显示文本'"&gt;&lt;/split-text&gt;</code></pre>
 
-        <h4>2. 可用属性</h4>
-        <ul>
-          <li><strong>text</strong> (String): 要显示的文本内容</li>
-          <li><strong>class-name</strong> (String): 应用于文本的CSS类名</li>
-          <li><strong>duration</strong> (Number): 动画持续时间（秒），默认为0.6</li>
-          <li><strong>delay</strong> (Number): 字符动画的间隔时间（毫秒），默认为100</li>
-          <li><strong>ease</strong> (String|Function): 动画缓动函数，默认为'power3.out'</li>
-          <li><strong>split-type</strong> (String): 分割类型('chars'|'words'|'lines')，默认为'chars'</li>
-          <li><strong>text-align</strong> (String): 文本对齐方式，默认为'center'</li>
-          <li><strong>from</strong> (Object): 动画起始状态，默认为{ opacity: 0, y: 40 }</li>
-          <li><strong>to</strong> (Object): 动画结束状态，默认为{ opacity: 1, y: 0 }</li>
-        </ul>
+          <h4>2. 可用属性</h4>
+          <ul>
+            <li><strong>text</strong> (String): 要显示的文本内容</li>
+            <li><strong>class-name</strong> (String): 应用于文本的CSS类名</li>
+            <li>
+              <strong>duration</strong> (Number): 动画持续时间（秒），默认为0.6
+            </li>
+            <li>
+              <strong>delay</strong> (Number):
+              字符动画的间隔时间（毫秒），默认为100
+            </li>
+            <li>
+              <strong>ease</strong> (String|Function):
+              动画缓动函数，默认为'power3.out'
+            </li>
+            <li>
+              <strong>split-type</strong> (String):
+              分割类型('chars'|'words'|'lines')，默认为'chars'
+            </li>
+            <li>
+              <strong>text-align</strong> (String): 文本对齐方式，默认为'center'
+            </li>
+            <li>
+              <strong>from</strong> (Object): 动画起始状态，默认为{ opacity: 0,
+              y: 40 }
+            </li>
+            <li>
+              <strong>to</strong> (Object): 动画结束状态，默认为{ opacity: 1, y:
+              0 }
+            </li>
+          </ul>
 
-        <h4>3. 示例代码</h4>
-        <pre><code>&lt;split-text 
-    :text="message" 
+          <h4>3. 示例代码</h4>
+          <pre><code>&lt;split-text
+    :text="message"
     :duration="3"
     :delay="200"
     text-align="center"
@@ -71,54 +91,53 @@
     :on-letter-animation-complete="toshow"
 &gt;
 &lt;/split-text&gt;</code></pre>
-      </div>
-      <div class="back-link">
-        <a href="../">← Back to mt</a>
+        </div>
+        <div class="back-link">
+          <a href="../">← Back to mt</a>
+        </div>
       </div>
     </div>
-  </div>
 
-  <script src="../../dist/vue2bits.min.js"></script>
-  <!-- 引入GSAP库 -->
-  <script src="../libs/gsap.min.js"></script>
-  <script src="../libs/ScrollTrigger.min.js"></script>
-  <!-- SplitText 需要单独引入 -->
-  <script src="../libs/SplitText.min.js"></script>
-  <script>
+    <script src="../../dist/vue2bits.min.js"></script>
+    <!-- 引入GSAP库 -->
+    <script src="../libs/gsap.min.js"></script>
+    <script src="../libs/ScrollTrigger.min.js"></script>
+    <!-- SplitText 需要单独引入 -->
+    <script src="../libs/SplitText.min.js"></script>
+    <script>
       new Vue({
-        el: '#app',
+        el: "#app",
         data() {
           return {
-            message: '这是一个SplitText动画示例'
-          }
+            message: "这是一个SplitText动画示例",
+          };
         },
         methods: {
           toshow: function () {
-            console.log('动画完成');
-          }
-        }
+            console.log("动画完成");
+          },
+        },
       });
-  </script>
-  <style>
-    /* 文本样式 */
-    .demo-text {
-      font-size: 50px;
-      font-weight: bold;
-      color: #333;
-    }
+    </script>
+    <style>
+      /* 文本样式 */
+      .demo-text {
+        font-size: 50px;
+        font-weight: bold;
+        color: #333;
+      }
 
-    .demo-text.chars {
-      color: #42b983;
-    }
+      .demo-text.chars {
+        color: #42b983;
+      }
 
-    .demo-text.words {
-      color: #409eff;
-    }
+      .demo-text.words {
+        color: #409eff;
+      }
 
-    .demo-text.lines {
-      color: #e6a23c;
-    }
-  </style>
-</body>
-
+      .demo-text.lines {
+        color: #e6a23c;
+      }
+    </style>
+  </body>
 </html>

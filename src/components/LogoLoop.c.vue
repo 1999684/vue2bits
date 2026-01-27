@@ -23,11 +23,7 @@
     </template>
 
     <!-- 轨道 -->
-    <div
-      ref="trackRef"
-      :style="trackStyle"
-      class="track"
-    >
+    <div ref="trackRef" :style="trackStyle" class="track">
       <!-- 循环副本 -->
       <ul
         v-for="copyIndex in copyCount"
@@ -56,17 +52,10 @@
             class="logo-link"
             :style="logoLinkStyle"
           >
-            <LogoContent
-              :item="item"
-              :scale-on-hover="scaleOnHover"
-            />
+            <LogoContent :item="item" :scale-on-hover="scaleOnHover" />
           </a>
           <!-- 不带链接 -->
-          <LogoContent
-            v-else
-            :item="item"
-            :scale-on-hover="scaleOnHover"
-          />
+          <LogoContent v-else :item="item" :scale-on-hover="scaleOnHover" />
         </li>
       </ul>
     </div>
@@ -74,70 +63,70 @@
 </template>
 
 <script>
-import LogoContent from './LogoContent.c.vue';
+import LogoContent from "./LogoContent.c.vue";
 
 const ANIMATION_CONFIG = {
   SMOOTH_TAU: 0.25,
   MIN_COPIES: 2,
-  COPY_HEADROOM: 2
+  COPY_HEADROOM: 2,
 };
 
 export default {
-  name: 'LogoLoop',
+  name: "LogoLoop",
   components: {
-    LogoContent
+    LogoContent,
   },
   props: {
     logos: {
       type: Array,
       required: true,
-      validator: (arr) => arr.every(item => item.src || item.node)
+      validator: (arr) => arr.every((item) => item.src || item.node),
     },
     speed: {
       type: Number,
-      default: 120
+      default: 120,
     },
     direction: {
       type: String,
-      default: 'left',
-      validator: val => ['left', 'right'].includes(val)
+      default: "left",
+      validator: (val) => ["left", "right"].includes(val),
     },
     width: {
       type: [Number, String],
-      default: '100%'
+      default: "100%",
     },
     logoHeight: {
       type: Number,
-      default: 60
+      default: 60,
     },
     gap: {
       type: Number,
-      default: 32
+      default: 32,
     },
     pauseOnHover: {
       type: Boolean,
-      default: true
+      default: true,
     },
     fadeOut: {
       type: Boolean,
-      default: false
+      default: false,
     },
     fadeOutColor: {
       type: String,
-      default: ''
+      default: "",
     },
     scaleOnHover: {
       type: Boolean,
-      default: false
+      default: false,
     },
     ariaLabel: {
       type: String,
-      default: 'logo loop'
+      default: "logo loop",
     },
     className: {
       type: String,
-      default: ''
-    }
+      default: "",
+    },
   },
 
   data() {
@@ -152,7 +141,7 @@ export default {
       resizeObserver: null,
       cleanupResize: null,
       cleanupImages: null,
-      cleanupAnimation: null
+      cleanupAnimation: null,
     };
   },
 
@@ -160,7 +149,7 @@ export default {
     // 目标速度计算
     targetVelocity() {
       const magnitude = Math.abs(this.speed);
-      const directionMultiplier = this.direction === 'left' ? 1 : -1;
+      const directionMultiplier = this.direction === "left" ? 1 : -1;
       const speedMultiplier = this.speed < 0 ? -1 : 1;
       return magnitude * directionMultiplier * speedMultiplier;
     },
@@ -168,21 +157,23 @@ export default {
     // 容器样式
     containerStyle() {
       const style = {
-        width: typeof this.width === 'number' ? `${this.width}px` : this.width,
-        position: 'relative',
-        overflow: 'hidden',
-        '--logoloop-gap': `${this.gap}px`,
-        '--logoloop-logoHeight': `${this.logoHeight}px`
+        width: typeof this.width === "number" ? `${this.width}px` : this.width,
+        position: "relative",
+        overflow: "hidden",
+        "--logoloop-gap": `${this.gap}px`,
+        "--logoloop-logoHeight": `${this.logoHeight}px`,
       };
 
       if (this.fadeOutColor) {
-        style['--logoloop-fadeColor'] = this.fadeOutColor;
+        style["--logoloop-fadeColor"] = this.fadeOutColor;
       }
 
       // 检测深色模式 (简单实现)
       if (!this.fadeOutColor) {
-        const isDark = window.matchMedia?.('(prefers-color-scheme: dark)').matches;
-        style['--logoloop-fadeColorAuto'] = isDark ? '#0b0b0b' : '#ffffff';
+        const isDark = window.matchMedia?.(
+          "(prefers-color-scheme: dark)"
+        ).matches;
+        style["--logoloop-fadeColorAuto"] = isDark ? "#0b0b0b" : "#ffffff";
       }
 
       return style;
@@ -191,12 +182,12 @@ export default {
     // 轨道样式
     trackStyle() {
       return {
-        display: 'flex',
-        width: 'max-content',
-        willChange: 'transform',
-        userSelect: 'none',
+        display: "flex",
+        width: "max-content",
+        willChange: "transform",
+        userSelect: "none",
         transform: `translate3d(${-this.offsetRef}px, 0, 0)`,
-        transition: this.prefersReducedMotion ? 'none' : 'none'
+        transition: this.prefersReducedMotion ? "none" : "none",
       };
     },
 
@@ -207,61 +198,67 @@ export default {
         marginRight: `${this.gap}px`,
         fontSize: `${this.logoHeight}px`,
         lineHeight: 1,
-        display: 'flex',
-        alignItems: 'center',
-        position: 'relative'
+        display: "flex",
+        alignItems: "center",
+        position: "relative",
       };
     },
 
     // Logo链接样式
     logoLinkStyle() {
       return {
-        display: 'inline-flex',
-        alignItems: 'center',
-        textDecoration: 'none',
-        borderRadius: '4px',
-        transition: 'opacity 200ms linear',
-        outline: 'none'
+        display: "inline-flex",
+        alignItems: "center",
+        textDecoration: "none",
+        borderRadius: "4px",
+        transition: "opacity 200ms linear",
+        outline: "none",
       };
     },
 
     // 淡出层左侧样式
     fadeLeftStyle() {
-      const fadeColor = this.fadeOutColor ||
-        (window.matchMedia?.('(prefers-color-scheme: dark)').matches ? '#0b0b0b' : '#ffffff');
+      const fadeColor =
+        this.fadeOutColor ||
+        (window.matchMedia?.("(prefers-color-scheme: dark)").matches
+          ? "#0b0b0b"
+          : "#ffffff");
       return {
-        pointerEvents: 'none',
-        position: 'absolute',
+        pointerEvents: "none",
+        position: "absolute",
         top: 0,
         left: 0,
         bottom: 0,
         zIndex: 1,
-        width: 'clamp(24px, 8%, 120px)',
-        background: `linear-gradient(to right, ${fadeColor} 0%, rgba(0, 0, 0, 0) 100%)`
+        width: "clamp(24px, 8%, 120px)",
+        background: `linear-gradient(to right, ${fadeColor} 0%, rgba(0, 0, 0, 0) 100%)`,
       };
     },
 
     // 淡出层右侧样式
     fadeRightStyle() {
-      const fadeColor = this.fadeOutColor ||
-        (window.matchMedia?.('(prefers-color-scheme: dark)').matches ? '#0b0b0b' : '#ffffff');
+      const fadeColor =
+        this.fadeOutColor ||
+        (window.matchMedia?.("(prefers-color-scheme: dark)").matches
+          ? "#0b0b0b"
+          : "#ffffff");
       return {
-        pointerEvents: 'none',
-        position: 'absolute',
+        pointerEvents: "none",
+        position: "absolute",
         top: 0,
         right: 0,
         bottom: 0,
         zIndex: 1,
-        width: 'clamp(24px, 8%, 120px)',
-        background: `linear-gradient(to left, ${fadeColor} 0%, rgba(0, 0, 0, 0) 100%)`
+        width: "clamp(24px, 8%, 120px)",
+        background: `linear-gradient(to left, ${fadeColor} 0%, rgba(0, 0, 0, 0) 100%)`,
       };
     },
 
     // 根容器类名
     rootClasses() {
-      const classes = ['logo-loop-container'];
+      const classes = ["logo-loop-container"];
       if (this.scaleOnHover) {
-        classes.push('has-scale-hover');
+        classes.push("has-scale-hover");
       }
       if (this.className) {
         classes.push(this.className);
@@ -271,9 +268,11 @@ export default {
 
     // 检测减速运动偏好
     prefersReducedMotion() {
-      return typeof window !== 'undefined' &&
-        window.matchMedia?.('(prefers-reduced-motion: reduce)').matches;
-    }
+      return (
+        typeof window !== "undefined" &&
+        window.matchMedia?.("(prefers-reduced-motion: reduce)").matches
+      );
+    },
   },
 
   watch: {
@@ -285,7 +284,7 @@ export default {
           this.cleanupImages = this.setupImageLoader();
         });
       },
-      deep: true
+      deep: true,
     },
     gap() {
       this.$nextTick(() => {
@@ -298,7 +297,7 @@ export default {
         this.cleanupImages?.();
         this.cleanupImages = this.setupImageLoader();
       });
-    }
+    },
   },
 
   mounted() {
@@ -353,7 +352,8 @@ export default {
         this.seqWidth = Math.ceil(sequenceWidth);
 
         const copiesNeeded =
-          Math.ceil(containerWidth / sequenceWidth) + ANIMATION_CONFIG.COPY_HEADROOM;
+          Math.ceil(containerWidth / sequenceWidth) +
+          ANIMATION_CONFIG.COPY_HEADROOM;
 
         this.copyCount = Math.max(ANIMATION_CONFIG.MIN_COPIES, copiesNeeded);
 
@@ -366,10 +366,10 @@ export default {
     setupResizeObserver() {
       if (!window.ResizeObserver) {
         const handleResize = () => this.updateDimensions();
-        window.addEventListener('resize', handleResize);
+        window.addEventListener("resize", handleResize);
         this.updateDimensions();
 
-        return () => window.removeEventListener('resize', handleResize);
+        return () => window.removeEventListener("resize", handleResize);
       }
 
       this.resizeObserver = new ResizeObserver(() => this.updateDimensions());
@@ -395,7 +395,7 @@ export default {
     // 设置图片加载器
     setupImageLoader() {
       const seqRef = this.$refs.copy0?.[0];
-      const images = seqRef?.querySelectorAll('img') || [];
+      const images = seqRef?.querySelectorAll("img") || [];
 
       if (images.length === 0) {
         this.updateDimensions();
@@ -411,19 +411,19 @@ export default {
         }
       };
 
-      images.forEach(img => {
+      images.forEach((img) => {
         if (img.complete) {
           handleImageLoad();
         } else {
-          img.addEventListener('load', handleImageLoad, { once: true });
-          img.addEventListener('error', handleImageLoad, { once: true });
+          img.addEventListener("load", handleImageLoad, { once: true });
+          img.addEventListener("error", handleImageLoad, { once: true });
         }
       });
 
       return () => {
-        images.forEach(img => {
-          img.removeEventListener('load', handleImageLoad);
-          img.removeEventListener('error', handleImageLoad);
+        images.forEach((img) => {
+          img.removeEventListener("load", handleImageLoad);
+          img.removeEventListener("error", handleImageLoad);
         });
       };
     },
@@ -434,12 +434,13 @@ export default {
       if (!track) return;
 
       if (this.seqWidth > 0) {
-        this.offsetRef = ((this.offsetRef % this.seqWidth) + this.seqWidth) % this.seqWidth;
+        this.offsetRef =
+          ((this.offsetRef % this.seqWidth) + this.seqWidth) % this.seqWidth;
         track.style.transform = `translate3d(${-this.offsetRef}px, 0, 0)`;
       }
 
       if (this.prefersReducedMotion) {
-        track.style.transform = 'translate3d(0, 0, 0)';
+        track.style.transform = "translate3d(0, 0, 0)";
         return () => {
           this.lastTimestampRef = null;
         };
@@ -454,15 +455,18 @@ export default {
         this.lastTimestampRef = timestamp;
 
         // 计算目标速度
-        const target = this.pauseOnHover && this.isHovered ? 0 : this.targetVelocity;
+        const target =
+          this.pauseOnHover && this.isHovered ? 0 : this.targetVelocity;
 
         // 平滑插值
-        const easingFactor = 1 - Math.exp(-deltaTime / ANIMATION_CONFIG.SMOOTH_TAU);
+        const easingFactor =
+          1 - Math.exp(-deltaTime / ANIMATION_CONFIG.SMOOTH_TAU);
         this.velocityRef += (target - this.velocityRef) * easingFactor;
 
         if (this.seqWidth > 0) {
           let nextOffset = this.offsetRef + this.velocityRef * deltaTime;
-          nextOffset = ((nextOffset % this.seqWidth) + this.seqWidth) % this.seqWidth;
+          nextOffset =
+            ((nextOffset % this.seqWidth) + this.seqWidth) % this.seqWidth;
           this.offsetRef = nextOffset;
 
           const translateX = -this.offsetRef;
@@ -488,8 +492,8 @@ export default {
       this.cleanupResize?.();
       this.cleanupImages?.();
       this.cleanupAnimation?.();
-    }
-  }
+    },
+  },
 };
 </script>
 

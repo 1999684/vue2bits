@@ -1,102 +1,126 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>PixelTransition 组件预览</title>
     <script src="../libs/vue.js"></script>
-    <link rel="stylesheet" href="../../dist/vue2bits.css">
-    <link rel="stylesheet" href="preview.css">
+    <link rel="stylesheet" href="../../dist/vue2bits.css" />
+    <link rel="stylesheet" href="preview.css" />
     <style>
-        body {
-            background-color: #422323;
-        }
-        a {
-            color: #ff4 !important;
-        }
-        h4, h3, h2, p, li {
-            color: #ffffff !important;
-        }
+      body {
+        background-color: #422323;
+      }
+      a {
+        color: #ff4 !important;
+      }
+      h4,
+      h3,
+      h2,
+      p,
+      li {
+        color: #ffffff !important;
+      }
     </style>
-</head>
+  </head>
 
-<body>
-    <div id="app" style="display: flex;">
-        <div class="col" style="height: 100vh; width: 50%; display: flex; align-items: center; justify-content: center;background-color: #000;">
-            <shape-blur 
-                :variation="constant.variation"
-                :pixel-ratio-prop="constant.pixelRatioProp"
-                :shape-size="constant.shapeSize"
-                :roundness="constant.roundness"
-                :border-size="constant.borderSize"
-                :circle-size="constant.circleSize"
-                :circle-edge="constant.circleEdge"
-                :class-name="constant.className"
-            ></shape-blur>
-        </div>
-        <div class="use">
-            <h2>how to use</h2>
-            <div class="usage-instructions">
-                <h3>ShapeBlur 组件使用说明</h3>
+  <body>
+    <div id="app" style="display: flex">
+      <div
+        class="col"
+        style="
+          height: 100vh;
+          width: 50%;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          background-color: #000;
+        "
+      >
+        <shape-blur
+          :variation="constant.variation"
+          :pixel-ratio-prop="constant.pixelRatioProp"
+          :shape-size="constant.shapeSize"
+          :roundness="constant.roundness"
+          :border-size="constant.borderSize"
+          :circle-size="constant.circleSize"
+          :circle-edge="constant.circleEdge"
+          :class-name="constant.className"
+        ></shape-blur>
+      </div>
+      <div class="use">
+        <h2>how to use</h2>
+        <div class="usage-instructions">
+          <h3>ShapeBlur 组件使用说明</h3>
 
-                <h4>1. 基本用法</h4>
-                <pre><code>&lt;shape-blur&gt;&lt;/shape-blur&gt;</code></pre>
+          <h4>1. 基本用法</h4>
+          <pre><code>&lt;shape-blur&gt;&lt;/shape-blur&gt;</code></pre>
 
-                <h4>2. 可用属性</h4>
-                <ul>
-                    <li><strong>className</strong> (String): 类名，用于自定义样式</li>
-                    <li><strong>variation</strong> (Number): 选择着色器使用的形状变化（0-3），默认为0</li>
-                    <li><strong>pixelRatioProp</strong> (Number): 像素比，控制着色器的模糊效果，默认为10</li>
-                    <li><strong>shapeSize</strong> (Number): 形状大小，控制形状大小，默认为1.2</li>
-                    <li><strong>roundness</strong> (Number): 形状圆度，默认为0.4</li>
-                    <li><strong>borderSize</strong> (Number): 边框大小，默认为0.05</li>
-                    <li><strong>circleSize</strong> (Number): 圆形大小，默认为0.3</li>
-                    <li><strong>circleEdge</strong> (Number): 控制悬停圆圈的边缘柔和度，默认为0.5</li>
-                </ul>
+          <h4>2. 可用属性</h4>
+          <ul>
+            <li><strong>className</strong> (String): 类名，用于自定义样式</li>
+            <li>
+              <strong>variation</strong> (Number):
+              选择着色器使用的形状变化（0-3），默认为0
+            </li>
+            <li>
+              <strong>pixelRatioProp</strong> (Number):
+              像素比，控制着色器的模糊效果，默认为10
+            </li>
+            <li>
+              <strong>shapeSize</strong> (Number):
+              形状大小，控制形状大小，默认为1.2
+            </li>
+            <li><strong>roundness</strong> (Number): 形状圆度，默认为0.4</li>
+            <li><strong>borderSize</strong> (Number): 边框大小，默认为0.05</li>
+            <li><strong>circleSize</strong> (Number): 圆形大小，默认为0.3</li>
+            <li>
+              <strong>circleEdge</strong> (Number):
+              控制悬停圆圈的边缘柔和度，默认为0.5
+            </li>
+          </ul>
 
-                <h4>3. 示例代码</h4>
-                <pre><code>&lt;shape-blur 
-    :variation="0" 
-    :pixel-ratio-prop="2" 
-    :shape-size="1.2" 
-    :roundness="0.4" 
-    :border-size="0.05" 
-    :circle-size="0.3" 
-    :circle-edge="0.5" 
+          <h4>3. 示例代码</h4>
+          <pre><code>&lt;shape-blur
+    :variation="0"
+    :pixel-ratio-prop="2"
+    :shape-size="1.2"
+    :roundness="0.4"
+    :border-size="0.05"
+    :circle-size="0.3"
+    :circle-edge="0.5"
     class="shape-blur-effect"
 &gt;
 &lt;/shape-blur&gt;</code></pre>
-            </div>
-            <div class="back-link">
-                <a href="../">← Back to index</a>
-            </div>
         </div>
+        <div class="back-link">
+          <a href="../">← Back to index</a>
+        </div>
+      </div>
     </div>
 
     <script src="../../dist/vue2bits.min.js"></script>
     <!-- 引入 GSAP 库 -->
     <script src="../libs/three.min.js"></script>
     <script>
-        // 确保 Vue 实例在 DOM 加载完成后创建
-        document.addEventListener('DOMContentLoaded', function () {
-            new Vue({
-                el: '#app',
-                data: {
-                    constant: {
-                        variation: 0,
-                        pixelRatioProp: 2,
-                        shapeSize: 1.2,
-                        roundness: 0.4,
-                        borderSize: 0.05,
-                        circleSize: 0.3,
-                        circleEdge: 0.5,
-                        className: 'shape-blur-effect'
-                    }
-                }
-            });
+      // 确保 Vue 实例在 DOM 加载完成后创建
+      document.addEventListener("DOMContentLoaded", function () {
+        new Vue({
+          el: "#app",
+          data: {
+            constant: {
+              variation: 0,
+              pixelRatioProp: 2,
+              shapeSize: 1.2,
+              roundness: 0.4,
+              borderSize: 0.05,
+              circleSize: 0.3,
+              circleEdge: 0.5,
+              className: "shape-blur-effect",
+            },
+          },
         });
+      });
     </script>
-</body>
-
+  </body>
 </html>

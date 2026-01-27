@@ -1,6 +1,7 @@
 <template>
   <div
-    :class="`gradient-text-container ${className}`" :style="{borderRadius: borderRadius}"
+    :class="`gradient-text-container ${className}`"
+    :style="{ borderRadius: borderRadius }"
   >
     <div
       v-if="showBorder"
@@ -8,7 +9,8 @@
       :style="borderStyle"
     >
       <div
-        class="gradient-text-border-inner" :style="{ background: background, borderRadius: borderRadius }"
+        class="gradient-text-border-inner"
+        :style="{ background: background, borderRadius: borderRadius }"
       />
     </div>
 
@@ -20,71 +22,71 @@
 
 <script>
 export default {
-  name: 'GradientText',
+  name: "GradientText",
   props: {
     // 文本内容
     text: {
       type: String,
-      default: ''
+      default: "",
     },
     // 自定义CSS类名
     className: {
       type: String,
-      default: ''
+      default: "",
     },
     // 渐变颜色数组
     colors: {
       type: Array,
-      default: function() {
-        return ['#ffaa40', '#9c40ff', '#ffaa40'];
-      }
+      default: function () {
+        return ["#ffaa40", "#9c40ff", "#ffaa40"];
+      },
     },
     // 动画速度（秒）
     animationSpeed: {
       type: Number,
-      default: 8
+      default: 8,
     },
     // 是否显示边框
     showBorder: {
       type: Boolean,
-      default: false
+      default: false,
     },
     // 设置背景
     background: {
       type: String,
-      default: 'black;'
+      default: "black;",
     },
     // 边框圆角
     borderRadius: {
       type: String,
-      default: '1.25rem'
+      default: "1.25rem",
     },
   },
   computed: {
     // 渐变样式
-    gradientStyle: function() {
+    gradientStyle: function () {
       return {
-        backgroundImage: 'linear-gradient(to right, ' + this.colors.join(', ') + ')',
-        animationDuration: this.animationSpeed + 's',
-        backgroundSize: '300% 100%',
-        '--animation-duration': this.animationSpeed + 's'
+        backgroundImage:
+          "linear-gradient(to right, " + this.colors.join(", ") + ")",
+        animationDuration: this.animationSpeed + "s",
+        backgroundSize: "300% 100%",
+        "--animation-duration": this.animationSpeed + "s",
       };
     },
     // 边框样式
-    borderStyle: function() {
+    borderStyle: function () {
       return this.gradientStyle;
     },
     // 文本样式
-    textStyle: function() {
+    textStyle: function () {
       return Object.assign({}, this.gradientStyle, {
-        backgroundClip: 'text',
-        WebkitBackgroundClip: 'text'
+        backgroundClip: "text",
+        WebkitBackgroundClip: "text",
       });
-    }
-  }
+    },
+  },
 };
 </script>
-
 
 <style scoped>
 .gradient-text-container {

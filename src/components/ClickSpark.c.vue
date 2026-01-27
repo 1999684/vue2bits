@@ -8,67 +8,69 @@
 
 <script>
 export default {
-  name: 'ClickSpark',
+  name: "ClickSpark",
   props: {
     sparkColor: {
       type: String,
-      default: '#fff'
+      default: "#fff",
     },
     sparkSize: {
       type: Number,
-      default: 10
+      default: 10,
     },
     sparkRadius: {
       type: Number,
-      default: 15
+      default: 15,
     },
     sparkCount: {
       type: Number,
-      default: 8
+      default: 8,
     },
     duration: {
       type: Number,
-      default: 400
+      default: 400,
     },
     easing: {
       type: String,
-      default: 'ease-out',
+      default: "ease-out",
       validator: function (value) {
-        return ['linear', 'ease-in', 'ease-out', 'ease-in-out'].indexOf(value) !== -1
-      }
+        return (
+          ["linear", "ease-in", "ease-out", "ease-in-out"].indexOf(value) !== -1
+        );
+      },
     },
     extraScale: {
       type: Number,
-      default: 1.0
-    }
+      default: 1.0,
+    },
   },
-  data: function() {
+  data: function () {
     return {
       sparks: [],
       startTime: null,
       animationId: null,
       resizeTimeout: null,
-      resizeObserver: null
+      resizeObserver: null,
     };
   },
   computed: {
-    easeFunc: function() {
+    easeFunc: function () {
       const easing = this.easing;
-      return function(t) {
+      return function (t) {
         switch (easing) {
-          case 'linear':
+          case "linear":
             return t;
-          case 'ease-in':
+          case "ease-in":
             return t * t;
-          case 'ease-in-out':
+          case "ease-in-out":
             return t < 0.5 ? 2 * t * t : -1 + (4 - 2 * t) * t;
           default:
             return t * (2 - t);
         }
       };
-    }
+    },
   },
-  mounted: function() {
+  mounted: function () {
     const canvas = this.$refs.canvasRef;
     if (!canvas) return;
 
@@ -77,13 +79,13 @@ export default {
 
     // 简单的 resize 处理，因为 ResizeObserver 在 Vue 2 中可能不被支持
     this.handleResize = this.handleResize.bind(this);
-    window.addEventListener('resize', this.handleResize);
+    window.addEventListener("resize", this.handleResize);
 
     this.resizeCanvas();
 
     this.animationId = requestAnimationFrame(this.draw);
   },
-  beforeDestroy: function() {
+  beforeDestroy: function () {
     if (this.resizeObserver) {
       this.resizeObserver.disconnect();
     }
@@ -94,34 +96,34 @@ export default {
     if (this.animationId) {
       cancelAnimationFrame(this.animationId);
     }
-    
-    window.removeEventListener('resize', this.handleResize);
+
+    window.removeEventListener("resize", this.handleResize);
   },
   watch: {
-    sparkColor: function() {
+    sparkColor: function () {
       this.restartAnimation();
     },
-    sparkSize: function() {
+    sparkSize: function () {
       this.restartAnimation();
     },
-    sparkRadius: function() {
+    sparkRadius: function () {
       this.restartAnimation();
     },
-    sparkCount: function() {
+    sparkCount: function () {
       this.restartAnimation();
     },
-    duration: function() {
+    duration: function () {
       this.restartAnimation();
     },
-    extraScale: function() {
+    extraScale: function () {
       this.restartAnimation();
     },
-    easing: function() {
+    easing: function () {
       this.restartAnimation();
-    }
+    },
   },
   methods: {
-    handleClick: function(e) {
+    handleClick: function (e) {
       const canvas = this.$refs.canvasRef;
       if (!canvas) return;
       const rect = canvas.getBoundingClientRect();
@@ -129,58 +131,63 @@ export default {
       const y = e.clientY - rect.top;
 
       const now = performance.now();
-      const newSparks = Array.from({ length: this.sparkCount }, function(_, i) {
-        return {
-          x: x,
-          y: y,
-          angle: (2 * Math.PI * i) / this.sparkCount,
-          startTime: now
-        };
-      }.bind(this));
+      const newSparks = Array.from(
+        { length: this.sparkCount },
+        function (_, i) {
+          return {
+            x: x,
+            y: y,
+            angle: (2 * Math.PI * i) / this.sparkCount,
+            startTime: now,
+          };
+        }.bind(this)
+      );
 
       this.sparks.push.apply(this.sparks, newSparks);
     },
-    draw: function(timestamp) {
+    draw: function (timestamp) {
       if (!this.startTime) {
         this.startTime = timestamp;
       }
 
       const canvas = this.$refs.canvasRef;
-      const ctx = canvas && canvas.getContext('2d');
+      const ctx = canvas && canvas.getContext("2d");
       if (!ctx || !canvas) return;
 
       ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-      this.sparks = this.sparks.filter(function(spark) {
-        const elapsed = timestamp - spark.startTime;
-        if (elapsed >= this.duration) {
-          return false;
-        }
+      this.sparks = this.sparks.filter(
+        function (spark) {
+          const elapsed = timestamp - spark.startTime;
+          if (elapsed >= this.duration) {
+            return false;
+          }
 
-        const progress = elapsed / this.duration;
-        const eased = this.easeFunc(progress);
+          const progress = elapsed / this.duration;
+          const eased = this.easeFunc(progress);
 
-        const distance = eased * this.sparkRadius * this.extraScale;
-        const lineLength = this.sparkSize * (1 - eased);
+          const distance = eased * this.sparkRadius * this.extraScale;
+          const lineLength = this.sparkSize * (1 - eased);
 
-        const x1 = spark.x + distance * Math.cos(spark.angle);
-        const y1 = spark.y + distance * Math.sin(spark.angle);
-        const x2 = spark.x + (distance + lineLength) * Math.cos(spark.angle);
-        const y2 = spark.y + (distance + lineLength) * Math.sin(spark.angle);
+          const x1 = spark.x + distance * Math.cos(spark.angle);
+          const y1 = spark.y + distance * Math.sin(spark.angle);
+          const x2 = spark.x + (distance + lineLength) * Math.cos(spark.angle);
+          const y2 = spark.y + (distance + lineLength) * Math.sin(spark.angle);
 
-        ctx.strokeStyle = this.sparkColor;
-        ctx.lineWidth = 2;
-        ctx.beginPath();
-        ctx.moveTo(x1, y1);
-        ctx.lineTo(x2, y2);
-        ctx.stroke();
+          ctx.strokeStyle = this.sparkColor;
+          ctx.lineWidth = 2;
+          ctx.beginPath();
+          ctx.moveTo(x1, y1);
+          ctx.lineTo(x2, y2);
+          ctx.stroke();
 
-        return true;
-      }.bind(this));
+          return true;
+        }.bind(this)
+      );
 
       this.animationId = requestAnimationFrame(this.draw);
     },
-    resizeCanvas: function() {
+    resizeCanvas: function () {
       const canvas = this.$refs.canvasRef;
       if (!canvas) return;
 
@@ -195,31 +202,31 @@ export default {
         canvas.height = height;
       }
     },
-    handleResize: function() {
+    handleResize: function () {
       if (this.resizeTimeout) {
         clearTimeout(this.resizeTimeout);
       }
       this.resizeTimeout = setTimeout(this.resizeCanvas, 100);
     },
-    restartAnimation: function() {
+    restartAnimation: function () {
       if (this.animationId) {
         cancelAnimationFrame(this.animationId);
       }
       this.animationId = requestAnimationFrame(this.draw);
-    }
-  }
+    },
+  },
 };
 </script>
 
 <style scoped>
-    .click-spark {
-        position: relative;
-        width: 100%;
-        height: 100%;
-    }
-    .click-spark-canvas {
-        position: absolute;
-        inset: 0;
-        pointer-events: none;
-    }
+.click-spark {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+.click-spark-canvas {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
 </style>
