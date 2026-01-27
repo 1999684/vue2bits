@@ -29,7 +29,6 @@ import Noise from "./Noise.c.vue";
 import PixelTrail from "./PixelTrail.c.vue";
 import PixelTransition from "./PixelTransition.c.vue";
 import ShapeBlur from "./ShapeBlur.c.vue";
-import SplashCursor from "./SplashCursor.c.vue";
 
 // 定义组件列表
 const components = [
