@@ -29,6 +29,7 @@ import Noise from "./Noise.c.vue";
 import PixelTrail from "./PixelTrail.c.vue";
 import PixelTransition from "./PixelTransition.c.vue";
 import ShapeBlur from "./ShapeBlur.c.vue";
+import StarBorder from "./StarBorder.c.vue";
 
 // 定义组件列表
 const components = [
@@ -62,6 +63,7 @@ const components = [
   PixelTrail,
   PixelTransition,
   ShapeBlur,
+  StarBorder,
 ];
 
 // 定义 install 方法，接收 Vue 作为参数
@@ -108,6 +110,7 @@ export default {
   PixelTrail,
   PixelTransition,
   ShapeBlur,
+  StarBorder,
 };
 
 // 单独导出组件，支持按需引入
@@ -142,4 +145,5 @@ export {
   PixelTrail,
   PixelTransition,
   ShapeBlur,
+  StarBorder,
 };
