@@ -21,6 +21,12 @@
       li {
         color: #ffffff !important;
       }
+
+      .border-star {
+          border: 1px solid #4880ff;
+          color: #333;
+          background: #fff;
+      }
     </style>
   </head>
 
@@ -43,8 +49,9 @@
           :color="constant.color"
           :thickness="constant.thickness"
           :custom-class="constant.customClass"
+          :border-class="constant.borderClass"
         >
-          Checkout this border
+          border
         </star-border>
       </div>
       <div class="use">
@@ -103,6 +110,7 @@
               color: "white",
               thickness: 1,
               customClass: "my-star-border",
+              borderClass: "border-star"
             },
           },
         });

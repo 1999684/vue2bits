@@ -10,7 +10,7 @@
 
     <div class="star-movement-top" :style="topStarStyle"></div>
 
-    <div class="star-border-content">
+    <div :class="'star-border-content ' + borderClass">
       <slot />
     </div>
   </component>
@@ -39,6 +39,10 @@ export default {
     thickness: {
       type: Number,
       default: 1,
+    },
+    borderClass: {
+      type: String,
+      default: "",
     },
   },
   computed: {
