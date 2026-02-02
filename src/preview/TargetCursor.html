@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>TargetCursor 组件预览</title>
+    <script src="../libs/vue.js"></script>
+    <link rel="stylesheet" href="../../dist/vue2bits.css" />
+    <link rel="stylesheet" href="preview.css" />
+    <style>
+      .demo-container {
+        padding: 50px;
+        display: flex;
+        flex-direction: column;
+        gap: 40px;
+      }
+      .target-box {
+        width: 200px;
+        height: 100px;
+        background: #333;
+        color: white;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 12px;
+        transition: transform 0.2s;
+        user-select: none;
+      }
+      .target-box:hover {
+        transform: scale(1.05);
+      }
+      .special-target {
+        width: 150px;
+        height: 150px;
+        background: #ff6b6b;
+        border-radius: 50%;
+      }
+      .cursor-target {
+        cursor: none; /* 配合组件使用 */
+      }
+    </style>
+  </head>
+  <body>
+    <div id="app" style="display: flex">
+      <div class="col" style="height: 100vh; width: 50%; overflow-y: auto;">
+        <div class="demo-container">
+          <h2>TargetCursor 交互预览</h2>
+          <p>将鼠标移动到下方的方块上查看锁定效果：</p>
+
+          <div class="target-box cursor-target">
+            默认目标 (.cursor-target)
+          </div>
+
+          <div class="target-box custom-selector">
+            自定义选择器目标
+          </div>
+
+          <div class="target-box special-target cursor-target">
+            圆形目标
+          </div>
+
+          <div style="margin-top: 20px;">
+            <label>切换光标颜色: </label>
+            <input type="color" v-model="cursorColor" />
+            <span style="margin-left: 10px;">{{ cursorColor }}</span>
+          </div>
+        </div>
+
+        <!-- 引入组件 -->
+        <target-cursor
+          target-selector=".cursor-target, .custom-selector, a"
+          :spin-duration="3"
+          :color="cursorColor"
+        ></target-cursor>
+      </div>
+
+      <div class="use">
+        <h2>how to use</h2>
+        <div class="usage-instructions">
+          <h3>TargetCursor 组件使用说明</h3>
+
+          <h4>1. 基本用法</h4>
+          <p>在 HTML 中放置组件，它会自动接管鼠标指针：</p>
+          <pre><code>&lt;target-cursor target-selector=".cursor-target"&gt;&lt;/target-cursor&gt;</code></pre>
+
+          <h4>2. 可用属性</h4>
+          <ul>
+            <li><strong>target-selector</strong> (String): 触发锁定效果的 CSS 选择器，默认为 '.cursor-target'</li>
+            <li><strong>spin-duration</strong> (Number): 闲置时光标旋转一周的秒数，默认为 2</li>
+            <li><strong>hide-default-cursor</strong> (Boolean): 是否隐藏系统默认光标，默认为 true</li>
+            <li><strong>color</strong> (String): 光标颜色（支持 CSS 颜色值），默认为 'white'</li>
+          </ul>
+
+          <h4>3. 视觉原理</h4>
+          <p>当鼠标进入匹配 <code>target-selector</code> 的元素时，光标的四个角会平滑地展开并贴合到目标的边界，同时停止旋转并产生轻微的视差跟随效果。</p>
+
+          <h4>4. 依赖说明</h4>
+          <p>本组件依赖于 <strong>GSAP</strong>。请确保在预览环境或全局已加载 GSAP 库：</p>
+          <pre><code>&lt;script src="../libs/gsap.min.js"&gt;&lt;/script&gt;</code></pre>
+        </div>
+        <div class="back-link">
+          <a href="../">← Back to index</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- 依次引入依赖 -->
+    <script src="../libs/gsap.min.js"></script>
+    <script src="../../dist/vue2bits.min.js"></script>
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        new Vue({
+          el: "#app",
+          data: {
+            cursorColor: "#333"
+          }
+        });
+      });
+    </script>
+  </body>
+</html>
