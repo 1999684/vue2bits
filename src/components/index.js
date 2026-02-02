@@ -30,6 +30,7 @@ import PixelTrail from "./PixelTrail.c.vue";
 import PixelTransition from "./PixelTransition.c.vue";
 import ShapeBlur from "./ShapeBlur.c.vue";
 import StarBorder from "./StarBorder.c.vue";
+import StickerPeel from "./StickerPeel.c.vue"
 
 // 定义组件列表
 const components = [
@@ -64,6 +65,7 @@ const components = [
   PixelTransition,
   ShapeBlur,
   StarBorder,
+  StickerPeel,
 ];
 
 // 定义 install 方法，接收 Vue 作为参数
@@ -111,6 +113,7 @@ export default {
   PixelTransition,
   ShapeBlur,
   StarBorder,
+  StickerPeel,
 };
 
 // 单独导出组件，支持按需引入
@@ -146,4 +149,5 @@ export {
   PixelTransition,
   ShapeBlur,
   StarBorder,
+  StickerPeel,
 };
