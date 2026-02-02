@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>StickerPeel 组件预览</title>
+    <script src="../libs/vue.js"></script>
+    <link rel="stylesheet" href="../../dist/vue2bits.css" />
+    <link rel="stylesheet" href="preview.css" />
+    <style>
+      .sticker-demo-container {
+        width: 100%;
+        height: 400px;
+        background: #f0f0f0;
+        position: relative;
+        overflow: hidden;
+        border-radius: 8px;
+        margin: 20px 0;
+      }
+      .demo-section {
+        margin-bottom: 40px;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="app" style="display: flex">
+      <div class="col" style="height: 100vh; width: 50%; overflow-y: auto; padding: 20px;">
+        <div class="demo-section">
+          <h3>基础展示 (可拖拽)</h3>
+          <div class="sticker-demo-container">
+            <sticker-peel
+              image-src="https://images.unsplash.com/photo-1574169208507-84376144848b?q=80&w=200&h=200&auto=format&fit=crop"
+              :width="200"
+              :rotate="15"
+              :initial-position="{ x: 50, y: 50 }"
+            ></sticker-peel>
+          </div>
+        </div>
+
+        <div class="demo-section">
+          <h3>不同旋转角度与方向</h3>
+          <div class="sticker-demo-container">
+            <sticker-peel
+              image-src="https://images.unsplash.com/photo-1579546929518-9e396f3cc809?q=80&w=150&h=150&auto=format&fit=crop"
+              :width="150"
+              :rotate="-20"
+              :peel-direction="180"
+              :initial-position="{ x: 100, y: 100 }"
+            ></sticker-peel>
+          </div>
+        </div>
+      </div>
+
+      <div class="use">
+        <h2>how to use</h2>
+        <div class="usage-instructions">
+          <h3>StickerPeel 组件使用说明</h3>
+
+          <h4>1. 基本用法</h4>
+          <p>在 HTML 中使用组件并传入图片地址，组件支持在容器内自由拖拽和剥离效果：</p>
+          <pre><code>&lt;sticker-peel image-src="path/to/image.jpg"&gt;&lt;/sticker-peel&gt;</code></pre>
+
+          <h4>2. 可用属性</h4>
+          <ul>
+            <li><strong>image-src</strong> (String): 图片的源地址 (必填)</li>
+            <li><strong>width</strong> (Number): 贴纸宽度，默认为 200</li>
+            <li><strong>rotate</strong> (Number): 贴纸自身的旋转角度，默认为 30</li>
+            <li><strong>peel-direction</strong> (Number): 剥离的方向角度，默认为 0</li>
+            <li><strong>peel-back-hover-pct</strong> (Number): 鼠标悬停时的剥离百分比，默认为 30</li>
+            <li><strong>peel-back-active-pct</strong> (Number): 鼠标点击时的剥离百分比，默认为 40</li>
+            <li><strong>shadow-intensity</strong> (Number): 阴影强度 (0-1)，默认为 0.6</li>
+            <li><strong>lighting-intensity</strong> (Number): 光照强度，默认为 0.1</li>
+            <li><strong>initial-position</strong> (String|Object): 初始位置，支持 'center' 或 {x, y} 对象</li>
+            <li><strong>class-name</strong> (String): 应用于组件根元素的自定义 CSS 类名</li>
+            <li><strong>peel-hover-easing</strong> (String): 悬停剥离动画缓动函数</li>
+            <li><strong>peel-easing</strong> (String): 剥离动画缓动函数</li>
+          </ul>
+
+          <h4>3. 依赖说明</h4>
+          <p>本组件依赖于 <strong>GSAP</strong> 和 <strong>Draggable</strong> 插件。请确保在预览环境或全局已加载这些库：</p>
+          <pre><code>&lt;script src="../libs/gsap.min.js"&gt;&lt;/script&gt;
+&lt;!-- Draggable 通常包含在 gsap 中或单独引入 --&gt;</code></pre>
+
+          <h4>4. 示例代码</h4>
+          <pre><code>&lt;sticker-peel
+  image-src="sticker.png"
+  :width="180"
+  :rotate="10"
+  :initial-position="{ x: 20, y: 20 }"
+  class-name="my-sticker"
+&gt;&lt;/sticker-peel&gt;</code></pre>
+        </div>
+        <div class="back-link">
+          <a href="../">← Back to index</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- 依次引入依赖 -->
+    <script src="../libs/gsap.min.js"></script>
+    <!-- 如果 Draggable 不在 gsap.min.js 中，需要单独引入，目前假设在 src/libs 下已有相关脚本或集成在 gsap 中 -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/Draggable.min.js"></script>
+    <script src="../../dist/vue2bits.min.js"></script>
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        // 注册插件
+        if (typeof Draggable !== 'undefined') {
+          gsap.registerPlugin(Draggable);
+        }
+
+        new Vue({
+          el: "#app",
+        });
+      });
+    </script>
+  </body>
+</html>
