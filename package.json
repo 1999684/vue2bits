@@ -13,6 +13,7 @@
   "scripts": {
     "dev": "webpack-dev-server --mode development",
     "build": "webpack --mode production",
+    "encrypt": "node build/encrypt.js",
     "build:dev": "webpack --mode development",
     "preview": "webpack-dev-server --mode development --open"
   },
@@ -34,6 +35,7 @@
     "babel-loader": "^8.2.4",
     "baseline-browser-mapping": "^2.9.18",
     "css-loader": "^6.7.1",
+    "javascript-obfuscator": "^4.2.2",
     "mini-css-extract-plugin": "^2.6.1",
     "vue": "^2.6.14",
     "vue-loader": "^15.9.8",
