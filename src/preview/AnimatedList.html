@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>AnimatedList 组件预览</title>
+    <script src="../libs/vue.js"></script>
+    <link rel="stylesheet" href="../../dist/vue2bits.css" />
+    <link rel="stylesheet" href="preview.css" />
+    <style>
+    body {
+      background-color: #000;
+    }
+    a {
+      color: #ff4 !important;
+    }
+    h4,
+    h3,
+    h2,
+    p,
+    li {
+      color: #ffffff !important;
+    }
+      .demo-container {
+        padding: 40px;
+      }
+      .demo-card {
+        margin-bottom: 40px;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="app" style="display: flex">
+      <div class="col" style="height: 100vh; width: 50%; overflow-y: auto;">
+        <div class="demo-container">
+          <div class="demo-card">
+            <h2 style="color: white; margin-bottom: 20px;">AnimatedList 滚动列表</h2>
+            <p style="color: #888; margin-bottom: 20px;">支持滚动视口检测、键盘导航和渐变遮罩。</p>
+
+            <animated-list
+              :items="listItems"
+              :show-gradients="true"
+              :enable-arrow-navigation="true"
+              @itemSelected="handleItemSelected"
+            ></animated-list>
+
+          </div>
+        </div>
+      </div>
+
+      <div class="use">
+        <h2>how to use</h2>
+        <div class="usage-instructions">
+          <h3>AnimatedList 组件使用说明</h3>
+
+          <h4>1. 基本用法</h4>
+          <p>在 HTML 中传入一个字符串数组即可生成带动画的列表：</p>
+          <pre><code>&lt;animated-list :items="['Apple', 'Banana', 'Cherry']"&gt;&lt;/animated-list&gt;</code></pre>
+
+          <h4>2. 可用属性</h4>
+          <ul>
+            <li><strong>items</strong> (Array): 列表数据数组。</li>
+            <li><strong>show-gradients</strong> (Boolean): 是否显示列表顶部的渐变遮罩，默认为 true。</li>
+            <li><strong>enable-arrow-navigation</strong> (Boolean): 是否启用键盘上下键、Tab 键导航，默认为 true。</li>
+            <li><strong>display-scrollbar</strong> (Boolean): 是否显示滚动条，默认为 true。</li>
+            <li><strong>initial-selected-index</strong> (Number): 初始选中的索引，默认为 -1。</li>
+            <li><strong>class-name</strong> (String): 容器的自定义类名。</li>
+            <li><strong>item-class-name</strong> (String): 列表项的自定义类名。</li>
+          </ul>
+
+          <h4>3. 事件</h4>
+          <ul>
+            <li><strong>itemSelected</strong>: 当点击列表项或在选中状态下按回车时触发。参数为 (item, index)。</li>
+          </ul>
+
+          <h4>4. 依赖说明</h4>
+          <p>本组件依赖于 <strong>GSAP</strong> 实现平滑的滚动锚定动画。请确保已加载 GSAP：</p>
+          <pre><code>&lt;script src="../libs/gsap.min.js"&gt;&lt;/script&gt;</code></pre>
+        </div>
+        <div class="back-link">
+          <a href="../">← Back to index</a>
+        </div>
+      </div>
+    </div>
+
+    <script src="../libs/gsap.min.js"></script>
+    <script src="../../dist/vue2bits.min.js"></script>
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        new Vue({
+          el: "#app",
+          data: {
+            listItems: Array.from({ length: 20 }, (_, i) => `探索项目组件 #${i + 1}`),
+            logs: []
+          },
+          methods: {
+            handleItemSelected(item, index) {
+              const msg = `Selected: ${item} at index ${index}`;
+              this.logs.unshift(msg);
+              if (this.logs.length > 5) this.logs.pop();
+              console.log(msg);
+            }
+          }
+        });
+      });
+    </script>
+  </body>
+</html>

@@ -1,8 +1,4 @@
 <script>
-/**
- * TargetCursor.c.vue
- * 注意：gsap 需在预览环境或全局引入，本文件内不直接 import
- */
 export default {
   name: "TargetCursor",
   props: {

@@ -32,6 +32,7 @@ import ShapeBlur from "./ShapeBlur.c.vue";
 import StarBorder from "./StarBorder.c.vue";
 import StickerPeel from "./StickerPeel.c.vue";
 import TargetCursor from "./TargetCursor.c.vue";
+import AnimatedList from "./AnimatedList.c.vue";
 
 // 定义组件列表
 const components = [
@@ -68,6 +69,7 @@ const components = [
   StarBorder,
   StickerPeel,
   TargetCursor,
+  AnimatedList,
 ];
 
 // 定义 install 方法，接收 Vue 作为参数
@@ -117,6 +119,7 @@ export default {
   StarBorder,
   StickerPeel,
   TargetCursor,
+  AnimatedList,
 };
 
 // 单独导出组件，支持按需引入
@@ -154,4 +157,5 @@ export {
   StarBorder,
   StickerPeel,
   TargetCursor,
+  AnimatedList,
 };
