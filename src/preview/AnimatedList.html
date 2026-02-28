@@ -8,43 +8,46 @@
     <link rel="stylesheet" href="../../dist/vue2bits.css" />
     <link rel="stylesheet" href="preview.css" />
     <style>
-    body {
-      background-color: #000;
-    }
-    a {
-      color: #ff4 !important;
-    }
-    h4,
-    h3,
-    h2,
-    p,
-    li {
-      color: #ffffff !important;
-    }
-      .demo-container {
-        padding: 40px;
+      /* 保持与参考文件一致的结构样式 */
+      .demo-box {
+        padding: 20px;
+        margin: 20px 10px;
+        border: 1px solid #ddd;
+        border-radius: 4px;
+        background-color: #f9f9f9; /* 给demo盒子一个浅色背景，突出深色组件 */
       }
-      .demo-card {
-        margin-bottom: 40px;
+
+      .demo-box h3 {
+        margin-top: 0;
+        margin-bottom: 15px;
+        color: #333;
+      }
+
+      /* 用于显示日志 */
+      .log-box {
+        margin-top: 10px;
+        font-family: monospace;
+        font-size: 12px;
+        color: #666;
+        background: #fff;
+        padding: 5px;
+        border: 1px solid #eee;
       }
     </style>
   </head>
   <body>
     <div id="app" style="display: flex">
       <div class="col" style="height: 100vh; width: 50%; overflow-y: auto;">
-        <div class="demo-container">
-          <div class="demo-card">
-            <h2 style="color: white; margin-bottom: 20px;">AnimatedList 滚动列表</h2>
-            <p style="color: #888; margin-bottom: 20px;">支持滚动视口检测、键盘导航和渐变遮罩。</p>
-
-            <animated-list
-              :items="listItems"
-              :show-gradients="true"
-              :enable-arrow-navigation="true"
-              @itemSelected="handleItemSelected"
-            ></animated-list>
-
-          </div>
+        <div class="demo-box">
+          <animated-list
+            :items="listItems"
+            max-height="600px"
+            main-background-color="#2d0a31"
+            item-background-color="#4a1252"
+            item-selected-background-color="#70207a"
+            show-gradients=false
+            @item-selected="handleItemSelected"
+          ></animated-list>
         </div>
       </div>
 
@@ -54,28 +57,57 @@
           <h3>AnimatedList 组件使用说明</h3>
 
           <h4>1. 基本用法</h4>
-          <p>在 HTML 中传入一个字符串数组即可生成带动画的列表：</p>
-          <pre><code>&lt;animated-list :items="['Apple', 'Banana', 'Cherry']"&gt;&lt;/animated-list&gt;</code></pre>
+          <p>在 HTML 中传入字符串数组即可生成带动画的滚动列表：</p>
+          <pre><code>&lt;animated-list 
+  :items="['Item 1', 'Item 2']"
+&gt;&lt;/animated-list&gt;</code></pre>
 
           <h4>2. 可用属性</h4>
           <ul>
-            <li><strong>items</strong> (Array): 列表数据数组。</li>
-            <li><strong>show-gradients</strong> (Boolean): 是否显示列表顶部的渐变遮罩，默认为 true。</li>
-            <li><strong>enable-arrow-navigation</strong> (Boolean): 是否启用键盘上下键、Tab 键导航，默认为 true。</li>
-            <li><strong>display-scrollbar</strong> (Boolean): 是否显示滚动条，默认为 true。</li>
-            <li><strong>initial-selected-index</strong> (Number): 初始选中的索引，默认为 -1。</li>
-            <li><strong>class-name</strong> (String): 容器的自定义类名。</li>
-            <li><strong>item-class-name</strong> (String): 列表项的自定义类名。</li>
+            <li>
+              <strong>items</strong> (Array): 列表数据源数组。
+            </li>
+            <li>
+              <strong>max-height</strong> (String): 列表最大高度，支持 CSS 单位（如 '400px', '50vh'），默认为 '400px'。
+            </li>
+            <li>
+              <strong>show-gradients</strong> (Boolean): 是否显示上下渐变遮罩，默认为 true。
+            </li>
+            <li>
+              <strong>enable-arrow-navigation</strong> (Boolean): 是否启用键盘导航，默认为 true。
+            </li>
+            <li>
+              <strong>display-scrollbar</strong> (Boolean): 是否显示滚动条，默认为 true。
+            </li>
+            <li>
+              <strong>main-background-color</strong> (String): 整体容器背景色，默认为 '#0b0b0b'。
+            </li>
+            <li>
+              <strong>item-background-color</strong> (String): 列表项默认背景色，默认为 '#111'。
+            </li>
+            <li>
+              <strong>item-selected-background-color</strong> (String): 列表项选中背景色，默认为 '#222'。
+            </li>
           </ul>
 
           <h4>3. 事件</h4>
           <ul>
-            <li><strong>itemSelected</strong>: 当点击列表项或在选中状态下按回车时触发。参数为 (item, index)。</li>
+            <li><strong>itemSelected</strong>: 选中列表项时触发，参数为 (item, index)。</li>
           </ul>
 
           <h4>4. 依赖说明</h4>
-          <p>本组件依赖于 <strong>GSAP</strong> 实现平滑的滚动锚定动画。请确保已加载 GSAP：</p>
+          <p>本组件依赖 GSAP 实现平滑滚动动画。</p>
           <pre><code>&lt;script src="../libs/gsap.min.js"&gt;&lt;/script&gt;</code></pre>
+
+          <h4>5. 完整示例</h4>
+          <pre><code>&lt;animated-list
+  :items="items"
+  max-height="300px"
+  main-background-color="#ffffff"
+  item-background-color="#f0f0f0"
+  item-selected-background-color="#e0e0e0"
+  @item-selected="onSelect"
+&gt;&lt;/animated-list&gt;</code></pre>
         </div>
         <div class="back-link">
           <a href="../">← Back to index</a>
@@ -83,24 +115,24 @@
       </div>
     </div>
 
+    <!-- 引入库文件 -->
     <script src="../libs/gsap.min.js"></script>
     <script src="../../dist/vue2bits.min.js"></script>
+    
     <script>
       document.addEventListener("DOMContentLoaded", function () {
         new Vue({
           el: "#app",
           data: {
-            listItems: Array.from({ length: 20 }, (_, i) => `探索项目组件 #${i + 1}`),
-            logs: []
+            listItems: Array.from({ length: 15 }, (_, i) => `普通项目 #${i + 1}`),
+            lastLog: ""
           },
           methods: {
             handleItemSelected(item, index) {
-              const msg = `Selected: ${item} at index ${index}`;
-              this.logs.unshift(msg);
-              if (this.logs.length > 5) this.logs.pop();
-              console.log(msg);
-            }
-          }
+              this.lastLog = `选中了: ${item} (索引: ${index})`;
+              console.log(this.lastLog);
+            },
+          },
         });
       });
     </script>

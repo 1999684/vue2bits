@@ -41,7 +41,7 @@ module.exports = {
     transformObjectKeys: true,
 
     // --- 调试与兼容性设置 ---
-    // 自我防御：若开启，代码被格式化后将失效。由于你需要保留调试可能性，此处建议设为 false
+    // 自我防御：若开启，代码被格式化后将失效
     selfDefending: false,
     // 调试保护：若开启，打开浏览器开发者工具会导致页面卡死。由于需要调试，设为 false
     debugProtection: false,

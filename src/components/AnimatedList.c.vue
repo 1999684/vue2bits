@@ -2,7 +2,6 @@
 export default {
   name: "AnimatedList",
   props: {
-    // 列表项数组
     items: {
       type: Array,
       default: () => [
@@ -11,35 +10,45 @@ export default {
         "Item 11", "Item 12", "Item 13", "Item 14", "Item 15"
       ],
     },
-    // 是否显示上下渐变遮罩
     showGradients: {
       type: Boolean,
       default: true,
     },
-    // 是否启用方向键导航
     enableArrowNavigation: {
       type: Boolean,
       default: true,
     },
-    // 容器类名
     className: {
       type: String,
       default: "",
     },
-    // 列表项类名
     itemClassName: {
       type: String,
       default: "",
     },
-    // 是否显示滚动条
     displayScrollbar: {
       type: Boolean,
       default: true,
     },
-    // 初始选中索引
     initialSelectedIndex: {
       type: Number,
       default: -1,
+    },
+    maxHeight: {
+      type: String,
+      default: "400px",
+    },
+    mainBackgroundColor: {
+      type: String,
+      default: "#0b0b0b",
+    },
+    itemBackgroundColor: {
+      type: String,
+      default: "#111",
+    },
+    itemSelectedBackgroundColor: {
+      type: String,
+      default: "#222",
     },
   },
   data() {
@@ -57,6 +66,14 @@ export default {
         "animated-list-content",
         this.displayScrollbar ? "with-scrollbar" : "hide-scrollbar",
       ];
+    },
+    cssVars() {
+      return {
+        "--main-bg": this.mainBackgroundColor,
+        "--item-bg": this.itemBackgroundColor,
+        "--item-selected-bg": this.itemSelectedBackgroundColor,
+        "--list-max-height": this.maxHeight,
+      };
     },
   },
   watch: {
@@ -79,7 +96,6 @@ export default {
     if (this.enableArrowNavigation) {
       window.addEventListener("keydown", this.handleKeyDown);
     }
-    // 初始计算渐变和视图内状态
     this.$nextTick(() => {
       if (this.$refs.listRef) {
         this.handleScroll({ target: this.$refs.listRef });
@@ -175,7 +191,11 @@ export default {
 </script>
 
 <template>
-  <div ref="containerRef" :class="['animated-list-container', className]">
+  <div 
+    ref="containerRef" 
+    :class="['animated-list-container', className]"
+    :style="cssVars"
+  >
     <div
       ref="listRef"
       :class="listClasses"
@@ -213,12 +233,12 @@ export default {
 .animated-list-container {
   position: relative;
   width: 500px;
-  background-color: #0b0b0b;
+  background-color: var(--main-bg);
   overflow: hidden;
 }
 
 .animated-list-content {
-  max-height: 400px;
+  max-height: var(--list-max-height);
   overflow-y: auto;
   padding: 1rem;
 }
@@ -233,16 +253,16 @@ export default {
 
 .with-scrollbar {
   scrollbar-width: thin;
-  scrollbar-color: #222 #0b0b0b;
+  scrollbar-color: var(--item-selected-bg) var(--main-bg);
 }
 .with-scrollbar::-webkit-scrollbar {
   width: 8px;
 }
 .with-scrollbar::-webkit-scrollbar-track {
-  background: #0b0b0b;
+  background: var(--main-bg);
 }
 .with-scrollbar::-webkit-scrollbar-thumb {
-  background: #222;
+  background: var(--item-selected-bg);
   border-radius: 4px;
 }
 
@@ -261,13 +281,13 @@ export default {
 
 .item-inner {
   padding: 1rem;
-  background-color: #111;
+  background-color: var(--item-bg);
   border-radius: 0.5rem;
   transition: background-color 0.2s ease;
 }
 
 .animated-list-item.is-selected .item-inner {
-  background-color: #222;
+  background-color: var(--item-selected-bg);
 }
 
 .item-text {
@@ -287,12 +307,12 @@ export default {
 .mask-top {
   top: 0;
   height: 50px;
-  background: linear-gradient(to bottom, #0b0b0b, transparent);
+  background: linear-gradient(to bottom, var(--main-bg), transparent);
 }
 
 .mask-bottom {
   bottom: 0;
   height: 100px;
-  background: linear-gradient(to top, #0b0b0b, transparent);
+  background: linear-gradient(to top, var(--main-bg), transparent);
 }
 </style>
